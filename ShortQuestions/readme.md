@@ -1,3 +1,56 @@
+# Markdown Example Homework
+
+## Breaking NEWS (Overall Headers)
+### N E W S (Sub header)
+#### NEWS is breaking into 4 chars (Sub Sub header)
+
+## Lists
+
+### Unordered List
+- Fruit
+    - Apple
+    - Orange
+- Sport
+    - Soccer
+    - Footbal
+
+### Ordered List
+1. Star size
+   1. Sun
+   2. Others
+2. Car size
+    1. Bus
+    2. Motor
+
+## In text
+*I'm Italicized*  
+**I'm so Bold**  
+~~I'm so Strikethrough~~
+
+### Task List
+- [x] Task 1: Write the Markdown structure.
+- [ ] Task 2: Add complex elements.
+- [ ] Task 3: Final review and submission.
+
+## Links
+Here is a link to [Google](https://www.google.com).
+
+## Images
+![Markdown Logo](https://markdown-here.com/img/icon128.png)
+
+## Blockquote
+> I'm a blockquote.
+
+## Inline Code
+I'm an inline code: `System.out.print("Hello, World!")`
+
+## Code Block
+```java
+public static void main(String[] args){
+    System.out.print("Hello World");
+}
+```
+
 # Markdown Language Tutorials
 
 ## Headings
@@ -127,8 +180,8 @@ To order the list, preced each line with a number.
 Create a nested list by indenting one or more list items below another item.
 
 1. First list item
-   - First nested list item
-     - Second nested list item
+    - First nested list item
+        - Second nested list item
 
 ### Task lists
 
@@ -152,55 +205,9 @@ A footnote can also have multiple lines[^2].
 
 [^1]: My reference.
 [^2]:
-    To add line breaks within a footnote, prefix new lines with 2 spaces.
-    This is a second line.
+To add line breaks within a footnote, prefix new lines with 2 spaces.
+This is a second line.
 
 ## Comments
 
 Using \<!-- This content will not appear in the rendered Markdown -->
-
-# Markdown Example Homework
-
-## Overall Headers
-### Sub header
-#### Sub Sub header
-
-## Lists
-
-### Unordered List
-- Item 1
-    - Item 1.1
-    - Item 1.2
-- Item 2
-    - Item 2.1
-    - Item 2.2
-
-### Ordered List
-1. item 1
-   1. item 1.1
-   2. item 1.2
-2. item 2
-    1. item 2.1
-    2. item 2.2
-
-## In text
-*Italicized*  
-**Bold**  
-~~Strikethrough~~
-
-## Links
-Here is a link to [Google](https://www.google.com).
-
-## Images
-![Markdown Logo](https://markdown-here.com/img/icon128.png)
-
-## Blockquote
-> This is a blockquote.
-
-## Inline Code
-Here is an inline code: `print("Hello, World!")`
-
-## Code Block
-```python
-def hello_world():
-    print("Hello, World!")
