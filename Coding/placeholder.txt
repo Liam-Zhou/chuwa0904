@@ -1,1 +1,63 @@
-write your answer to this folder.
+1. Two Sum
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int[] res = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            int m = target - nums[i];
+            if (map.containsKey(m) && map.get(m) != i) {
+                res[0] = i;
+                res[1] = map.get(m);
+                return res;
+            }
+            map.put(nums[i], i);
+        }
+        return res;
+    }
+}
+
+49. Group Anagrams
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String word : strs) {
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String s1 = new String(chars);
+            if (!map.containsKey(s1)) {
+                map.put(s1, new ArrayList<>());
+            }
+            map.get(s1).add(word);
+        }
+        return new ArrayList<>(map.values());
+    }
+}
+
+217. Contains Duplicate
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            if (map.get(nums[i]) > 1) return true;
+        }
+        return false;
+    }
+}
+
+242. Valid Anagram
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int m = s.length();
+        int n = t.length();
+        if (m != n) return false;
+        char[] char_s = s.toCharArray();
+        char[] char_t = t.toCharArray();
+        Arrays.sort(char_s);
+        Arrays.sort(char_t);
+        String s1 = new String(char_s);
+        String t1 = new String(char_t);
+        return s1.equals(t1);
+    }
+}
+
