@@ -15,7 +15,7 @@ The rendered output looks like this:
 ## Heading level 3  
 
 # Paragraphs
-To create paragraphs, use a blank line to separate one or more lines of text.  
+To create a line break or new line, end a line with two or more spaces, and then type return.  
 
     I really like using Markdown.  
     I think I'll use it to format all of my documents from now on.  
@@ -233,7 +233,8 @@ The rendered output looks like this:
 - I think 1969 was second best.
 
 # Code
-To denote a word or phrase as code, enclose it in backticks `(``)`.
+To denote a word or phrase as code, enclose it in backticks `(``)`.  
+
     At the command prompt, type `nano`.  
 
 The rendered output looks like this:  
