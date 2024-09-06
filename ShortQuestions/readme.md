@@ -158,3 +158,49 @@ A footnote can also have multiple lines[^2].
 ## Comments
 
 Using \<!-- This content will not appear in the rendered Markdown -->
+
+# Markdown Example Homework
+
+## Overall Headers
+### Sub header
+#### Sub Sub header
+
+## Lists
+
+### Unordered List
+- Item 1
+    - Item 1.1
+    - Item 1.2
+- Item 2
+    - Item 2.1
+    - Item 2.2
+
+### Ordered List
+1. item 1
+   1. item 1.1
+   2. item 1.2
+2. item 2
+    1. item 2.1
+    2. item 2.2
+
+## In text
+*Italicized*  
+**Bold**  
+~~Strikethrough~~
+
+## Links
+Here is a link to [Google](https://www.google.com).
+
+## Images
+![Markdown Logo](https://markdown-here.com/img/icon128.png)
+
+## Blockquote
+> This is a blockquote.
+
+## Inline Code
+Here is an inline code: `print("Hello, World!")`
+
+## Code Block
+```python
+def hello_world():
+    print("Hello, World!")
