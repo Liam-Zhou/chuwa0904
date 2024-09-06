@@ -13,7 +13,6 @@ cd your_work_dir
 git clone https://github.com/Liam-Zhou/chuwa0904
 ```
 
-### Student TODO: send your github email address to me by slack. I will add you to this repo
 
 ### Create your feature branch to implement the assignment.
 
@@ -23,10 +22,10 @@ git checkout firstName_lastName/notes
 
 example: 
 HW1:
-git checkout -b firstName_lastName/hw1
+git checkout -b Jitong_Yan/hw1
 git add .
 git commit -m "commit_message"
-git push origin firstName_lastName/hw1
+git push origin Jitong_Yan/hw1
 ```
 write your assignment under this feature branch.
 
