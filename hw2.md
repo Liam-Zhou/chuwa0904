@@ -10,7 +10,14 @@ A WAR file is used for packaging web applications in Java, including servlets, J
 It is used when developing Java EE web applications that need to be deployed to a servlet container like Apache Tomcat, Jetty, or any other web server supporting Java-based web applications.
 A POM file (with .pom extension) is used to manage dependencies, plugins, and other project configurations. It does not contain any compiled code or resources like JAR or WAR files. Instead, it acts as a parent project or dependency aggregator. It is used when defining parent projects or BOM (Bill of Materials) files, which can manage versions of dependencies and configure shared plugins across multiple child projects.
 
+3. Create a project and added the dependencies
+No error encountered.
+Project is attached.
 
+4. Build the project and install it to local Maven repo
+No error encountered.
+
+5. 
 6. List Maven life cycles in order, compare them.
 Maven has three built-in life cycles:
 
