@@ -1,7 +1,11 @@
 
 ## 1. Find at least one dependency for each packaging type on mvnrepo
-![](/Users/fionagu/Desktop/1.png)
-![](/Users/fionagu/Desktop/2.png)
+
+
+![1.png](..%2F1.png)
+
+
+![2.png](..%2F2.png)
 ## 2. Explain the diff between jar, war and pom
 
 **JAR**: Java archive  
@@ -25,12 +29,11 @@ Example: spring-boot-dependencies, which manages versions for Spring Boot depend
 **Solution**: Click Maven change 
 
 ## 4. Install your executable to local Maven repository
-![](/Users/fionagu/Desktop/3.png)
-
+![3.png](..%2F3.png)
 ```bash
 mvn install
 ```
-![](/Users/fionagu/Desktop/4.png)
+![4.png](..%2F4.png)
 ```bash
 mvn dependency:tree
 ```
