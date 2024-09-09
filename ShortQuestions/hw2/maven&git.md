@@ -64,7 +64,7 @@ Ref: https://www.baeldung.com/maven-packaging-types
 
 ## 3. Create a maven managed project in IntelliJ Idea, add above dependencies to your project.
 
-![Create a maven project](/pictures/1.png)
+![Create a maven project](pictures/1.png)
 
 When adding those dependencies to `pom.xml` at the first time, it will report some error, and then clicking the reload maven project button to solve the problem.
 
@@ -77,7 +77,7 @@ mvn package
 
 mvn package command will **Compiling the Code** (Maven will compile the source code of your project, including any dependent libraries defined in the pom.xml), **Testing the Code** (If there are unit tests (under src/test/java), Maven will run them), **Packaging the Artifact** (Create jar/war file)
 
-![mvn package](/pictures/2.png)
+![mvn package](pictures/2.png)
 
 **mvn package command will not install jar file to user's local repository.**
 
@@ -89,13 +89,13 @@ mvn install
 
 mvn install command will install the jar file to user's local repository.
 
-![mvn install](/pictures/3.png)
+![mvn install](pictures/3.png)
 
 ## 5. Create a new module in your maven project, make 4.2 as a dependency of this module
 
 In hw2 maven project, creating a child module sub_hw2 behind hw2 module, sub_hw2 will automatically have all dependencies in hw2.
 
-![maven hier](/pictures/4.png)
+![maven hier](pictures/4.png)
 
 If creating an external project:
 
@@ -115,7 +115,7 @@ Then,
 mvn package
 ```
 
-![maven external](/pictures/5.png)
+![maven external](pictures/5.png)
 
 ## 6. List Maven lifecycles in order, compare them.
 
