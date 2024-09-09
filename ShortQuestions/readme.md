@@ -1,160 +1,92 @@
-# Markdown Language Tutorials
+# HW2 Maven & Git
 
-## Headings
+## 1. Find at least one dependency for each packing type
 
-using '#' symbols before the heading text. Less '#' in use indicates higher level in heading.
-
-## Styling text
-
-Bold: \*\* ** ; **This is a bold text\*\*
-
-Italic: \* * ; *This is an italicezed text\*
-
-Bold and Italic: \*** \***; This text is **_really important_**
-
-Strikethrough: ~~ ~~; ~~This was mistaken text~~
-
-Subscript: \<sub> \</sub>; This is a <sub>subscript</sub> text.
-
-Superscript: \<sup> \</sup>; This is a <sup>superscript</sup> text.
-
-## Quoting text
-
-Quote text with a \>
-
-> Text that is quote
-
-### Block quote with Multiple Paragraphs
-
-Add a > on the blank lines between the paragraphs.
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-### Nested Blockquotes
-
-Add a >> in front of the paragraph you want to nest
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> > The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-### Quoting code
-
-Use \` \` (backtick)  
-Use `git status` to list all new or modified files that haven't yet been committed.
-
-### Format code
-
-Use \``` \``` Triple backticks
+### 1.1 Packaging type is `war`
 
 ```
-git status
-git add
-git commit
+<dependency>
+  <groupId>jakarta.servlet</groupId>
+  <artifactId>jakarta.servlet-api</artifactId>
+  <version>5.0.0</version>
+  <scope>provided</scope>
+</dependency>
 ```
 
-## Color models
-
-Using \` Color models\`  
-e.g.
-HEX: `#0969DA`  
-RGB: `rgb(9, 105, 218)`  
-HSL: `hsl(212, 92%, 45%)`
-
-## Links
-
-Wrap link text in bracktes \[ \], then wrapping the URL in parentheses \( \)  
-This site was build using [GitHub Pages](https://pages.github.com/).
-
-relative links: relative link is a link that is relative to the current file/image.  
-[Contribution guidelines for this project](../README.md).
-
-## Images
-
-display an image by adding \! and wrapping the alt text in [ ]. Alt text is a short text equivalent of the information in the image. Then, wrap the link for the image in parentheses ()  
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
-
-### Specifying the theme an image is shown to
-
-By using the HTML <picture> element in combination with the prefers-color-scheme media feature.  
-e.g. following code displays a sun image for light themes and a moon for dark themes:
+### 1.2 Packaging type is `jar`
 
 ```
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/25423296/163456776-7f95b81a-f1ed-45f7-b7ab-8fa810d529fa.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
-  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
-</picture>
+<dependency>
+    <groupId>com.adobe.aem</groupId>
+    <artifactId>uber-jar</artifactId>
+    <version>6.5.21</version>
+</dependency>
 ```
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/25423296/163456776-7f95b81a-f1ed-45f7-b7ab-8fa810d529fa.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
-  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
-</picture>
+### 1.3 Packaging type is `POM`
 
-## Lists
+```
+<dependency>
+    <groupId>fish.focus.uvms.maven</groupId>
+    <artifactId>uvms-pom-arquillian-deps</artifactId>
+    <version>3.24</version>
+    <type>pom</type>
+</dependency>
+```
 
-Make unordered list by preceding one or more lines of text with -, \*, or +.
+### 1.4 Packaging type is other than all above.
 
-- George Washington
+```
+<dependency>
+    <groupId>org.zeroturnaround</groupId>
+    <artifactId>zt-zip</artifactId>
+    <version>1.17</version>
+</dependency>
+```
 
-* John Adams
+## 2. Explain the difference between `war`, `jar`, and `POM`
 
-- Thomas Jefferson
+1. They have difference extension: .war, .jar, and .pom
+2. They have difference using case: .war is common in web application packaging and deployment; .jar is used for Java library or standlone applications; .pom is used for configuration, dependencies and plugins for maven.
 
-* Hello
-* World
+## 3. Create a maven managed project in IntelliJ Idea
 
-- Gone
-- With
-- The
-- Wind
+### 3.1 Create a maven managed project in IntelliJ Idea
 
-* Sam
-* Houston
+![Dependency](./Picture/image.png)
 
-To order the list, preced each line with a number.
+### 3.2 Explain how to resolve dependency-related errors
 
-1. George H. W. Bush
-2. George W. Bush
-3. John Ellis Bush
+I checked error message and find the conflict package. Then I used \<exclusions> tag to exclude the transitive dependency. If possible, I will use \<scope> tag when resolving the dependency in a complexed or industrial project.
 
-### Nested Lists
+## 4. Build the project
 
-Create a nested list by indenting one or more list items below another item.
+4.1 Build the project
+![alt text](./Picture/image2.png)
 
-1. First list item
-   - First nested list item
-     - Second nested list item
+4.2 The executable is installed into the local maven repository
+![alt text](./Picture/image3.png)
 
-### Task lists
+## 5. Create a new module and add 4.2\) as dependency
 
-Using \- \[x\]
+![alt text](./Picture/image4.png)
+Created a new module called NewModule in HW2 project. Added 4.2\) as a dependency in HW2 project pom file. Then use `mvn install` to compile and install the new project. No dependency-related issure came up.
 
-- [x] #739
-- [ ] https://github.com/octo-org/octo-repo/issues/740
-- [ ] Add delight to the experience when all tasks are complete :tada:
+## 6. List Maven life cycles in order
 
-## Using Emojis
+validate->compile->test->package->integration->verify->install->deploy  
+To be honest, I don't know how to make the comparison. They are different part of maven life cycles, also in software life cycles, but they are not in the same scope, which means they share little things in common, so many differences that make comparison go difficult.
 
-Typing `:EMOJICODE:`  
-@octocat :+1: This PR looks great - it's ready to merge! :shipit:
+## 7. `git merge` vs `git rebase`
 
-## Footnotes
+Merge creates a merge commit, while rebase re-applies commits from one branch onto another
 
-Using [^#]  
-Here is a simple footnote[^1].
+## 8. Explain `Trunk-based development` git branching strategy.
 
-A footnote can also have multiple lines[^2].
+Trunk-based development is a Git branching model that focuses on keeping a single, central branch (called the "trunk" or "mainline") as the primary development branch. In this model, all developers commit their changes directly to the trunk or merge their feature branches into the trunk in a short period of time. The goal is to maintain a highly active trunk that is always stable, with minimal use of long-lived feature branches. In `Trunk-based development`, the main or master branch is always in a production-ready state.
 
-[^1]: My reference.
-[^2]:
-    To add line breaks within a footnote, prefix new lines with 2 spaces.
-    This is a second line.
+## 9. Explain `git reset` options
 
-## Comments
-
-Using \<!-- This content will not appear in the rendered Markdown -->
+1. git reset --soft: Moves the HEAD pointer to a previous commit but keeps changes staged for commit.
+2. git reset --mixed: Moves the HEAD pointer to a previous commit and unstages changes, but keeps them in the working directory.
+3. git reset --hard: Moves the HEAD pointer to a previous commit and discards all changes in the working directory and the index.
