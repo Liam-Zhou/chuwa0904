@@ -1,5 +1,4 @@
 #### 1.
-
 #### 2. What is wrapper class in Java and Why we need wrapper class?
 A wrapper class is an object representation of a primitive data type. Java provides wrapper classes for each of the eight primitive types: int, char, float, double, boolean, byte, short, and long. The corresponding wrapper classes are Integer, Character, Float, Double, Boolean, Byte, Short, and Long.
 
