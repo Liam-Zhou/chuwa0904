@@ -70,14 +70,14 @@ Encapsulation is defined as wrapping data into a single unit. In Java, it implem
 * Abstract class methods can have any access modifier but Interface methods are public by default
 
 ## Question 17 & 18 & 19
-In pattern folder
+Code in Coding/patterns
 
 ## Question 20
 ### Requirements
 * Vehicle types: The parking lot should support different kinds of vehicles like cars, bikes, trucks, etc.
 * Parking spots: The parking lot should have different types of parking spots for different vehicle type.
 * Ticketing and payment: The system should issue parking tickets and handle payments when vehicles leave the lot.
-* Code in Parking lot folder
+* Code in Coding/ParkingLot
 
 ## Question 21
 There are Deque and Priority Queue extended from Queue. LinkedList and ArrayDeque extended from Deque.
