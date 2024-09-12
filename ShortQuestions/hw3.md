@@ -1,8 +1,7 @@
 # Hw 3
 ## Question 1
-
-![Diagram](../images/20240911164933.png)
-![Diagram](../images/20240911165014.png)
+<img src="../images/20240911164933.png" alt="Alt text" width="500"/>
+<img src="../images/20240911165014.png" alt="Alt text" width="500"/>
 
 ## Question 2
 Wrapper class is for the primitive data type of Java to make it have object orianted features. Sometimes we need to treat primitive data type in object, we will need wrapper class in that case
