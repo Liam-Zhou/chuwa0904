@@ -1,4 +1,8 @@
 # Hw 3
+## Question 1
+
+![Diagram](images/20240911164933.png)
+![Diagram](images/20240911165014.png)
 
 ## Question 2
 Wrapper class is for the primitive data type of Java to make it have object orianted features. Sometimes we need to treat primitive data type in object, we will need wrapper class in that case
@@ -65,3 +69,19 @@ Encapsulation is defined as wrapping data into a single unit. In Java, it implem
 * Abstract classes can have instance variable and constants but Interface can only have constants
 * Abstract classes can have constructor but Interface can't
 * Abstract class methods can have any access modifier but Interface methods are public by default
+
+## Question 17 & 18 & 19
+In pattern folder
+
+## Question 20
+### Requirements
+* Vehicle types: The parking lot should support different kinds of vehicles like cars, bikes, trucks, etc.
+* Parking spots: The parking lot should have different types of parking spots for different vehicle type.
+* Ticketing and payment: The system should issue parking tickets and handle payments when vehicles leave the lot.
+* Code in Parking lot folder
+
+## Question 21
+There are Deque and Priority Queue extended from Queue. LinkedList and ArrayDeque extended from Deque.
+* LinkedList: It is a doubly-linked list that can be used as both a queue or a deque. Used when you need a easier insertion and deletion of element.
+* PriorityQueue: When you need to process elements based on priority rather than insertion order. Like the top k problem.
+* ArrayDeque: It is an array-based implementation of a deque. When used during if you want to avoid null pointers of the list and access element faster.
