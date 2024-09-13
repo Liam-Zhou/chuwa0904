@@ -1,339 +1,278 @@
 # HW3 Java & OOP homework
 
-## 1. Write up Example code to demonstrate the three foundmental concepts of OOP
+## 1. Learn Java generics by reading and practicing following code:
 
-### 1.1 Encapsulation
+[Java Generics](https://github.com/CTYue/chuwa-eij-tutorial/tree/main/02-java-core/src/main/java/com/chuwa/tutorial/t01_basic/generic)
 
-```
-class Bird {
-    private int weight;
-    private String name;
+## 2. Read the follwoing code repo and type it one by one by yourself.
 
-    public int getWeight() {
-        return weight;
-    }
+[Java Core](https://github.com/CTYue/chuwa-eij-tutorial/tree/main/02-java-core/src/main/java/com/chuwa/tutorial/t06_java8/features)
 
-    public String getName() {
-        return name;
-    }
+## 3. Practice following stream API exercises at least 3 times
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
+[Java Stream API exercises](https://github.com/gavinklfong/stream-api-exercises/blob/main/src/test/java/space/gavinklfong/demo/streamapi/StreamApiTest.java)
 
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-```
+## 4. Practice Optional methods at least 2 times
 
-### 1.2 Polymorphism
+[Optional Methods](https://github.com/CTYue/chuwa-eij-tutorial/blob/main/02-java-core/src/main/java/com/chuwa/tutorial/t06_java8/exercise/ShoppingCartUtil.java)
+
+## 5. Discuss best practices on nullptr exception prevention, provide code snippet for each practice that you mentioned.
+
+1. Use `Optional` methods for Optional values.
+2. Check `null` before using object.
+3. Use default value instead of `null` in initialization.
+
+## 6. Discuss Java 8 new features with code snippet
+
+1. Lambda Expression
 
 ```
-class Animal {
-    public void sound() {
-        System.out.println("This animal makes a sound.");
-    }
+// Using lambda expression for Comparator
+Collections.sort(names, (String s1, String s2) -> s1.length() - s2.length());
+```
+
+2. Functional Interfaces
+
+```
+@FunctionalInterface
+public interface MyFunction {
+    void apply(String s);
 }
 
-class Dog extends Animal {
-    @Override
-    public void sound() {
-        System.out.println("The dog barks.");
+MyFunction print = s -> System.out.println(s);
+print.apply("Hello, World!");
+```
+
+3. Stream API
+
+```
+List<String> cities = Array.asList("Beijing", "Houston", "Shanghai", "San jose", "Seattle", "New York");
+
+List<String> filteredCities = cities.strea().filter(name->name.startWith("A")).collect(Collectors.toList());
+```
+
+4. Optional
+
+```
+Optional<String> nonEmptyOptional = Optional.of("Hello");
+if (nonEmptyOptional.isPresent()) {
+            System.out.println("Non-Empty Optional contains: " + nonEmptyOptional.get());
+        }
+```
+
+5. Method References
+
+```
+List<String> cities = Array.asList("Beijing", "Houston", "Shanghai", "San jose", "Seattle", "New York");
+
+// Method reference
+cities.forEach(System.out::println)
+```
+
+6. Default methods and static methods in Interfaces
+
+```
+public interface DIMLearn {
+    static final String BLOG = "is Chuwa a";
+    int add(int a, int b);
+    default int substract(int a, int b) {
+        return a - b;
     }
-}
-
-class Cat extends Animal {
-    @Override
-    public void sound() {
-        System.out.println("The cat meows.");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Animal myAnimal = new Animal();
-        Animal myDog = new Dog();   //Where the Polymorphism comes
-        Animal myCat = new Cat();
-
-        myAnimal.sound();
-        myDog.sound();
-        myCat.sound();
+    static String blogName() {
+        return BLOG;
     }
 }
 ```
 
-### 1.3 Inheritance
+## 7. `What are the advantages of the Optional class?
+
+1. Prevents NullPointerException
+2. Improves Code Readability
+3. Encourages Functional Programming
+4. Supports Safe Default Values
+5. Facilitates Better API Design
+
+## 8. Explain Functional Interface and Lambda with code samples
+
+Functional Interface is an interface with a single abstract method. If can have multiple default or static methods but only one abstract method.
 
 ```
-class Animal {
-    public void eat() {
-        System.out.println("This animal is eating.");
+@FunctionalInterface
+public interface MyFunction {
+    void helloworld(String s);
+}
+```
+
+Lambda Expressions is the implementation of the abstract method, work with functional interface.
+
+```
+MyFunction print = s -> System.out.print(s);
+
+print.helloworld("Lambda Expresssion");
+```
+
+## 9. Explain Method Reference with code samples?
+
+`Method References` provide a shorthand, more readable syntax for writing lambda expressions when a method already exists to perform the operation. Method references allow you to reference existing methods by their name instead of writing a lambda to invoke the method.
+
+1. Static Method Reference  
+   `ClassName::staticMethod` references a static method of a class.
+
+```
+// Static method
+public class Utils {
+    public static void print(String s) {
+        System.out.println(s);
     }
 }
 
-class Dog extends Animal {
-    public void bark() {
-        System.out.println("The dog is barking.");
-    }
-}
+// Method reference
+List<String> names = Arrays.asList("John", "Jane", "Doe");
+names.forEach(Utils::print);
+
 ```
 
-## 2. What is wrapper class in Java and Why we need wrapper class?
+2. Instance Method  
+   `instance::instanceMethod` references an instance method of a particular object.
 
-`Wrapper class` is object which can convert the primitive data types into Object. This gives more API and collections to manipulate and store primitive data, adding flexibility in coding.
+```
+public class Printer {
+    public void print(String s) {
+        System.out.println(s);
+    }
+}
 
-## 3. What is the difference between HashMap and HashTable?
+// Instance method reference
+Printer printer = new Printer();
+List<String> names = Arrays.asList("John", "Jane", "Doe");
+names.forEach(printer::print);
+```
 
-`HashMap` is not synchronized, allows one null key and multiple null values.  
-`HashTable` is synchronized and doesn’t allow null keys or values.
+3. Instance Method of an Arbitrary Object  
+   `ClassName::instanceMethod` references an instance method of an object that is provided by the stream.
 
-## 4. What is String pool in Java and why we need String pool? Explain String immunity.
+```
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+names.forEach(System.out::println);
+```
 
-The `String pool` is a special memory area inside the Java heap where string literals are stored.  
-`String pool` helps to optimize memory usage by storing only one instance of a string literal and sharing it among all references that point to that literal.  
-String pool design the string in immunity, which means the string instance in the string pool cannot be modified, if the string is changed, it will create a new object in the string pool and the old unchanged one remains.
+4. Constructor Reference  
+   `ClassName::new` references a constructor to create new instances.
 
-## 5. Explain garbage collection?
+```
+Supplier<List<String>> listSupplier = ArrayList::new;
+List<String> names = listSupplier.get();
+```
 
-`Garbage collection` is when JVM find the object that are no longer in use, it will dispose the object and frees up memory. The process happens automatically.
+## 10. Explain "Lambda can use unchanged variable outside of lambda", with code snippet
 
-## 6. What are access modifiers and their scopes in Java?
+```
+final int num = 10;
+Consumer<Integer> consumer = (x) -> x + num;
 
-In Java, access modifiers are keywords used to set the visibility and accessibility of classes, methods, variables, and constructors.  
+consumer.accept(5); //Output will be 15
+```
+
+## 11. Can a functional interface extend/inherit another interface?
+
+Yes, a functional interface in Java can extend or inherit from another interface, as long as it still satisfies the condition of being a functional interface. Specifically, this means that after extending another interface, the derived functional interface must still have only one abstract method.
+
+## 12. What are Intermediate and Terminal operations?
+
+1. Intermidiate Operatons: Operations that transform a stream into another stream and are lazy, they are not executed until a terminal operation is invoked. Examples: filter, map, sorted, distinct.
+2. Terminal Operations: Operations that produce a result or a side-effect and trigger the processing of the stream pipeline. Examples: collect, forEach, reduce, count.
+
+## 13. Demontrate the most commonly used Intermediate operations in Stream API, with code snippet
+
+```
+Stream<String> cities = Stream.of("Beijing", "Houston", "Shanghai", "San jose", "Seattle", "New York", "Beijing");
+```
+
+1. filer
+
+```
+Stream<String> filtered = cities.filter(s -> s.startsWith("b"));
+```
+
+2. map
+
+```
+Stream<Integer> lengths = cities.map(String::length);
+```
+
+3. sorted
+
+```
+Stream<String> sorted = cities.sorted();
+```
+
+4. distinct
+
+```
+Stream<String> distinct = cities.distinct();
+```
+
+5. limit
+
+```
+Stream<String> limited = cities.limit(3);
+```
+
+## 14. How are Collections different from Stream?
+
 ![alt text](./Picture/image1.png)
 
-## 7. Explain final key word? (Filed, Method, Class)
-
-Final Variable: variable that cannot be changed (same to const).  
-Final Method: Method that cannot be overrided.  
-Final Class: Class that cannot be inheritaed or modified.
-
-## 8. Explan static keyword? (Filed, Method, Class). When do we usually use it?
-
-The `static` keyword in Java is used to indicate that a member (field, method, or nested class) belongs to the class itself rather than to instances of the class.  
-`Static` keyword is usually used in the initialization or resources shared between different instance of the same class.
-
-## 9. What is the differences between overriding and overloading?
-
-`Overloading` has same method name in different parameter lists, whereas `overriding` has same method name and same parameters.  
-`Overloading` happens in the same class/scope and `overriding` happends in the inheritance relationship.  
-`Overloading` is done in the compile phase whereas `overriding` happends in the runtime.
-
-## 10. Explain how Java defines a method signature, and how it helps on overloading and overriding?
-
-Java `method signature` includes the method name, parameter types and parameter amount.  
-Java allows method overloading as long as the method signatures differ in terms of the number, type, or order of parameters.
-The overriding method must have the same method signature as the method in the superclass.
-
-## 11. What is the differences between super and this?
-
-`super` refers to the parent class whereas `this` refers to the current instance of the class.
-
-## 12. Explain how equals and hashCode work?
-
-The `equals()` method is used to check if two objects are logically equal. By default, the `equals()` method in the object class compares the reference of two objects.  
-The `hashCode()` method returns an integer value, called the hash code, that represents the object. It can used in the hash-based colletions to quickly find the bucket where an object is stored.
-
-## 13. What is the Java load sequence?
-
-The `Java load sequence` refers to the order in which the Java Virtual Machine (JVM) loads, initializes, and executes various components of a class (including fields, methods, and blocks) when a Java program is run. This process involves class loading, initialization of static and instance variables, and constructor execution.
-
-## 14. What is Polymorphism ? And how Java implements it ?
-
-The term `polymorphism` means "many forms," and in programming, it refers to the ability of a single interface (such as a method, function, or object) to represent different types or behaviors. In simple terms, `polymorphism` allows one entity (such as a method or object) to take on multiple forms depending on the context in which it is used.  
-In Java, this is typically achieved through method overloading (`static polymorphism`) and method overriding (`dynamic polymorphism`).
-
-## 15. What is Encapsulation ? How Java implements it? And why we need encapsulation?
-
-It refers to the bundling of data (fields/attributes) and the methods (functions/operations) that operate on that data into a single unit, called a class.  
-Java implements encapsulation using `Access Modifiers` and `Getter and Setter Methods`.  
-`Encapsulation` increases data protection and security, improved maintainability and flexibility of the class, and added design pattern in practice.
-
-## 16. Compare interface and abstract class?
-
-`Interface` cannot have constructors, whereas `abstract class` can have constructors.  
-`Interface` can implement multiple interfaces, whereas `abstract class` can only extend one abstract class.  
-`Interface` can only have abstract methods, whereas `abstract class` can have both abstract and concrete methods.
-
-## 17. Write a factory pattern in code.
+## 15. Implement Stream API's filter and map methods by your self.
 
 ```
-interface Shape {
-    void draw();
-}
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-class Circle implements Shape {
-    @Override
-    public void draw() {
-        System.out.println("Drawing a Circle");
-    }
-}
+public class CustomStream<T> {
+    private List<T> list;
 
-class Rectangle implements Shape {
-    @Override
-    public void draw() {
-        System.out.println("Drawing a Rectangle");
-    }
-}
-
-class Square implements Shape {
-    @Override
-    public void draw() {
-        System.out.println("Drawing a Square");
-    }
-}
-
-class ShapeFactory {
-    public Shape getShape(String shapeType) {
-        if (shapeType == null) {
-            return null;
-        }
-        if (shapeType.equalsIgnoreCase("CIRCLE")) {
-            return new Circle();
-        } else if (shapeType.equalsIgnoreCase("RECTANGLE")) {
-            return new Rectangle();
-        } else if (shapeType.equalsIgnoreCase("SQUARE")) {
-            return new Square();
-        }
-        return null;
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        ShapeFactory shapeFactory = new ShapeFactory();
-
-        Shape shape1 = shapeFactory.getShape("CIRCLE");
-        shape1.draw();
-
-        Shape shape2 = shapeFactory.getShape("RECTANGLE");
-        shape2.draw();
-
-        Shape shape3 = shapeFactory.getShape("SQUARE");
-        shape3.draw();
-    }
-}
-```
-
-## 18. Write a adapter pattern in code.
-
-```
-interface MediaPlayer {
-    void play(String audioType, String fileName);
-}
-
-interface AdvancedMediaPlayer {
-    void playVlc(String fileName);
-    void playMp4(String fileName);
-}
-
-class VlcPlayer implements AdvancedMediaPlayer {
-    @Override
-    public void playVlc(String fileName) {
-        System.out.println("Playing vlc file. Name: " + fileName);
+    // Constructor to create a stream from a list
+    public CustomStream(List<T> list) {
+        this.list = list;
     }
 
-    @Override
-    public void playMp4(String fileName) {
-
-    }
-}
-
-class Mp4Player implements AdvancedMediaPlayer {
-    @Override
-    public void playVlc(String fileName) {
-
-    }
-
-    @Override
-    public void playMp4(String fileName) {
-        System.out.println("Playing mp4 file. Name: " + fileName);
-    }
-}
-
-class MediaAdapter implements MediaPlayer {
-    AdvancedMediaPlayer advancedMusicPlayer;
-
-    public MediaAdapter(String audioType) {
-        if (audioType.equalsIgnoreCase("vlc")) {
-            advancedMusicPlayer = new VlcPlayer();
-        } else if (audioType.equalsIgnoreCase("mp4")) {
-            advancedMusicPlayer = new Mp4Player();
-        }
-    }
-
-    @Override
-    public void play(String audioType, String fileName) {
-        if (audioType.equalsIgnoreCase("vlc")) {
-            advancedMusicPlayer.playVlc(fileName);
-        } else if (audioType.equalsIgnoreCase("mp4")) {
-            advancedMusicPlayer.playMp4(fileName);
-        }
-    }
-}
-
-class AudioPlayer implements MediaPlayer {
-    MediaAdapter mediaAdapter;
-
-    @Override
-    public void play(String audioType, String fileName) {
-        if (audioType.equalsIgnoreCase("mp3")) {
-            System.out.println("Playing mp3 file. Name: " + fileName);
-        }
-        else if (audioType.equalsIgnoreCase("vlc") || audioType.equalsIgnoreCase("mp4")) {
-            mediaAdapter = new MediaAdapter(audioType);
-            mediaAdapter.play(audioType, fileName);
-        }
-        else {
-            System.out.println("Invalid media. " + audioType + " format not supported");
-        }
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        AudioPlayer audioPlayer = new AudioPlayer();
-
-        audioPlayer.play("mp3", "song.mp3");
-        audioPlayer.play("mp4", "video.mp4");
-        audioPlayer.play("vlc", "movie.vlc");
-        audioPlayer.play("avi", "unsupported.avi");
-    }
-}
-```
-
-## 19. Write singleton pattern in code, make sure your code is thread-safe.
-
-```
-public class Singleton {
-    private static volatile Singleton instance = null;
-
-    private Singleton() {
-        if (instance != null) {
-            throw new RuntimeException("Use getInstance() method to get the singleton instance");
-        }
-    }
-
-    public static Singleton getInstance() {
-        if (instance == null) {
-            synchronized (Singleton.class) {
-                if (instance == null) {
-                    instance = new Singleton();
-                }
+    // Custom filter method: Filters elements based on a given predicate
+    public CustomStream<T> filter(Predicate<T> predicate) {
+        List<T> filteredList = new ArrayList<>();
+        for (T element : list) {
+            if (predicate.test(element)) {  // Apply the predicate
+                filteredList.add(element);  // Add to filtered list if predicate returns true
             }
         }
-        return instance;
+        return new CustomStream<>(filteredList);  // Return a new CustomStream with filtered elements
+    }
+
+    // Custom map method: Applies a function to each element and returns a new stream with transformed elements
+    public <R> CustomStream<R> map(Function<T, R> mapper) {
+        List<R> mappedList = new ArrayList<>();
+        for (T element : list) {
+            mappedList.add(mapper.apply(element));  // Apply the function and add to mapped list
+        }
+        return new CustomStream<>(mappedList);  // Return a new CustomStream with mapped elements
+    }
+
+    // Terminal operation to collect the elements into a list
+    public List<T> collect() {
+        return list;
+    }
+
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+
+        // Creating a custom stream, filtering even numbers, then mapping to their squares
+        List<Integer> result = new CustomStream<>(numbers)
+                .filter(n -> n % 2 == 0)  // Keep only even numbers
+                .map(n -> n * n)  // Square the numbers
+                .collect();  // Collect results into a list
+
+        System.out.println(result);  // Output: [4, 16, 36]
     }
 }
 ```
-
-## 20. Design a parking lot
-
-See the java file in `../Coding/Main.java`
-
-## 21. What are Queue interface implementations and what are the differences and when to use what?
-
-1. Priority Queue: When you need to process elements based on priority rather than insertion order
-2. Linked List: When you need a FIFO queue (standard queue behavior). And when you want fast insertions and deletions at both ends of the queue.
-3. Arrary Deque: When you need a FIFO queue with better performance than `LinkedList` And when you need constant-time performance for insertions and deletions at both ends.
