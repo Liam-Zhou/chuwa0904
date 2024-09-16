@@ -196,3 +196,14 @@ LinkedBlockingDeque:	A thread-safe deque that allows elements to be added or rem
 * ReentrantLock: Acquired manually using lock() and released with unlock() in finally.
 * ReadWriteLock: Provides two locks: read lock for multiple readers and write lock for exclusive writers. Allows higher concurrency in read-heavy systems.
 * StampedLock: Supports three modes: exclusive write lock, shared read lock, and optimistic read lock. Optimistic read locks allow threads to read without blocking unless a write happens.Better for read-dominant scenarios. Optimistic locking reduces contention.
+
+## Question 21
+Future represents the result of an asynchronous computation. It provides a way to retrieve the result of a task that runs in a separate thread and check its completion status. But it will still do the blocking operation when calling the get() method.
+CompletableFuture is an extension of future, it offers non-blocking calls
+Main Functions of CompletableFuture:
+Main Methods of CompletableFuture:
+* supplyAsync(Supplier<U> supplier): Returns a new CompletableFuture that is asynchronously completed by a task running in the ForkJoinPool.commonPool() with the value obtained by calling the given Supplier.
+* thenApply(Function<T, U>): Transforms the result of the computation using a function and returns a new CompletableFuture.
+* allOf(CompletableFuture<?>... cfs): Returns a new CompletableFuture that is completed when all of the given CompletableFutures complete.
+* anyOf(CompletableFuture<?>... cfs): Returns a new CompletableFuture that is completed when any of the given CompletableFutures complete, with the same result.
+* thenAccept(Consumer<T>): Returns a new CompletionStage that, when this stage completes normally, is executed with this stage's result as the argument to the supplied action.
