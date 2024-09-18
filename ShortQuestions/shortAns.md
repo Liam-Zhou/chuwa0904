@@ -53,7 +53,7 @@
     - Body: Contains the actual content or data being returned by the server (if applicable)
     - Status code: Indicates the result of the request, such as success (200)
     
-    - ![img](ShortQuestions/img.png)
+    - ![img](img.png)
 
 5. Compare SQL DB vs NoSQL DB in detail.
     - SQL: Structured, strict schema, good for complex queries, strong consistency.
