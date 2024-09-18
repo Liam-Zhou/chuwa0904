@@ -302,3 +302,33 @@ Indicates that the client needs to authenticate to gain network access.\
 ### 306 unused
 ### 307 Temporary Redirect
 ### 308 Permanent Redirect
+
+# API Design
+## Design REST APIs for following scenairos:
+## 1. find the customer's payments, like credit card 1, credit card 2, paypal, Apple Pay.
+```
+GET /api/v1/customers/amy/payments
+```
+## 2. Find the customer's history orders from 10/10/2022 to 10/24/2022
+```
+GET /api/v1/customers/amy/orders?start-date=2022-10-10&end-date=2022-10-24
+```
+## 3. find the customer's delievery addresses
+```
+GET /api/v1/customers/amy/addresses
+```
+## 4. If I also want to get customer's default payment and default delievery address, what kind of the API (URL) should be?
+```
+GET /api/v1/customers/amy/payments/default
+GET /api/v1/customers/jack/payments/default
+```
+## 5. Find 2 collection of APIs example. ie. Twitter, Paypal, Youtube etc. -- 命名规范
+```
+https://x.com/user/communities/explore
+https://www.youtube.com/feed/subscriptions
+```
+## 6. Design a collection of APIs for a Blog Website, please specify GET POST PUT DELETE 
+GET /api/v1/users/blogs
+POST /api/v1/users/blogs/{blog_id}
+PUT /api/v1/users/blogs/{blog_id}
+DELETE /api/v1/users/blogs/{blog_id}
