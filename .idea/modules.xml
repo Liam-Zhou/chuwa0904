@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/chuwa0904.iml" filepath="$PROJECT_DIR$/.idea/chuwa0904.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Coding/hw5/multithreading-tutorial.iml" filepath="$PROJECT_DIR$/Coding/hw5/multithreading-tutorial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Coding/src/online-store-simulator.iml" filepath="$PROJECT_DIR$/Coding/src/online-store-simulator.iml" />
     </modules>
   </component>
 </project>
