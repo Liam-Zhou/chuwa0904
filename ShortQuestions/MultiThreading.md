@@ -228,10 +228,10 @@ thenAccept(), exceptionally(), thenApplyAsync(), anyOf(), allOf()
 ## 22. Practice
 
 ## 23. Write a code to create 2 threads, one thread print 1,3,5,7,9, another thread print 2,4,6,8,10.
+### 1. Use synchronized and wait notify
 ```java
-public class OddEventPrinter {
-    private static final Lock lock = new ReentrantLock();
-    private static final Condition condition = lock.newCondition();
+public class OddEvenPrinterSync {
+    private static final Object monitor = new Object();
     private static int value = 1;
     private static boolean isOddTurn = true;
 
@@ -243,31 +243,147 @@ public class OddEventPrinter {
         new Thread(evenPrinter, "Thread-1").start();
     }
 
-    private static void printNumbers(boolean odd) {
-        lock.lock();
-        try {
+    private static void printNumbers(boolean isOdd) {
+        synchronized (monitor) {
             while (value <= 10) {
-                while (isOddTurn != odd) {
+                while (isOddTurn != isOdd) {
                     try {
-                        condition.await();
+                        monitor.wait();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
                 }
-                if (value % 2 == (odd ? 1 : 0)) {
-                    System.out.println(Thread.currentThread().getName() + ": " + value++);
-                }
+                System.out.println(Thread.currentThread().getName() + ": " + value++);
                 isOddTurn = !isOddTurn;
-                condition.signalAll();
+                monitor.notifyAll();
             }
-        } finally {
-            lock.unlock();
         }
     }
 }
 
 ```
 
+### 2. Use ReentrantLock and await, signal
+```java
+public class OddEventPrinter {
+    private static final Object monitor = new Object();
+    private static int value = 1;
+
+    public static void main(String[] args) {
+        PrintRunnable runnable = new PrintRunnable();
+        new Thread(runnable).start();//t0
+        new Thread(runnable).start();//t1
+    }
+
+    static class PrintRunnable implements Runnable {
+        private final Lock lock = new ReentrantLock();
+        private final Condition condition = lock.newCondition();
+        @Override
+        public void run() {
+            // synchronized : 门
+            // 门里有资源
+            // 买一把锁 monitor
+            lock.lock();
+            try   {
+                while (value <= 10) {
+                    System.out.println(Thread.currentThread().getName() + ": " + value++);
+                    condition.signalAll();
+                    try {
+                        condition.await(); // 解锁
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+}
+
+
+```
+
 ## 24. Create 3 threads, one thread output 1-10, one thread output 11-20, one thread output 21-22. threads run sequence is random. 
+```java
+
+public class PrintNumber1 {
+    public static void main(String[] args) {
+        // Thread 1: Prints numbers 1-10
+        Runnable task1 = () -> {
+            for (int i = 1; i <= 10; i++) {
+                System.out.println(Thread.currentThread().getName() + ": " + i);
+            }
+        };
+
+        // Thread 2: Prints numbers 11-20
+        Runnable task2 = () -> {
+            for (int i = 11; i <= 20; i++) {
+                System.out.println(Thread.currentThread().getName() + ": " + i);
+            }
+        };
+
+        // Thread 3: Prints numbers 21-22
+        Runnable task3 = () -> {
+            for (int i = 21; i <= 22; i++) {
+                System.out.println(Thread.currentThread().getName() + ": " + i);
+            }
+        };
+
+        // Creating and starting the threads
+        Thread thread1 = new Thread(task1, "Thread-0");
+        Thread thread2 = new Thread(task2, "Thread-1");
+        Thread thread3 = new Thread(task3, "Thread-2");
+
+        // Start threads
+        thread1.start();
+        thread2.start();
+        thread3.start();
+    }
+}
+```
 
 ## 25. Completable future
+### 1. Use CompletableFuture to asynchronously get the sum and product of 2 intergers.
+```java
+import java.util.concurrent.CompletableFuture;
+
+public class AsyncSumAndProduct {
+
+    public static void main(String[] args) {
+        int num1 = 5;
+        int num2 = 10;
+
+        // Asynchronously calculate the sum
+        CompletableFuture<Integer> sumFuture = CompletableFuture.supplyAsync(() -> {
+            int sum = num1 + num2;
+            System.out.println("Sum: " + sum);
+            return sum;
+        });
+
+        // Asynchronously calculate the product
+        CompletableFuture<Integer> productFuture = CompletableFuture.supplyAsync(() -> {
+            int product = num1 * num2;
+            System.out.println("Product: " + product);
+            return product;
+        });
+
+        // Wait for both to complete
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(sumFuture, productFuture);
+
+        // When both are done, print a completion message
+        combinedFuture.thenRun(() -> System.out.println("Both tasks completed!"));
+
+        // Keep the main thread alive until all tasks are done
+        combinedFuture.join();
+    }
+}
+
+```
+
+### 2. AssumethereisanonlinestorethatneedstofetchdatafromthreeAPIs:products, reviews, and inventory. Use CompletableFuture to implement this scenario and merge the fetched data for further processing.
+See OnlineStoreDataFetcher in Coding folder.
+
+
+### 3. Use CompletableFuture to asynchronously get the sum and product of 2 intergers.
+See OnlineStoreDataFetcher in Coding folder.

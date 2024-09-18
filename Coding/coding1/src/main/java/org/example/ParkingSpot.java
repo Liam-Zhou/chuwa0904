@@ -1,4 +1,4 @@
-package org.example;
+package coding1.src.main.java.org.example;
 
 public class ParkingSpot {
     private boolean isOccupied;

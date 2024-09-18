@@ -1,5 +1,7 @@
-import org.example.ParkingLot;
-import org.example.Vehicle;
+package coding1.src.test.java;
+
+import coding1.src.main.java.org.example.ParkingLot;
+import coding1.src.main.java.org.example.Vehicle;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
