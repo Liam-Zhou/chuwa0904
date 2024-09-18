@@ -6,11 +6,12 @@ Markdown is a lightweight markup language that you can use to add formatting ele
 
 To create headings, use the `#` symbol followed by a space. The number of `#` symbols determines the heading level.
 
-```md
+```
 # H1
 ## H2
 ### H3
 #### H4
+```
 
 ## 2. Emphasis
 **Bold** or __Bold__
