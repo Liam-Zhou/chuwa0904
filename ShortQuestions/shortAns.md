@@ -85,11 +85,11 @@ Design REST APIs for the following scenarios:
 3. Find the customer's delivery addresses.
 4. If I also want to get the customer's default payment and default delivery address, what kind of API (URL) should be?
 ````
-Code in ClientCotroller.java 
+Code in Coding/rest-demo/src/main/java/restdemo/controller/ClientCotroller.java 
 ````
 5. Find 2 collections of API examples, i.e., Twitter, PayPal, YouTube.
 6. Design a collection of APIs for a Blog Website, please specify GET, POST, PUT, DELETE
 
 ````
-Code in BlogController.java 
+Code in Coding/rest-demo/src/main/java/restdemo/controller/BlogController.java 
 ````
