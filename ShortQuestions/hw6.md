@@ -78,8 +78,6 @@ Example:
   - GET /customers/123/addresses
   - Response: [{ "type": "Home", "address": "123 Main St, City, State" }, { "type": "Office", "address": "456 Elm St, City, State" }]
 
-
-
 ### 4. If I also want to get the customer's default payment and default delivery address, what kind of the API (URL) should be?
 URL: /customers/{customerId}/defaults  
 Method: GET  
@@ -104,7 +102,7 @@ PayPal API Collection
 
 ### 6. Design a collection of APIs for a Blog Website. Please specify GET, POST, PUT, DELETE.
 
-GET /posts: Fetch all blog posts  
+GET /posts: Fetch all blog posts.
 GET /posts/{postId}: Fetch a specific blog post by ID.  
 POST /posts: Create a new blog post.  
 PUT /posts/{postId}: Update a specific blog post by ID.  
