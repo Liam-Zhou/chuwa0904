@@ -114,6 +114,4 @@ Here is the reference[^1].
 ## Ignoring markdown formatting
 Tell Github to ignore Markdown formatting by using \ before Markdown character.
 
-Let us rename \*new\* to \*old\*.
-
-
+Let us rename \*new_name\* to \*old_name\*.
