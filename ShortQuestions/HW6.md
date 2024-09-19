@@ -1,6 +1,6 @@
 # HomeWork 6
 
-Yuhang Li
+Yuhang Li 09/18
 
 ## Short Questions
 
