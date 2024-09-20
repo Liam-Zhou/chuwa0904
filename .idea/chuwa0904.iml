@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$" />
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Coding/hw4/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/default_interface_method" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/generic" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/lambda" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises/src" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises/src/main" />
+      <excludeFolder url="file://$MODULE_DIR$/Coding/hw4/stream-api-exercises/src/test" />
+    </content>
   </component>
 </module>
