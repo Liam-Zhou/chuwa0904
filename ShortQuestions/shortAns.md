@@ -1,3 +1,4 @@
+
 ### write a thread safe singleton class
 ```
 package chuwa0904.Coding;
@@ -471,3 +472,4 @@ code in CalSum.java
 ### Assume there is an online store that needs to fetch data from three APIs: products, reviews, and inventory. Use CompletableFuture to implement this scenario and merge the fetched data for further processing 
 
 code in DataFetcher.java
+
