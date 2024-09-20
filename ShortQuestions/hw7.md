@@ -101,11 +101,15 @@ ResultSet is an object that holds the data retrieved from a database after execu
     System.out.println(average);
     ```
 
-13. **Understand the code in the following repositories:**
+13. **抄写并理解 https://github.com/TAIsRich/springboot-redbook/tree/03_post_pageable 下的代码：**
     - [Post Pageable Code](https://github.com/TAIsRich/springboot-redbook/tree/03_post_pageable)
-    - [Comment Code](https://github.com/TAIsRich/springboot-redbook/tree/04_comment)
+   
 
-    The Post Pageable Code repository demonstrates how pagination is implemented in a Spring Boot application, using Spring Data JPA's Pageable and PageRequest classes to retrieve a subset of posts. The controller method accepts parameters like page number and size to return paginated data, encapsulated in a Page<PostDto> object, which includes pagination metadata such as the current page and total pages. The Comment Code repository focuses on managing comments related to posts, where a Comment entity is associated with a Post through a ManyToOne relationship. The service and repository layers handle business logic and database operations for comments, allowing comments to be added to or retrieved by posts. Both examples showcase the use of Spring Data JPA to simplify data access and management.
+    The Post Pageable Code repository demonstrates how pagination is implemented in a Spring Boot application, using Spring Data JPA's Pageable and PageRequest classes to retrieve a subset of posts. The controller method accepts parameters like page number and size to return paginated data, encapsulated in a Page<PostDto> object, which includes pagination metadata such as the current page and total pages. 
+    
+14. **抄写并理解 https://github.com/TAIsRich/springboot-redbook/tree/04_comment 下的代码：**
+    - [Comment Code](https://github.com/TAIsRich/springboot-redbook/tree/04_comment)
+    The Comment Code repository focuses on managing comments related to posts, where a Comment entity is associated with a Post through a ManyToOne relationship. The service and repository layers handle business logic and database operations for comments, allowing comments to be added to or retrieved by posts. Both examples showcase the use of Spring Data JPA to simplify data access and management.
 
 
 
