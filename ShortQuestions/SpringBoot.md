@@ -186,3 +186,28 @@ double average = Arrays.stream(array).average().OrElse(0);
 
 ### 14. 抄写并理解 [GitHub Code - 04_comment](https://github.com/TAIsRich/springboot-redbook/tree/04_comment)
 
+1. **Why does IntelliJ give a warning about constructor injection?**
+   - Constructor-based injection is preferred for better testability and immutability. Field injection can be less reliable.
+
+2. **How many ways can we do Dependency Injection?**
+   - **Constructor Injection**: Best practice.
+   - **Setter Injection**: Through setters.
+   - **Field Injection**: Using `@Autowired` on fields.
+
+3. **Which way is the best?**
+   - **Constructor-based injection**: Ensures immutability and easier testing.
+
+4. **Which API retrieves the content of a post?**
+   - The **GET** API: 
+   ```java
+   @GetMapping("/posts/{postId}/comments")
+   ```
+
+5. **Which API is called when submitting a comment?**
+   - The **POST** API:
+   ```java
+   @PostMapping("/posts/{postId}/comments")
+   ```
+
+6. **Why is `postId` a `@PathVariable` and not a request parameter?**
+   - **`@PathVariable`** fits REST principles, making the post ID part of the URL and resource path, making it more intuitive.
