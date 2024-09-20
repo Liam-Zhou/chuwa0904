@@ -73,3 +73,50 @@ How to Get Data Using JDBC:
 * Hibernate abstracts the database layer using object-relational mapping (ORM), allowing developers to interact with databases using Java objects instead of raw SQL.
 * Queries are written in HQL, which operates on entity objects rather than directly on database tables
 * Hibernate reduces boilerplate code by automatically managing entity persistence, session handling, and SQL generation. However, it still requires some code for managing sessions and transactions.
+
+### Question 10
+Create instance first
+```
+private static ObjectMapper objectMapper = new ObjectMapper();
+```
+Deserializing JSON with readValue: The method readValue is used to convert JSON strings into Java objects.
+```
+FoodOutlet foodOutlet = objectMapper.readValue(resBody, FoodOutlet.class);
+```
+Serializing Java objects to JSON with writeValueAsString:
+```
+String s = objectMapper.writeValueAsString(foodOutlet); // FoodOutlet object is serialized back into a JSON string 
+System.out.println(s);
+```
+After deserialization, the data within the FoodOutlet object can be accessed using getData() and process through Stream API.
+```
+List<Data> datas = foodOutlet.getData();
+List<String> collect = datas.stream().filter(data -> data.getEstimated_cost() <= maxCost)
+                                     .map(data -> data.getName())
+                                     .collect(Collectors.toList());
+```
+The API may return data in paginated format, so the code is designed to handle multiple pages.
+```
+int total_pages = foodOutlet.getTotal_pages();
+for (int i = 2; i <= total_pages; i++) {
+    URL_Addr = BASE_URL + "&page=" + i;
+    resBody = callURL(URL_Addr);
+    strings = processData(resBody, maxCost);
+    res.addAll(strings);
+}
+```
+The total_pages field is extracted from the first response. The code then loops through subsequent pages, retrieving and processing additional data until all pages have been handled.
+
+### Question 11
+Serialization is the process of converting a data object—a combination of code and data represented within a region of data storage—into a series of bytes that saves the state of the object in an easily transmittable form. In this serialized form, the data can be delivered to another data store.
+Deserialization is the reverse process of serialization. It converts a serialized format (JSON, XML, binary, etc.) back into a usable object within a programming environment.
+
+### Question 12
+```
+        int[] nums = {20, 3, 78, 9, 6, 53, 73, 99, 24, 32};
+        int ans = Arrays.stream(nums).sum();
+        System.out.println(ans);
+```
+
+### Question 13 & 14
+I have read, retyped, and understand the code provided
