@@ -49,3 +49,27 @@ Other Common Spring Boot Starters:
 The @RequestMapping annotation in Spring MVC is used to map web requests (HTTP requests) to specific handler methods in controller classes. 
 (value = "/users", method = RequestMethod.POST) means: The method is mapped to handle HTTP POST requests at the URL /users.
 
+### Question 7
+ResponseEntity is a class in Spring Framework that represents an HTTP response,including the response body, HTTP status code, and headers. It allows us to have full control over the HTTP response. Specifically, it lets you customize the HTTP status code, Add HTTP headers, return response body, flexible handling of different scenarios
+
+### Question 8 
+In JDBC (Java Database Connectivity), a ResultSet is an object that represents the data retrieved from a database after executing a query, typically a SELECT statement. It is essentially a table of data that holds the results of a database query and allows you to iterate over the rows and retrieve column values.
+How to Get Data Using JDBC:
+1. Load the JDBC Driver: After Java 6, you ususally don't need to load the JDBC driver manually.
+2. Establish a connection using DriverManager.getConnection()
+3. Create a statement or preparedStatement, PreparedStatement allows you to execute parameterized queries. Use connection.createStatement() or connection.prepareStatement()
+4. Execute the Query using the executeQuery() method. This method returns a ResultSet containing the results of the query.
+
+### Question 9
+#### Spring Data JPA
+* Spring Data JPA provides an abstraction over JPA and Hibernate, allowing you to perform most CRUD operations without writing any SQL or HQL. 
+* *It uses repositories (e.g. JpaRepository) to handle CRUD operations automatically, with minimal code required.
+* Spring Data JPA minimizes boilerplate code to almost zero for basic CRUD operations. The repository interfaces handle most of the work, and there is no need to write SQL or session management code.
+#### JDBC
+* JDBC provides direct access to the database. You manually manage database connections, SQL queries, and result sets.
+* But we need to write raw SQL queries for all database operations.
+* JDBC requires a lot of boilerplate code for managing connections, preparing statements, handling exceptions, and processing result sets. Every query involves significant manual work.
+#### Hibernate
+* Hibernate abstracts the database layer using object-relational mapping (ORM), allowing developers to interact with databases using Java objects instead of raw SQL.
+* Queries are written in HQL, which operates on entity objects rather than directly on database tables
+* Hibernate reduces boilerplate code by automatically managing entity persistence, session handling, and SQL generation. However, it still requires some code for managing sessions and transactions.
