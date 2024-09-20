@@ -1,6 +1,6 @@
 # HW6 DB_RestAPI
 
-\*Short Questions
+# Short Questions
 
 ## 1. Compare Rest API methods ( Get , Post , Put , Patch , Delete ) in detail.
 
