@@ -8,7 +8,7 @@
 
 <https://github.com/CTYue/chuwa-eij-tutorial/tree/main/02-java-core/src/main/java/com/chuwa/tutorial/t06_java8/features>
 
-[See Coding/Java8_features](../Coding/Java8_features)
+[See Coding/Java8_features](../Coding/hw4/Java8_features)
 
 ### 3. Practice following stream API exercises at least 3 times
 
