@@ -1,0 +1,21 @@
+- @Entity: Marks a class as an entity that will be mapped to a database table.
+- @Table: Specifies the table in the database that corresponds to the entity.
+- @Id: Specifies the primary key of an entity.
+- @GeneratedValue: Defines the strategy for primary key generation (e.g., GenerationType.IDENTITY).
+- @Column: Specifies the column details (e.g., name, nullable) for a field in an entity.
+- @OneToMany: Defines a one-to-many relationship between entities.
+- @ManyToOne: Defines a many-to-one relationship between entities.
+- @ManyToMany: Defines a many-to-many relationship between entities.
+- @JoinColumn: Specifies the foreign key column used in a relationship.
+- @JoinTable: Specifies the table used in many-to-many relationships.
+- @Query: Allows writing custom JPQL or SQL queries directly in the repository layer.
+- @NamedQuery: Defines a static query with a name that can be referenced later.
+- @NamedQueries: Contains multiple @NamedQuery annotations.
+- @PersistenceContext: Injects an instance of EntityManager for interacting with the persistence context.
+- @Transactional: Marks methods or classes where transactions should be managed.
+- @EnableTransactionManagement: Enables annotation-driven transaction management in Spring.
+- @Repository: Indicates that a class is a repository that will interact with the database.
+- @Service: Marks a class as a service provider.
+- @Autowired: Automatically injects dependencies into a Spring-managed bean.
+- @RestController: Combines @Controller and @ResponseBody to handle RESTful web services.
+- @RequestMapping: Maps HTTP requests to handler methods in controller classes.
