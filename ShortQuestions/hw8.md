@@ -117,12 +117,12 @@ List<Comment> findByPostId(Long postId);
 
 ## 11. (Optional) Check out a new branch from branch `02_post_RUD` and replace the DAO layer using JdbcTemplate.
 ```bash
-git checkout -b hw02_01_jdbcTemplate
+git checkout -b 02_post_RUD
 ```
 
 ## 12. Type the code, you need to check out a new branch from branch `02_post_RUD`, name the new branch with `hw05_01_slides_JPQL`.
 ```bash
-git checkout -b hw05_01_slides_JPQL
+git checkout -b hw05_01_slides_JPQL 02_post_RUD
 ```
 
 ## 13. What is JPQL?
