@@ -113,8 +113,6 @@ situation you choose which one?
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 ```
 
-### Try to use JPA advanced methods in your class project. In the repository layer, you need to use the naming convention to use the method provided by JPA.
-
 ### What is JPQL?
 JPQL (Java Persistence Query Language) provides a way to query and interact with entities in a more object-oriented manner
 -  @NamedQuery, @Query and TypedQuery with EntityManager are used in JPA for defining JPQL
@@ -228,6 +226,8 @@ public class EmployeeService {
 ### What is @Query? In which Interface we write the sql or JPQL?
 @Query is an annotation used to define custom SQL or JPQL queries directly within a repository interface
 ### What is HQL and Criteria Queries?
+- HQL is an object-oriented query language similar to SQL but designed for Hibernate.
+- Criteria Queries are a programmatic way to build dynamic, type-safe queries in Hibernate using the Criteria API
 
 ### What is EnityManager?
 EntityManager is an interface of JPA provides ways to manage entities and execute queries(TypeQuery)
