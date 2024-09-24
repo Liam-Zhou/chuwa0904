@@ -97,14 +97,23 @@ private Set<Student> students = new HashSet<>();
 
 ```
 
-### What is the
-cascade = CascadeType.ALL, orphanRemoval = true
-? and what are the other CascadeType
-and their features? In which situation we choose which one?
-### What is the
-fetch = FetchType.LAZY, fetch = FetchType.EAGER
-? what is the difference? In which
-situation you choose which one?
+### What is the cascade = CascadeType.ALL, orphanRemoval = true ? and what are the other CascadeType and their features? In which situation we choose which one?
+```angular2html
+CascadeType.ALL: Applies all cascade operations (e.g., persist, merge, remove) to the related entity.
+
+orphanRemoval = true: Automatically deletes child entities when they are no longer referenced by the parent.
+
+Use CascadeType.ALL when you want all actions on the parent to affect the child entities.
+
+```
+Other Cascade Types:
+
+1. PERSIST: Automatically saves the child entity when the parent is saved.
+2. REMOVE: Deletes the child entity when the parent is deleted.
+3. MERGE: Updates the child entity when the parent is updated.
+4. REFRESH: Refreshes the child entity when the parent is refreshed.
+5. DETACH: Detaches child entities when the parent is detached.
+### What is the fetch = FetchType.LAZY, fetch = FetchType.EAGER ? what is the difference? In which situation you choose which one?
 ### What is the rule of JPA naming convention? Shall we implement the method by ourselves? Could you list some examples?
 1. Start with keywords like findBy, getBy, or readBy followed by field names
 2. Use CamelCase: Combine field names in camelCase
