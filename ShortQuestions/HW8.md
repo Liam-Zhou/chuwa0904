@@ -1,230 +1,511 @@
 # HW8 Spring-Data
 
-## 4. What is JPA? and what is Hibernate?
+## 2. Compare Spring and Springboot? What are the benfits of Srpingboot?
 
-JPA: JPA (Java Persistence API) is a specification for object-relational mapping (ORM) in Java. It provides a standard way to manage relational data in Java applications by mapping Java objects (entities) to database tables.  
-Hibernate: Hibernate is an open-source ORM (Object-Relational Mapping) framework that implements the JPA specification. It simplifies database interactions by automatically mapping Java objects to database tables, allowing developers to focus on the domain model instead of SQL queries and database management.
+### Comparison: Spring vs Spring Boot
 
-## 5. What is Hiraki? what is the benefits of connection pool?
+| Aspect                        | **Spring**                                                             | **Spring Boot**                                                                         |
+| ----------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Setup & Configuration**     | Requires extensive configuration (XML or Java annotations)             | Provides auto-configuration and reduces boilerplate code.                               |
+| **Boilerplate Code**          | More boilerplate code for setup and configuration.                     | Minimal boilerplate due to embedded servers and auto-config.                            |
+| **Application Server**        | Requires external server setup (Tomcat, Jetty, etc.).                  | Comes with embedded servers (Tomcat, Jetty, Undertow).                                  |
+| **Deployment**                | Usually packaged as a WAR and deployed to external servers.            | Can be packaged as a standalone JAR and run independently.                              |
+| **Development Speed**         | Slower, requires manual setup and configuration.                       | Faster, with built-in tools and simplified configuration.                               |
+| **Auto-Configuration**        | Manual configuration of each component is necessary.                   | Auto-configures components based on the classpath and settings.                         |
+| **Complexity**                | More complex due to manual configuration requirements.                 | Easier to start and maintain, especially for new applications.                          |
+| **Testing**                   | Requires manual setup for testing environments.                        | Testing support is built-in with simplified configurations.                             |
+| **Microservices**             | Can be used for microservices but requires manual setup.               | Optimized for microservices with lightweight configuration and tools like Spring Cloud. |
+| **Production-Ready Features** | No built-in production monitoring tools.                               | Provides Actuator for health checks, metrics, and other production-ready tools.         |
+| **Learning Curve**            | Steeper learning curve due to manual setup and various configurations. | Easier learning curve with sensible defaults and pre-configured setups.                 |
 
-Hiraki is a high-performance JDBC (Java Database Connectivity) connection pool library. It is known for being lightweight, fast, and efficient, making it a popular choice for managing database connections in Java applications.  
-The benefits of connection pool include Improved Performance, increase scalability, reduce latency, better resource management.
+### Summary:
 
-## 6.@OneToMany, @ManyToOne, @ManyToMany:
+- **Spring** is a more comprehensive and flexible framework, but it requires more setup and configuration. It is ideal for large and complex enterprise applications where fine-grained control is required.
+- **Spring Boot** simplifies the setup process, speeds up development, and is designed for building standalone and microservices-based applications with minimal configuration. It is well-suited for small to medium-sized applications or rapid development environments.
 
-`@OneToMany`: means that one entity (A) can be related to multiple instances of another entity (B), but each instance of B is related to only one instance of A.  
-e.g. An entity Department can have many Employees, but each Employee belongs to only one Department.
+### Benefits of Spring Boot
 
-```
-@Entity
-public class Department {
+Spring Boot provides several advantages over traditional Spring development, especially for modern application architectures like microservices.
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+1. Reduced Boilerplate Code: Spring Boot significantly reduces the amount of configuration code and XML files needed, allowing developers to focus more on the business logic.
 
-    private String name;
+2. Faster Development: With auto-configuration, starter dependencies, and embedded servers, Spring Boot enables faster application setup and development.
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Employee> employees = new ArrayList<>();
+3. Standalone Applications: Spring Boot applications can be run directly as standalone JARs with embedded servers (like Tomcat), eliminating the need to set up external servers.
 
-    // getters and setters
-}
+4. Microservices Support: Spring Boot is ideal for microservices architecture because of its lightweight nature, fast setup, and support for embedded servers. It’s also commonly used with Spring Cloud for distributed systems.
 
-@Entity
-public class Employee {
+5. Easy Monitoring and Management: With the Spring Boot Actuator, you can easily monitor your application, check health status, expose metrics, and interact with your app through HTTP endpoints.
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+6. Easier Testing: Spring Boot includes embedded testing tools and makes it easier to mock environments for integration and unit tests.
 
-    private String name;
+7. Community and Ecosystem: Spring Boot is built on top of the Spring Framework, so it benefits from the rich ecosystem of tools, libraries, and a large community that Spring provides.
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+8. Conventions Over Configurations: Spring Boot follows a "convention over configuration" approach, making it easier for developers to get started without worrying about low-level configurations.
 
-    // getters and setters
-}
-```
+## 3. What is IOC and What is DI?
 
-`@ManyToOne`: means that many instances of one entity (B) can be associated with one instance of another entity (A). This is often the inverse of a `@OneToMany` relationship  
-e.g. Continue with Employee and Department example, each employee belongs to one department, and this relationship is declared on the employee side as `@ManyToOne`.
+Inversion of Control (IoC) and Dependency Injection (DI) are two core concepts in software development, particularly in the context of frameworks like Spring. They help manage dependencies between objects, making the system more modular, testable, and easier to maintain.
 
-```
-@Entity
-public class Employee {
+Inversion of Control (IoC) is a design principle where the control of object creation, configuration, and lifecycle is transferred (or "inverted") from the application code to a framework or container. Instead of the application being responsible for managing these aspects, the framework takes over.
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+Dependency Injection (DI) is a design pattern and a specific way of implementing IoC. In DI, the framework or container is responsible for injecting the dependencies (or collaborators) an object needs, rather than the object itself creating those dependencies. It is one of the ways to achieve IoC.
 
-    private String name;
+## 4. What is @CompnonentScan?
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+@ComponentScan is an annotation in the Spring Framework used to specify the base packages that Spring should scan for components (such as classes annotated with @Component, @Service, @Repository, @Controller, etc.). It allows Spring to automatically detect and register beans into the application context.
 
-    // getters and setters
-}
-```
+When you use @ComponentScan, Spring will look for Spring-managed components in the specified packages and their sub-packages and register them as beans in the IoC (Inversion of Control) container.
 
-`@ManyToMany`: means that multiple instances of entity A can relate to multiple instances of entity B and vice versa. This requires a join table to hold the foreign key references from both entities.  
-e.g. A Student can enroll in many Courses, and each Course can have many Students. This is a many-to-many relationship.
+## 5. What is @SpringbootApplication?
+
+`@SpringBootApplication` is a key annotation in Spring Boot that is used to enable a variety of configuration and bootstrap functionalities in Spring Boot applications. It is essentially a convenience annotation that combines several other annotations that are commonly used together when building a Spring Boot application.
+
+## 6. How many ways to define a bean? Provide code examples.
+
+1. Using `@Component`
 
 ```
-@Entity
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
-    @ManyToMany
-    @JoinTable(
-        name = "student_course",
-        joinColumns = @JoinColumn(name = "student_id"),
-        inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> courses = new ArrayList<>();
-
-    // getters and setters
-}
-
-@Entity
-public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
-    @ManyToMany(mappedBy = "courses")
-    private List<Student> students = new ArrayList<>();
-
-    // getters and setters
+@Component
+public class MyComponent {
+    public void doSomething() {
+        System.out.println("Component Bean Method Executed");
+    }
 }
 ```
 
-## 7. About cascade and orphan
+2. Using `@Bean` in a `@Configuration` Class
 
-`cascade = CascadeType.ALL`: This setting applies cascading operations from the parent entity to its related child entities. Essentially, it ensures that any changes made to the parent entity (such as persist, update, delete) are automatically propagated to the related child entities.  
-`orphanRemoval = true`: This option ensures that when a child entity is removed from the relationship (e.g., from a collection), it is automatically deleted from the database. If you remove an element from a collection, and orphanRemoval is set to true, that child entity is considered an orphan and will be removed from the database.
+```
+@Configuration
+public class AppConfig {
 
-| **CascadeType**        | **Description**                                                                                         | **Use Case**                                                                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `CascadeType.PERSIST`  | Child entities are automatically persisted when the parent is persisted.                                | Use when saving the parent should automatically save its children.                                    |
-| `CascadeType.MERGE`    | Child entities are automatically merged (updated) when the parent is merged.                            | Use when updating the parent should automatically update its children.                                |
-| `CascadeType.REMOVE`   | Child entities are automatically removed when the parent is removed.                                    | Use when deleting the parent should also delete its children.                                         |
-| `CascadeType.REFRESH`  | Child entities are refreshed (reloaded) from the database when the parent is refreshed.                 | Use when refreshing the parent should also refresh its children to reflect the latest database state. |
-| `CascadeType.DETACH`   | Child entities are detached when the parent is detached from the persistence context.                   | Use when detaching the parent should also detach its children from the persistence context.           |
-| `CascadeType.ALL`      | Applies all of the above cascades: `PERSIST`, `MERGE`, `REMOVE`, `REFRESH`, `DETACH`.                   | Use when you want all entity lifecycle operations to be cascaded to the child entities.               |
-| `orphanRemoval = true` | Orphaned child entities are removed from the database when they are no longer referenced by the parent. | Use when removing a child from a parent's collection should delete the child entity.                  |
+    @Bean
+    public MyBean myBean() {
+        return new MyBean();
+    }
 
-## 8. As to fetch
+    @Bean
+    public AnotherBean anotherBean() {
+        return new AnotherBean(myBean()); // You can inject dependencies between beans
+    }
+}
+```
 
-In JPA, fetch = FetchType.LAZY and fetch = FetchType.EAGER are used to control how related entities are loaded from the database. These options determine whether the associated entities are fetched immediately or on demand when the parent entity is retrieved.  
-`FetchType.LAZY`: Lazy loading means the associated entities are not loaded from the database until they are explicitly accessed. The associated entities are loaded on demand when their getter method is invoked.  
-`FetchType.EAGER`: Eager loading means the associated entities are loaded immediately when the parent entity is fetched. All associated entities are retrieved in the same query as the parent entity, and there is no need for additional queries to load them.
+3. Using XML Configuration
 
-| **FetchType.LAZY**                                                         | **FetchType.EAGER**                                                                             |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Associated entities are **loaded on demand**.                              | Associated entities are **loaded immediately** when the parent is fetched.                      |
-| Reduces initial performance impact and memory usage.                       | Increases initial load and memory usage, as everything is fetched upfront.                      |
-| May result in additional database queries when accessing related entities. | No additional queries required; everything is loaded in one query.                              |
-| **Good for large collections** or rarely accessed relationships.           | **Good for small, frequently accessed** relationships or when you always need the related data. |
+```
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-Choosing Between LAZY and EAGER:  
-Use FetchType.LAZY when:
+    <bean id="myBean" class="com.example.MyBean" />
+    <bean id="anotherBean" class="com.example.AnotherBean">
+        <constructor-arg ref="myBean" />
+    </bean>
 
-- You don’t always need the related entities.
-- The relationship contains a large number of records.
-- You want to optimize performance by loading only the necessary data.
-- You expect to access the related data only within the same persistence context (to avoid LazyInitializationException).
+</beans>
+```
 
-Use FetchType.EAGER when:
+4. Using `@Import` Annotation
 
-- You always need the related data along with the parent entity.
-- The associated data is lightweight and doesn't impact performance or memory usage significantly.
-- You want to avoid potential LazyInitializationException issues, especially in web applications.
+```
+@Configuration
+public class AppConfig1 {
+    @Bean
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}
 
-## 9. What is the rule of JPA naming convention? Shall we implement the method by ourselves? Could you list some examples?
+@Configuration
+@Import(AppConfig1.class)
+public class AppConfig2 {
+    @Bean
+    public AnotherBean anotherBean(MyBean myBean) {
+        return new AnotherBean(myBean);
+    }
+}
+```
 
-JPA follows specific naming conventions when mapping Java entities to database tables and fields. These conventions help avoid ambiguity and improve code consistency. By default, JPA uses certain rules to map entities and their fields to corresponding database tables and columns, but these mappings can be customized using annotations like `@Table` and `@Column`.
+5. Using @Autowired or Constructor Injection for Dependency Injection
 
-## 13. What is JPQL
+```
+@Component
+public class MyComponent {
+    private final MyService myService;
 
-`JPQL (Java Persistence Query Language` is the query language used in JPA (Java Persistence API) to interact with entities stored in a relational database. It is an object-oriented query language that operates on entity objects, rather than directly on database tables, unlike SQL which works with tables and columns.
+    @Autowired  // Constructor injection
+    public MyComponent(MyService myService) {
+        this.myService = myService;
+    }
 
-## 14. What is @NamedQuery and @NamedQueries
+    public void doSomething() {
+        myService.processData();
+    }
+}
 
-The `@NamedQuery` annotation is used to define a single static query that can be invoked by name.  
-The `@NamedQueries` annotation is a container annotation used to define multiple `@NamedQuery` annotations for a single entity.
+@Service
+public class MyService {
+    public String processData() {
+        return "Processing data...";
+    }
+}
+```
 
-## 15. What is @Query? In which Interface we write the sql or JPQL?
+6. Using Factory Beans
 
-The `@Query` annotation in JPA is used to define custom JPQL (Java Persistence Query Language) or native SQL queries directly within repository methods. It allows you to write more complex or specialized queries that aren't covered by JPA's default methods like findById() or save().  
-We typically define these queries in repository interfaces that extend `JpaRepository` or `CrudRepository`. These interfaces are part of the `Spring Data JPA module`, which simplifies data access by providing common repository functionality and reducing boilerplate code.
+```
+public class MyFactoryBean implements FactoryBean<MyBean> {
 
-## 16. What is HQL and Criteria Queries?
+    @Override
+    public MyBean getObject() throws Exception {
+        return new MyBean(); // Custom creation logic
+    }
 
-HQL: HQL is an object-oriented query language similar to JPQL (Java Persistence Query Language), but it is specific to Hibernate. HQL works with Hibernate entities rather than directly interacting with database tables. It is designed to be database-independent, meaning it abstracts away the details of SQL and operates on entity objects.  
-Criteria Queries: Criteria Queries provide a programmatic, object-oriented way to construct queries. Instead of writing the query as a string (like HQL), you use method calls to build queries dynamically. This is particularly useful when the query is complex or needs to be built based on user input or dynamic conditions.
+    @Override
+    public Class<?> getObjectType() {
+        return MyBean.class;
+    }
+}
 
-| Feature             | **HQL (Hibernate Query Language)**                 | **Criteria Queries**                                     |
-| ------------------- | -------------------------------------------------- | -------------------------------------------------------- |
-| **Query Type**      | String-based, similar to SQL syntax                | Programmatic, using Java objects and methods             |
-| **Flexibility**     | Static queries, less suited for dynamic conditions | Highly dynamic, ideal for runtime conditions             |
-| **Type-Safety**     | Not type-safe; potential runtime errors            | Type-safe; reduces risk of runtime errors                |
-| **Readability**     | Easier for those familiar with SQL                 | Can become verbose and harder to read for simple queries |
-| **Use Case**        | Good for standard, pre-defined queries             | Best for dynamic, runtime-generated queries              |
-| **Complex Queries** | Supports complex joins and subqueries              | Supports dynamic conditions and complex filters          |
+@Configuration
+public class AppConfig {
+    @Bean
+    public MyFactoryBean myFactoryBean() {
+        return new MyFactoryBean();
+    }
+}
+```
 
-## 17. What is EnityManager?
+7. Using `@Value` for Property Injection
 
-`EntityManager` is the primary interface used to interact with the persistence context and manage the lifecycle of entities. It serves as the core API for working with JPA, responsible for performing operations like querying, persisting, merging, and removing entities in a relational database.
+```
+@Component
+public class MyComponent {
 
-## 18. What is SessionFactory and Session?
+    @Value("${my.property}")
+    private String myProperty;
 
-In Hibernate, SessionFactory and Session are core interfaces responsible for managing the interaction between the application and the database. They are used to handle database connections, manage the lifecycle of entities, and perform various database operations such as saving, updating, and querying data.
+    public void printProperty() {
+        System.out.println("Property Value: " + myProperty);
+    }
+}
+```
 
-## 19. What is Transaction? how to manage your transaction?
+## 7. What is default bean name for for @Component and @Bean? Also compare @Component and @Bean.
 
-A transaction in the context of a database is a sequence of operations performed as a `single logical unit of work`. These operations are executed with certain guarantees to ensure consistency and correctness of the data. A transaction must adhere to the ACID properties.
+When you use the `@Component` annotation (or one of its specialized versions like `@Service`, `@Repository`, `@Controller`), Spring automatically generates a bean name by default. This name is derived from the **class name**, with the first letter lowercased.
 
-Transactions can be managed in different ways depending on the framework or API you are using. In Java, transactions can be managed manually using APIs like JPA (Java Persistence API) or Hibernate, or automatically using Spring Framework.
+When you define a bean using the `@Bean` annotation in a `@Configuration` class, the default bean name is the **name of the method that returns** the bean.
 
-## 20. What is hibernate Caching? Explain Hibernate caching mechanism in detail.
+### Comparison of `@Component` vs `@Bean`
 
-Hibernate caching is a mechanism that helps optimize the performance of data retrieval and storage by reducing the number of database queries executed. By caching frequently accessed data in memory, Hibernate reduces the overhead of accessing the database repeatedly for the same data, which can be time-consuming and resource-intensive.
+| Aspect                     | `@Component`                                                                                               | `@Bean`                                                                                                 |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Purpose**                | Marks a class as a Spring-managed component/bean.                                                          | Defines a bean method within a `@Configuration` class.                                                  |
+| **How It's Used**          | Applied directly on a class to indicate it is a bean.                                                      | Applied on a method that returns a bean, usually in a `@Configuration` class.                           |
+| **Bean Creation Control**  | Spring automatically detects the class and registers it as a bean.                                         | Full control over bean instantiation, including constructor arguments, configuration, and dependencies. |
+| **Scope**                  | Typically used for simple, self-contained components.                                                      | Allows more complex bean definitions with custom creation logic.                                        |
+| **Dependency Injection**   | Dependencies are injected using `@Autowired` or constructor injection.                                     | Dependencies can be passed explicitly when calling the method.                                          |
+| **Use of Method**          | Not associated with methods. Bean is created via class instantiation.                                      | The method is called by Spring, and the return value is registered as a bean.                           |
+| **Stereotype Annotations** | Specialized forms of `@Component` exist: `@Service`, `@Repository`, `@Controller`.                         | No stereotypes exist. It is only used within a `@Configuration` class.                                  |
+| **Bean Name**              | The default name is the class name with the first letter in lowercase (e.g., `myService` for `MyService`). | The default name is the method name (e.g., `myService`).                                                |
+| **When to Use**            | Use when you want Spring to automatically detect and manage beans via classpath scanning.                  | Use when you need more fine-grained control over the creation process or need complex setup logic.      |
 
-Hibernate caching works at two levels:
+## 8. Compare @component and @service, @repository, @controller?
 
-- First-level cache (Session-level cache)
-- Second-level cache (SessionFactory-level cache)
+In Spring, @Component, @Service, @Repository, and @Controller are all stereotype annotations used to define Spring-managed beans. They serve similar purposes but are intended for different layers of an application, providing better readability and understanding of the architecture.
 
-Both levels of caching aim to enhance performance by minimizing database access.
+## 9. Explain @Autowired, @Qualifier, @Resource and @Primary?
 
-## 21. What is the difference between first-level cache and second-level cache?
+In Spring, dependency injection (DI) is a core feature, and several annotations are available to assist with this. Each of the following annotations—@Autowired, @Qualifier, @Resource, and @Primary—helps Spring resolve and inject dependencies in different scenarios.
 
-| **Aspect**              | **First-Level Cache**                                                                               | **Second-Level Cache**                                                                                               |
-| ----------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Scope**               | Session-level: Each Hibernate `Session` has its own first-level cache.                              | SessionFactory-level: Shared across multiple `Session` instances created by the same `SessionFactory`.               |
-| **Enabled by Default**  | Yes, always enabled.                                                                                | No, must be explicitly configured and enabled.                                                                       |
-| **Lifespan**            | Exists for the duration of a `Session`.                                                             | Persists beyond a single `Session`, across multiple sessions.                                                        |
-| **Configuration**       | No configuration required, cannot be disabled.                                                      | Requires explicit configuration in Hibernate settings and entity annotations.                                        |
-| **Caching Scope**       | Caches entities loaded or persisted within the current session.                                     | Caches entities, collections, and sometimes query results across multiple sessions.                                  |
-| **Data Retention**      | Cache is cleared when the session is closed.                                                        | Data remains in the cache as long as the `SessionFactory` is active, even after sessions close.                      |
-| **Use Case**            | Reduces redundant database queries within the same session.                                         | Reduces database access for frequently accessed data across multiple sessions.                                       |
-| **Granularity**         | Works only for entities loaded in the same session.                                                 | Can cache entities globally for all sessions associated with a `SessionFactory`.                                     |
-| **Cache Provider**      | No external cache provider needed; built-in to Hibernate.                                           | Requires external cache providers like EHCache, Infinispan, or Hazelcast.                                            |
-| **Cache Invalidations** | Managed by the session itself; cache is cleared after the session ends.                             | Entities can be invalidated automatically based on cache concurrency strategies like `READ_ONLY`, `READ_WRITE`, etc. |
-| **Performance Impact**  | Reduces database access within the same session, offering a small but consistent performance boost. | Can significantly reduce database load, especially for static or frequently used data across sessions.               |
-| **Transaction Scope**   | Transactions within the session benefit from the cache.                                             | Works across multiple transactions and sessions.                                                                     |
+1. @Autowired  
+   `@Autowired` is the most commonly used annotation in Spring for automatic dependency injection. It tells Spring to automatically resolve and inject the required dependency into a class.
 
-## 22. How do you understand @Transactional?
+2. @Qualifier  
+   `@Qualifier` is used to resolve ambiguity when there are multiple beans of the same type. It allows you to specify which exact bean to inject by name.
 
-@Transactional is a powerful and commonly used annotation in Spring Framework that helps manage transaction boundaries declaratively. It defines the scope of a single database transaction and provides a consistent way to manage the transactional behavior of methods and classes in a Spring application.
+3. @Resource  
+   `@Resource` is part of the JSR-250 specification and works similarly to `@Autowired`, but it resolves the dependency by name by default (and then by type if no matching name is found). It can be thought of as a hybrid between `@Autowired` and `@Qualifier`.
+
+4. @Primary  
+   `@Primary` is used to resolve conflicts when multiple beans of the same type are present, by marking one of them as the default. If no @Qualifier is specified, Spring will inject the bean marked with `@Primary`.
+
+### Comparison of `@Autowired`, `@Qualifier`, `@Resource`, and `@Primary`
+
+| Annotation       | Description                                                                                                                       | Injection Type  | Use Case                                                                                                     |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------ |
+| **`@Autowired`** | Automatically injects dependencies by **type**. Throws an exception if multiple beans of the same type exist without a qualifier. | By type         | Used for automatic injection of dependencies, typically with only one bean of the type available.            |
+| **`@Qualifier`** | Used alongside `@Autowired` to specify the **exact bean** to inject when multiple beans of the same type are present.             | By name         | Resolves ambiguity by specifying the name of the bean to inject when multiple beans of the same type exist.  |
+| **`@Resource`**  | Injects dependencies by **name** first, then by type if no matching name is found.                                                | By name or type | Often used when JSR-250 standard is followed or when injecting beans by name first is important.             |
+| **`@Primary`**   | Marks a bean as the **default** when multiple beans of the same type are available and no qualifier is specified.                 | By type         | Defines the default bean to inject when multiple candidates are available and no specific qualifier is used. |
+
+## 10. How many annotaitons we can use to inject a bean?
+
+| Annotation       | Description                                                       | Primary Use Case                                  |
+| ---------------- | ----------------------------------------------------------------- | ------------------------------------------------- |
+| **`@Autowired`** | Injects a dependency by type.                                     | When you want automatic dependency injection.     |
+| **`@Qualifier`** | Specifies which exact bean to inject when multiple exist.         | When multiple beans of the same type are present. |
+| **`@Resource`**  | Injects a bean by name, or by type if no name is specified.       | When you want to inject by name first.            |
+| **`@Inject`**    | Part of JSR-330 standard, similar to `@Autowired`.                | When you want to use standard CDI.                |
+| **`@Primary`**   | Marks a bean as the default candidate for injection.              | When there are multiple beans of the same type.   |
+| **`@Value`**     | Injects literal values (e.g., properties, environment variables). | When you want to inject configuration values.     |
+
+## Descriptions
+
+- **`@Autowired`**: The most commonly used annotation for dependency injection in Spring. It automatically resolves dependencies by type.
+- **`@Qualifier`**: Used with `@Autowired` to specify which bean to inject when multiple beans of the same type exist.
+- **`@Resource`**: Injects dependencies by name first, and then by type if no matching name is found.
+- **`@Inject`**: A JSR-330 standard annotation, similar to `@Autowired`, commonly used in Java CDI-based frameworks.
+- **`@Primary`**: Designates a bean as the default one when there are multiple candidates of the same type.
+- **`@Value`**: Used to inject literal values, such as properties from configuration files or environment variables.
+
+## 11. Explain and compare different types of denpendency injection, their pros and cons, and use cases.
+
+### Explain:
+
+1. Constructor Injection: In Constructor Injection, dependencies are provided through a class constructor. The dependencies are passed as parameters, and they become part of the class’s state as soon as the object is created
+2. Setter (or Method) Injection: In Setter Injection, dependencies are provided through setter methods after the object is created. Spring calls the setter methods to inject the required beans.
+3. Field Injection: In Field Injection, dependencies are injected directly into fields. Spring uses reflection to set the field’s value during the bean creation process. This is done by using the @Autowired annotation on the field.
+
+### Comparison Table of Different Dependency Injection Types:
+
+| Type                      | How Dependencies Are Injected               | Pros                                                                                                               | Cons                                                                                           | Use Cases                                                                                               |
+| ------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Constructor Injection** | Dependencies passed via constructor.        | - Promotes immutability<br>- Easy to mock for testing<br>- Explicit dependencies<br>- Avoids circular dependencies | - Constructor can become unwieldy with many parameters<br>- All dependencies must be provided. | - When all dependencies are required at object creation<br>- When immutability and testability are key. |
+| **Setter Injection**      | Dependencies passed via setter methods.     | - Ideal for optional dependencies<br>- More flexible and readable in some cases                                    | - Object can be in an inconsistent state<br>- Dependencies can be changed after creation.      | - When optional dependencies are present<br>- When dependencies are injected after object creation.     |
+| **Field Injection**       | Dependencies injected directly into fields. | - Simplest to implement<br>- Less boilerplate code                                                                 | - Reduced testability<br>- Breaks encapsulation<br>- Hidden dependencies<br>- Not immutable    | - Simple applications with minimal testing needs.<br>- When concise code is preferred over structure.   |
+
+## 12. If we have multiple beans for one type, how to set one is primary? and how Spring IOC picks one bean to inject if no primay, demo with code examples.
+
+1. Mark one of the beans as @Primary: This will make the marked bean the default choice if no other specific bean is specified.
+2. Use @Qualifier: If no @Primary is set and multiple beans are available, you can explicitly specify which bean to inject using @Qualifier.
+
+## 13. Compare BeanFactory and ApplicationContext in Spring framework?
+
+| Aspect                             | **BeanFactory**                                                                                           | **ApplicationContext**                                                                                     |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Definition**                     | Basic container in Spring that provides the core functionality of managing beans.                         | More advanced container built on top of `BeanFactory` with additional enterprise-level features.           |
+| **Eager/Lazy Initialization**      | Initializes beans lazily (only when requested).                                                           | Initializes beans eagerly on startup, unless specified otherwise.                                          |
+| **Event Handling**                 | No built-in support for event propagation.                                                                | Provides event handling capabilities with the ability to publish and listen for events.                    |
+| **Internationalization (i18n)**    | Does not provide built-in support for internationalization.                                               | Provides built-in support for internationalization (i18n).                                                 |
+| **Web Applications**               | Typically not used for web applications.                                                                  | Often used for web applications with features like integration with Spring MVC.                            |
+| **Bean Post Processing**           | Requires manual configuration for BeanPostProcessor.                                                      | Automatically registers `BeanPostProcessor` and `BeanFactoryPostProcessor` for lifecycle events.           |
+| **Built-in Enterprise Features**   | No support for enterprise-level features such as AOP, declarative transactions, etc.                      | Supports AOP, declarative transactions, and other enterprise-level features.                               |
+| **Type of Usage**                  | Lightweight and typically used in scenarios where resource constraints exist (e.g., mobile applications). | Preferred for most Spring applications due to its rich feature set and built-in capabilities.              |
+| **XML Configuration**              | Supports XML configuration but requires more manual setup.                                                | Supports XML configuration with more advanced features and easier setup.                                   |
+| **Annotation-Based Configuration** | Basic support for annotations.                                                                            | Full support for annotations like `@Component`, `@Autowired`, and `@Configuration`.                        |
+| **Event Handling**                 | No event handling mechanism available.                                                                    | Offers a robust event handling mechanism for publishing and consuming events.                              |
+| **Built-in Beans**                 | Does not provide built-in beans such as `MessageSource`, `ApplicationEventPublisher`.                     | Provides various built-in beans such as `MessageSource`, `ApplicationEventPublisher`, etc.                 |
+| **Common Implementations**         | `XmlBeanFactory` (deprecated as of Spring 3.1).                                                           | `ClassPathXmlApplicationContext`, `FileSystemXmlApplicationContext`, `AnnotationConfigApplicationContext`. |
+
+## Summary:
+
+- **`BeanFactory`**: A basic Spring container that is lightweight and used in scenarios where resources are limited, and the advanced features of `ApplicationContext` are not required. It is useful when lazy initialization is needed or when you want minimal memory footprint.
+- **`ApplicationContext`**: A more feature-rich container, widely used in most Spring applications, especially web-based and enterprise applications. It provides many advanced features, such as event propagation, AOP, transaction management, internationalization, and more. It is the preferred choice for most applications.
+
+### Recommendation:
+
+In modern Spring applications, `ApplicationContext` is typically used due to its richer feature set and support for most enterprise and web application needs. `BeanFactory` is mainly used in limited resource environments where performance and memory usage are critical.
+
+## 14. Explain bean scope in Spring IOC? List bean scopes with explainations and code examples if possible.
+
+In Spring, bean scope defines the lifecycle and visibility of a bean. It controls how and when the beans are created and how they are shared within the Spring IoC (Inversion of Control) container. Spring provides several bean scopes, each designed for different use cases.
+
+Example:
+
+1. Singleton (default): A single instance of the bean is created and shared across the entire Spring container. This means that the container will create the bean only once and will return the same instance every time it is requested.
+
+   The bean is instantiated when the Spring container is initialized and exists for the entire lifecycle of the application. Use singleton scope when the bean represents a stateless service that can be shared across the application.
+
+```
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("singleton")  // Optional, as singleton is the default scope
+public class SingletonBean {
+    public SingletonBean() {
+        System.out.println("Singleton Bean Created");
+    }
+}
+```
+
+2. Prototype: A new instance of the bean is created every time it is requested. Unlike the singleton scope, the Spring container doesn’t manage the complete lifecycle of a prototype bean, meaning it only creates new instances but doesn’t track or destroy them.
+
+   A new instance is created each time the bean is requested, but Spring does not manage the bean’s destruction. Use prototype scope when you need a separate instance of the bean for each use, such as for stateful components or beans with mutable state.
+
+```
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("prototype")
+public class PrototypeBean {
+    public PrototypeBean() {
+        System.out.println("Prototype Bean Created");
+    }
+}
+```
+
+3. Request (Web Application Scope): A new instance of the bean is created for each HTTP request. The bean is created and used during the lifecycle of a single HTTP request and is discarded once the request is completed.
+
+   The bean exists only during the lifecycle of a single HTTP request. Use request scope for beans that should be created and used within the scope of a single HTTP request, such as request-scoped data or context-specific objects.
+
+```
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
+
+@Component
+@RequestScope  // Alternatively, @Scope("request")
+public class RequestScopedBean {
+    public RequestScopedBean() {
+        System.out.println("Request Scoped Bean Created");
+    }
+}
+```
+
+4. Session (Web Application Scope): A new instance of the bean is created for each HTTP session. The bean is available throughout the lifecycle of an HTTP session and is shared across requests made within the same session.
+
+   The bean exists during the entire HTTP session, and a new instance is created for each session. Use session scope when you need to maintain state or store session-related data across multiple HTTP requests in a single session.
+
+```
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
+@Component
+@SessionScope  // Alternatively, @Scope("session")
+public class SessionScopedBean {
+    public SessionScopedBean() {
+        System.out.println("Session Scoped Bean Created");
+    }
+}
+```
+
+5. Application (Web Application Scope): A single instance of the bean is created for the entire web application. This scope is similar to the singleton scope, but it is specific to web applications, meaning the bean is shared across all requests and sessions within the application.
+
+   The bean exists for the entire lifecycle of the web application. Use application scope for beans that represent global resources and need to be shared across all sessions and requests in the web application.
+
+```
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
+
+@Component
+@ApplicationScope  // Alternatively, @Scope("application")
+public class ApplicationScopedBean {
+    public ApplicationScopedBean() {
+        System.out.println("Application Scoped Bean Created");
+    }
+}
+```
+
+## 15. A Spring Application sample
+
+See the coding part
+
+## 16. Explain builder pattern with code examples
+
+### Builder Pattern Overview
+
+The Builder Pattern is a creational design pattern used to construct complex objects step by step. Unlike other creational patterns, which construct objects in one go, the Builder Pattern provides a way to build an object incrementally, adding attributes one by one. This is especially useful when an object has multiple optional fields or when the creation process itself is complex.
+
+### When to Use the Builder Pattern
+
+When the object creation involves multiple parameters, especially optional ones.
+When you want to avoid a constructor with too many arguments (the "telescoping constructor" problem).
+When the construction process is complex and needs to be controlled step by step.
+
+Builder Pattern Example:
+
+```
+public class User {
+    // Required parameters
+    private String firstName;
+    private String lastName;
+
+    // Optional parameters
+    private int age;
+    private String phone;
+    private String address;
+
+    // Private constructor to enforce the use of the Builder
+    private User(UserBuilder builder) {
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.age = builder.age;
+        this.phone = builder.phone;
+        this.address = builder.address;
+    }
+
+    // Static nested Builder class
+    public static class UserBuilder {
+        // Required parameters
+        private String firstName;
+        private String lastName;
+
+        // Optional parameters
+        private int age;
+        private String phone;
+        private String address;
+
+        // Constructor for required parameters
+        public UserBuilder(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        // Setter method for optional parameters, returning the builder
+        public UserBuilder setAge(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public UserBuilder setPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public UserBuilder setAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        // Build method to create the final object
+        public User build() {
+            return new User(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "User [firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", phone=" + phone
+                + ", address=" + address + "]";
+    }
+}
+
+//====== Next Page ======
+
+public class BuilderPatternDemo {
+    public static void main(String[] args) {
+        // Using the Builder to create a User object
+        User user1 = new User.UserBuilder("John", "Doe")
+                .setAge(30)
+                .setPhone("123-456-7890")
+                .setAddress("123 Main St")
+                .build();
+
+        User user2 = new User.UserBuilder("Jane", "Doe")
+                .setPhone("098-765-4321")
+                .build();
+
+        System.out.println(user1);
+        System.out.println(user2);
+    }
+}
+```
