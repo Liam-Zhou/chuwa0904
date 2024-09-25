@@ -165,8 +165,8 @@ To create a nested list using the web editor on GitHub or a text editor that use
 ```
 
 1. First list item
-    - First nested list item
-        - Second nested list item
+   - First nested list item
+     - Second nested list item
 
 
 ## Task lists

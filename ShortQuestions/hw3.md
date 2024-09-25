@@ -422,7 +422,7 @@ public class Singleton {
 
 ### 20. design a `parking lot` (put the code to codingQuestions/coding1 folder)
 
-[See Coding/coding1](../Coding/coding1)
+[See Coding/coding1](../Coding/hw3/coding1)
 
 ### 21. What are `Queue` interface implementations and what are the differences and when to use what?
 
