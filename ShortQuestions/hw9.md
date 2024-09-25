@@ -43,4 +43,8 @@ When defining a bean using the **@Bean** annotation in a @Configuration class, t
 **@Bean** is the preferred way for third-party libraries, as you can configure these beans in the @Configuration class even if you don’t control the source code.
 
 ### Question 8
-
+@Component, @Service, @Repository, and @Controller are stereotype annotations used to indicate that a class is a Spring-managed bean. 
+* @Component: Generic annotation for any Spring-managed bean.
+* @Service: Marks a class as a service, typically containing business logic.
+* @Repository: Marks a class as a data access object (DAO), responsible for database interaction.
+* @Controller: Marks a class as a Spring MVC controller, handling HTTP requests and returning responses.
