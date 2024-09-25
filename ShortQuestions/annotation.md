@@ -17,4 +17,29 @@ Annotation file
 @NamedQueries: // Container annotation for defining multiple @NamedQuery annotations.
 @Transactional: // Declares that a method or class should be executed within a transaction.
 @PersistenceContext: // Used to inject an EntityManager into a class for managing entities.
+
+@Component: //Marks a class as a Spring component.
+@Service: //Specialization of @Component for service layer components.
+@Repository: //Specialization of @Component for the data access layer.
+@Controller: //Specialization of @Component for MVC controllers.
+@ControllerAdvice: //Provides global exception handling advice across controllers.
+@ComponentScan: //Configures component scanning.
+@Autowired: //Autowires a bean into another bean.
+@Qualifier: //Specifies which bean should be autowired when multiple options exist.
+@Primary: //Designates a primary bean when multiple beans of the same type exist.
+@Bean: //Declares a bean within a Spring configuration class.
+@Configuration: //Marks a class as a source of bean definitions.
+@EnableAutoConfiguration: //Enables Spring Boot's auto-configuration mechanism.
+
+@ExceptionHandler: //Handles specific exceptions in a Spring MVC application.
+@ControllerAdvice: //Provides global exception handling for controllers.
+@Valid: //Marks a parameter to be validated against constraints.
+@NotEmpty: //Validation annotation that checks if a field is not empty.
+@Size: //Ensures a field has a specific size range.
+@Email: //Validates that a field contains a valid email address.
+@PostMapping: //Maps HTTP POST requests onto specific handler methods.
+@PutMapping: //Maps HTTP PUT requests onto specific handler methods.
+@RequestBody: //Binds the HTTP request body to a method parameter.
+@PathVariable: //Extracts values from the URI and binds them to method parameters.
+@SpringBootApplication: //Combination of @Configuration, @EnableAutoConfiguration, and @ComponentScan to mark a main class for a Spring Boot application.
 ```
