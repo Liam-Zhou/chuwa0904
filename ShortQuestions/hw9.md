@@ -48,3 +48,53 @@ When defining a bean using the **@Bean** annotation in a @Configuration class, t
 * @Service: Marks a class as a service, typically containing business logic.
 * @Repository: Marks a class as a data access object (DAO), responsible for database interaction.
 * @Controller: Marks a class as a Spring MVC controller, handling HTTP requests and returning responses.
+
+### Question 9
+* **@Autowired** is used to automatically inject beans by type. Spring looks for a bean of a matching type in the IoC container and injects it into the class where **@Autowired** is applied.
+* **@Qualifier**is used in conjunction with **@Autowired** when there are multiple beans of the same type, and you want to specify which bean should be injected. While **@Autowired** resolves dependencies by type, **@Qualifier** allows for fine-grained control by specifying the bean name to inject.
+* **@Resource** is part of **javax.annotation** package and can be used for dependency injection in Spring. It injects beans by name, unlike **@Autowired**, which injects by type. However, if **@Resource** cannot find a bean by name, it will fallback to type-based injection.
+* **@Primary** is used to mark a bean as the primary candidate when there are multiple beans of the same type. When Spring finds multiple beans of the same type, it uses the bean marked with **@Primary**as the default bean to inject (unless another bean is specified using **@Qualifier**).
+
+### Question 10
+* @Autowired
+* @Qualifier
+* @Resource
+* @Inject
+* @Primary
+
+### Question 11
+1. Constructor Injection:
+   * Immutability: Since dependencies are provided when the object is created, you can declare fields as final, which enforces immutability.  Immutable objects are easier to understand and maintain because they do not have unexpected state changes.
+   * Clear Dependencies: The class’s constructor clearly declares what dependencies it needs, making it easy to understand the class’s dependencies at a glance.
+   - Too Many Parameters: If a class has many dependencies, the constructor can become long and difficult to manage (constructor overloading).
+2. Setter Injection:
+   * Optional Dependencies: Setter injection is ideal for optional dependencies. You can instantiate the object without providing the dependency and set it later.
+   * Flexibility: Setter methods can be used to update dependencies at runtime, providing more flexibility than constructor injection.
+   - Lack of Immutability: Dependencies can be changed after object creation, which can lead to mutable state and side effects if not handled properly.
+3. Field Injection
+   * Simplicity: Field injection is easy to implement as it requires minimal boilerplate code. The dependencies are directly injected into fields without the need for setters or constructors.
+   - Testability: It’s harder to write unit tests because the dependencies are private, and injecting mocks during testing often requires using reflection or Spring’s testing utilities.
+   - ack of Immutability: The injected fields can be mutable, and it’s not clear when or where the dependency is set.
+
+### Question 12
+We try to set primary under **@Component**:
+```
+@Component
+@Primary
+public class HibernateChuwa implements JpaChuwa {
+
+    @Override
+    public void printMessage() {
+        System.out.println("Message from " + getClass().getName());
+    }
+}
+```
+If No Bean is Marked @Primary, Spring will choose according to the @Qualifier,or variable name. It Spring cannot determine through varible name, Spring will throw a NoUniqueBeanDefinitionException.
+
+### Question 13
+
+| Feature | Bean Factory | ApplicationContext |
+| Basic   | Basic IoC container, provides fundamental DI features.| Advanced IoC container, built on BeanFactory with more features|
+|Initialization|Beans are created lazily|Beans are created eagerly (at startup) by default.|
+| Event Handling | No support for event handling.| Provides support for application events and listener registration.|
+| Automatic Bean Discovery | No automatic scanning; beans must be defined explicitly.| Supports component scanning, automatically detects beans annotated with @Component, @Service, etc.|  
