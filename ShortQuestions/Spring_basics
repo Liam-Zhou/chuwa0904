@@ -1,0 +1,184 @@
+# Spring Framework Annotations Cheat Sheet
+
+## 1. List all of the annotations learned from class and homework:
+- `@Component`
+- `@Service`
+- `@Repository`
+- `@Controller`
+- `@Bean`
+- `@Autowired`
+- `@Qualifier`
+- `@Primary`
+- `@Resource`
+- `@ComponentScan`
+- `@SpringBootApplication`
+- `@Scope`
+- `@Configuration`
+
+## 2. Compare Spring and Spring Boot, Benefits of Spring Boot:
+### Spring:
+- Traditional Spring requires a lot of configuration (XML or annotations).
+- Requires external server deployment.
+
+### Spring Boot:
+- Provides auto-configuration, removing the need for a lot of boilerplate code.
+- Comes with an embedded server like Tomcat, so there's no need to manually deploy the app to an external server.
+- Has a simplified build and deployment process.
+- Opinionated defaults to get projects running quickly.
+
+## 3. What is IOC and DI?
+### IOC (Inversion of Control):
+- Refers to the control of object creation being handed over to the Spring container instead of the developer.
+
+### DI (Dependency Injection):
+- Refers to the process of injecting dependencies (objects) into classes rather than having them instantiate them.
+
+## 4. What is `@ComponentScan`?
+- It tells Spring where to look for annotated components (e.g., `@Component`, `@Service`, `@Controller`, etc.) to be automatically discovered and registered as beans in the application context.
+
+## 5. What is `@SpringBootApplication`?
+- It is a combination of three annotations: `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
+- It enables automatic configuration and component scanning in Spring Boot.
+
+## 6. How many ways to define a bean? Provide code examples.
+### Using `@Component`:
+```java
+@Component
+public class MyBean {
+}
+```
+### Using `@Bean` in a `@Configuration` class:
+```java
+@Configuration
+public class MyConfig {
+    @Bean
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}
+```
+
+## 7. Default Bean Name for `@Component` and `@Bean`
+- Default bean name for `@Component` is the class name with the first letter in lowercase (e.g., `myBean` for `MyBean` class).
+- Default bean name for `@Bean` is the method name.
+
+### Comparison: `@Component` vs `@Bean`:
+- `@Component` is used for component scanning and is more convenient for auto-discovery.
+- `@Bean` is used when you want explicit control over bean instantiation, usually in `@Configuration` classes.
+
+## 8. Compare `@Component`, `@Service`, `@Repository`, `@Controller`
+- All are specializations of `@Component` and are used for different layers in an application:
+  - `@Component`: Generic stereotype for any Spring-managed component.
+  - `@Service`: Marks a class as a business service.
+  - `@Repository`: Marks a class as a DAO (Data Access Object), provides additional benefits like exception translation.
+  - `@Controller`: Marks a class as a Spring MVC controller.
+
+## 9. Explain `@Autowired`, `@Qualifier`, `@Resource`, and `@Primary`
+- `@Autowired`: Automatically injects a bean into a class.
+- `@Qualifier`: Used to resolve ambiguity when more than one bean of the same type exists.
+- `@Resource`: Injects a bean by its name rather than type.
+- `@Primary`: Marks a bean as the primary candidate when there are multiple beans of the same type.
+
+## 10. How many annotations can we use to inject a bean?
+- `@Autowired`
+- `@Resource`
+- `@Inject` (JSR-330)
+
+## 11. Compare different types of Dependency Injection:
+- **Constructor Injection**: Recommended for mandatory dependencies.
+  - Pros: Immutable objects, better for testing.
+  - Cons: Requires many constructor arguments if there are too many dependencies.
+- **Setter Injection**: Used for optional dependencies.
+  - Pros: Easy to test, flexible.
+  - Cons: May lead to incomplete object construction.
+- **Field Injection**: Directly injects dependencies into fields.
+  - Pros: Simplicity.
+  - Cons: Harder to test and maintain.
+
+## 12. Handling Multiple Beans with No Primary
+```java
+@Component
+public class BeanA {}
+
+@Component
+public class BeanB implements MyInterface {}
+
+@Primary
+@Component
+public class PrimaryBean implements MyInterface {}
+```
+- Spring will pick the `PrimaryBean` if no `@Qualifier` is specified.
+- If there is no primary, Spring will throw an error if multiple beans are present.
+
+## 13. Compare `BeanFactory` and `ApplicationContext`:
+- `BeanFactory`:
+  - Lazy initialization.
+  - Basic, only used for bean instantiation and management.
+- `ApplicationContext`:
+  - Eager initialization.
+  - More advanced features such as event propagation, internationalization, and AOP support.
+
+## 14. Bean Scope in Spring:
+- **Singleton**: Default, a single instance for the entire Spring container.
+- **Prototype**: A new bean instance every time it is requested.
+- **Request**: A new bean for every HTTP request (Web applications only).
+- **Session**: A new bean for every HTTP session (Web applications only).
+
+```java
+@Scope("singleton")
+@Component
+public class SingletonBean {}
+
+@Scope("prototype")
+@Component
+public class PrototypeBean {}
+```
+
+## 15. Spring Application Example with Bean Registration and Autowiring
+```java
+@Configuration
+public class AppConfig {
+    @Bean
+    public MyBean myBean() {
+        return new MyBean();
+    }
+}
+
+@Component
+public class MyService {
+    @Autowired
+    private MyBean myBean;
+}
+```
+
+## 16. Builder Pattern Example:
+```java
+public class Person {
+    private String name;
+    private int age;
+
+    private Person(PersonBuilder builder) {
+        this.name = builder.name;
+        this.age = builder.age;
+    }
+
+    public static class PersonBuilder {
+        private String name;
+        private int age;
+
+        public PersonBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public PersonBuilder withAge(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(this);
+        }
+    }
+}
+```
