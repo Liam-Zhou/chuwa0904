@@ -44,3 +44,48 @@
 
 15. **@Transient**  
     Marks a field that should not be persisted to the database.
+
+16. **@Component**  
+    Marks a class as a Spring component for automatic scanning and registration.
+
+17. **@Service**  
+    Indicates that a class is a service in the service layer of the application.
+
+18. **@Repository**  
+    Indicates that a class is a Data Access Object (DAO) that interacts with the database.
+
+19. **@Controller**  
+    Marks a class as a Spring MVC controller to handle web requests.
+
+20. **@RestController**  
+    Combines `@Controller` and `@ResponseBody` to simplify RESTful web services.
+
+21. **@RequestMapping**  
+    Specifies the URL mapping for a controller method.
+
+22. **@GetMapping, @PostMapping, @PutMapping, @DeleteMapping**  
+    Shorthand for `@RequestMapping` for specific HTTP methods.
+
+23. **@Autowired**  
+    Automatically injects the dependent beans into a class.
+
+24. **@Qualifier**  
+    Specifies which bean to inject when multiple candidates are present.
+
+25. **@Primary**  
+    Indicates that a bean should be given preference when multiple candidates are present.
+
+26. **@Valid**  
+    Used to trigger validation on a method parameter or field.
+
+27. **@ExceptionHandler**  
+    Specifies a method to handle specific exceptions in a controller.
+
+28. **@ControllerAdvice**  
+    Provides global exception handling across multiple controllers.
+
+29. **@SpringBootApplication**  
+    A convenience annotation that combines `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
+
+30. **@PostConstruct**  
+    Marks a method to be executed after the bean's properties have been initialized.
