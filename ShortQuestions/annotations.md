@@ -74,3 +74,11 @@
 
 
 
+## hw10
+
+### @Resource(" {name} ")
+
+Get the bean by name.
+
+
+
