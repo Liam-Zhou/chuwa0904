@@ -1,4 +1,4 @@
-### **Core Spring Bean Management and IoC Annotations**:
+## **Core Spring Bean Management and IoC Annotations**
 - **@Component**: Marks a class as a Spring-managed bean.
 - **@Service**: Specialization of `@Component` for service layer beans.
 - **@Repository**: Marks the class as a Data Access Object (DAO) that interacts with the database.
@@ -9,7 +9,7 @@
 
 ---
 
-### **Dependency Injection Annotations**:
+## **Dependency Injection Annotations**
 - **@Autowired**: Automatically injects beans by type.
 - **@Qualifier**: Resolves ambiguity when multiple beans of the same type exist by specifying the bean by name.
 - **@Primary**: Marks one bean as the default when multiple beans of the same type exist.
@@ -18,31 +18,31 @@
 
 ---
 
-### **Scope and Lifecycle Annotations**:
+## **Scope and Lifecycle Annotations**
 - **@Scope**: Defines the scope of a bean (e.g., `singleton`, `prototype`, `request`, `session`).
 - **@PostConstruct**: Executes a method after bean initialization.
 - **@PreDestroy**: Executes a method before a bean is destroyed.
 
 ---
 
-### **Spring Boot Annotations**:
+## **Spring Boot Annotations**
 - **@SpringBootApplication**: Marks the main class of a Spring Boot application and combines `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
 
 ---
 
-### **Exception Handling Annotations**:
+## **Exception Handling Annotations**
 - **@ExceptionHandler**: Handles specific exceptions in Spring MVC controllers.
 - **@ControllerAdvice**: Allows global exception handling across multiple controllers.
 
 ---
 
-### **Validation and Request Annotations**:
+## **Validation and Request Annotations**
 - **@Valid**: Triggers validation for incoming request data.
 - **@RequestBody**: Binds the HTTP request body to a method parameter.
 
 ---
 
-### **Spring MVC Annotations**:
+## **Spring MVC Annotations**
 - **@RestController**: Combines `@Controller` and `@ResponseBody` to simplify REST API development.
 - **@RequestMapping**: Maps HTTP requests to handler methods (can be customized with HTTP methods like `@GetMapping`, `@PostMapping`, etc.).
 - **@GetMapping**: Maps HTTP GET requests for retrieving resources.
@@ -52,7 +52,7 @@
 
 ---
 
-### **JPA Annotations**:
+## **JPA Annotations**
 - **@Entity**: Declares a class as a JPA entity (mapped to a database table).
 - **@Table**: Specifies the table name and details of the table that the entity maps to.
 - **@Id**: Identifies the primary key in the entity.
@@ -63,7 +63,7 @@
 
 ---
 
-### **JPA Relationship Annotations**:
+## **JPA Relationship Annotations**
 - **@ManyToOne**: Establishes a many-to-one relationship between entities.
 - **@JoinColumn**: Specifies the foreign key column for the relationship.
 - **@ManyToMany**: Establishes a many-to-many relationship between entities.
@@ -71,22 +71,21 @@
 
 ---
 
-### **Query Annotations**:
+## **Query Annotations**
 - **@Query**: Allows defining custom queries using JPQL.
 - **@NamedQuery**: Declares a named JPQL query at the entity level.
 
 ---
 
-### **Transaction Annotations**:
+## **Transaction Annotations**
 - **@Transactional**: Ensures that the method or class runs within a database transaction.
 
 ---
 
-## **Summary of Use Cases**:
+## **Summary of Use Cases**
 - **Spring Core & IoC**: `@Component`, `@Service`, `@Repository`, `@Controller`, `@Bean`, `@Configuration`.
 - **Dependency Injection**: `@Autowired`, `@Qualifier`, `@Primary`, `@Resource`, `@Inject`.
 - **Spring Boot**: `@SpringBootApplication`.
 - **Exception Handling**: `@ExceptionHandler`, `@ControllerAdvice`.
 - **Web MVC**: `@RestController`, `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping`.
 - **JPA**: `@Entity`, `@Table`, `@Id`, `@GeneratedValue`, `@Column`, `@ManyToOne`, `@JoinColumn`.
-
