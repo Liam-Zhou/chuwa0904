@@ -94,7 +94,12 @@ If No Bean is Marked @Primary, Spring will choose according to the @Qualifier,or
 ### Question 13
 
 | Feature | Bean Factory | ApplicationContext |
-| Basic   | Basic IoC container, provides fundamental DI features.| Advanced IoC container, built on BeanFactory with more features|
+| -------- | ------- |------- |
+| Basic | Basic IoC container, provides fundamental DI features.| Advanced IoC container, built on BeanFactory with more features|
 |Initialization|Beans are created lazily|Beans are created eagerly (at startup) by default.|
 | Event Handling | No support for event handling.| Provides support for application events and listener registration.|
 | Automatic Bean Discovery | No automatic scanning; beans must be defined explicitly.| Supports component scanning, automatically detects beans annotated with @Component, @Service, etc.|  
+
+### Question 14
+1. **Singleton**: In the **Singleton** scope, Spring creates only **one instance** of the bean per Spring IoC container. The same instance is returned every time the bean is requested.
+2. **Prototype**: In the **Prototype** scope, a new instance of the bean is created every time the bean is requested from the Spring IoC container.
