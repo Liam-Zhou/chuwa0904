@@ -1,6 +1,6 @@
 ### 1. List all of the annotations you learned from class and homework to annotaitons.md
 
-see `/annotations.md`
+see `ShortQuestions/annotations.md`
 
 ### 2. Type out the code for the Comment feature of the class project.
 
