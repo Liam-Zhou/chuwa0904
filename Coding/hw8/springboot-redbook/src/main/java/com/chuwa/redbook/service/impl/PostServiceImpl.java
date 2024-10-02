@@ -4,12 +4,8 @@ import com.chuwa.redbook.dao.PostRepository;
 import com.chuwa.redbook.entity.Post;
 import com.chuwa.redbook.exception.ResourceNotFoundException;
 import com.chuwa.redbook.payload.PostDto;
-import com.chuwa.redbook.payload.PostResponse;
 import com.chuwa.redbook.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,9 +36,9 @@ public class PostServiceImpl implements PostService {
         return postDtos;
     }
 
-
     @Override
     public PostDto getPostById(long id) {
+
 
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
@@ -68,28 +64,6 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
-    @Override
-    public PostResponse getAllPost(int pageNo, int pageSize, String sortBy, String sortDir) {
-
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, sort);
-        Page<Post> pagePosts = postRepository.findAll(pageRequest);
-
-        List<Post> posts = pagePosts.getContent();
-        List<PostDto> postDtos = posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
-
-        PostResponse postResponse = new PostResponse();
-        postResponse.setContent(postDtos);
-        postResponse.setPageNo(pagePosts.getNumber());
-        postResponse.setPageSize(pagePosts.getSize());
-        postResponse.setTotalElements(pagePosts.getTotalElements());
-        postResponse.setTotalPages(pagePosts.getTotalPages());
-        postResponse.setLast(pagePosts.isLast());
-        return postResponse;
-    }
-
     private PostDto mapToDTO(Post post) {
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
@@ -107,23 +81,5 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
 
         return post;
-    }
-
-    @Override
-    public List<PostDto> getPostsByTitle(String title) {
-        List<Post> posts = postRepository.findByTitle(title);
-        return posts.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<PostDto> searchPostsByKeyword(String keyword) {
-        List<Post> posts = postRepository.findByTitleContaining(keyword);
-        return posts.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<PostDto> getPostsByTitleOrderedByDate(String title) {
-        List<Post> posts = postRepository.findByTitleOrderByCreateDateTimeDesc(title);
-        return posts.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 }
