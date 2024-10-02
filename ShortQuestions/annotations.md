@@ -80,5 +80,31 @@
 
 Get the bean by name.
 
+###  @PostConstruct
 
+Mark a method that would be executed after a bean constructed
+
+### @GetMapping @PostMapping
+
+
+
+## hw 11
+
+**@PreAuthorize**
+
+Define access control on methods  based on user roles or conditions. Simplify security constraints.
+
+~~~java
+@PreAuthorize("hasRole('ADMIN')")
+public void adminMethod() {
+// Only users with the 'ADMIN' role can execute this method
+	System.out.println("Admin method executed.");
+}
+
+@PreAuthorize("hasAuthority('READ_PRIVILEGE')")
+public void readData() {
+// Only users with 'READ_PRIVILEGE' authority can execute this method
+	System.out.println("Data read successfully.");
+}
+~~~
 
