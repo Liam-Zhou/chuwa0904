@@ -36,3 +36,12 @@
 * @EnableWebSecurity：Enables Spring Security's web security support.
 * @Secured: Used at the method level to specify which roles are allowed to execute a method.
 * @PreAuthorize: This annotation is more powerful than @Secured and allows you to use SpEL (Spring Expression Language) to define more complex access control expressions.
+
+### Spring AOP
+* @Aspect:  Declares a class as an aspect.
+* @Pointcut: Declares a reusable pointcut expression.
+* @Before: Advice that runs before a method execution.
+* @After: Advice that runs after a method execution, whether it completes successfully or throws an exception.
+* @AfterReturning: Advice that runs after a method successfully returns a result.
+* @AfterThrowing: Advice that runs after a method throws an exception.
+* @Around: Advice that runs around a method execution, allowing custom behavior before and after the method call.
