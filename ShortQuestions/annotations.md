@@ -108,3 +108,37 @@ public void readData() {
 }
 ~~~
 
+@PreFilter 
+
+
+
+@PostAuthorize 
+
+
+
+@PostFilter  
+
+
+
+@Secured
+
+
+
+@RolesAllowed
+
+
+
+## hw12
+
+Following controls the AOP running. 
+
+**Order**: running order 
+
+**Before advice**: Runs before something happens. For instance, a barista might check inventory before making coffee.
+
+**After returning advice**: Runs after a task is successfully completed, like cleaning up after a customer leaves.
+
+**After throwing advice**: Runs if something goes wrong, such as an apology or discount if a customer spills their drink.
+
+**Around advice**: Runs before and after an event, like a cashier’s process of greeting, taking payment, and saying goodbye.
+

@@ -15,15 +15,15 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner commandLineRunner(UserDao userDao) {
-		return runner-> {
-			// createService(userDao);
-			// readUser(userDao);
-			// updateUser(userDao);
-			// deleteUser(userDao);
-		};
-	}
+	// @Bean
+	// public CommandLineRunner commandLineRunner(UserDao userDao) {
+	// 	return runner-> {
+	// 		// createService(userDao);
+	// 		// readUser(userDao);
+	// 		// updateUser(userDao);
+	// 		// deleteUser(userDao);
+	// 	};
+	// }
 
 	private void deleteUser(UserDao userDao) {
 		userDao.delete(2);
