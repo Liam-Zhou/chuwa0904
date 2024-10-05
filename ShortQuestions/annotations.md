@@ -89,3 +89,61 @@
 
 30. **@PostConstruct**  
     Marks a method to be executed after the bean's properties have been initialized.
+
+31. **@PreAuthorize**  
+    Specifies permission expressions that must be satisfied before a method is invoked for method-level security.
+
+32. **@Secured**  
+    Specifies one or more roles that must be present to allow method invocation.
+
+33. **@RolesAllowed**  
+    Specifies the roles allowed to access a method, commonly related to Java EE security.
+
+34. **@PostAuthorize**  
+    Specifies permission expressions that must be satisfied after a method has been invoked for method-level security.
+
+35. **@EnableGlobalMethodSecurity**  
+    Enables global method security, allowing the use of `@PreAuthorize` and other security annotations.
+
+36. **@Aspect**  
+    Indicates that a class is an aspect in Aspect-Oriented Programming (AOP).
+
+37. **@Before**  
+    Specifies advice that runs before a join point.
+
+38. **@After**  
+    Specifies advice that runs after a join point, regardless of its outcome.
+
+39. **@AfterReturning**  
+    Specifies advice that runs after a join point completes successfully.
+
+40. **@AfterThrowing**  
+    Specifies advice that runs if a join point throws an exception.
+
+41. **@Pointcut**  
+    Defines a pointcut, which is an expression that matches join points.
+
+42. **@Around**  
+    Specifies advice that wraps around a join point, allowing control over when to proceed with the join point execution.
+
+43. **@Api**  
+    Used to annotate controller classes for generating corresponding API documentation.
+
+44. **@ApiOperation**  
+    Describes a single operation method, including its description, HTTP method, return value, etc.
+
+45. **@ApiParam**  
+    Describes information about method parameters, such as name, type, and whether it is required.
+
+46. **@ApiResponse**  
+    Describes the response information of a method, including status code and description.
+
+47. **@ApiResponses**  
+    Describes a collection of multiple responses.
+
+48. **@ApiModel**  
+    Describes model objects, typically used for complex objects in request or response bodies.
+
+49. **@ApiModelProperty**  
+    Describes information about model properties, including name, description, and whether it is required.
+
