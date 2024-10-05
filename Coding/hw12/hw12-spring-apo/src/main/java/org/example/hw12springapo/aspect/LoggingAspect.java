@@ -3,7 +3,6 @@ package org.example.hw12springapo.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
@@ -19,12 +18,7 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Pointcut("within(org.example.hw12springapo..*)")
-    public void applicationPackagePointcut() {
-        // Method is empty as this is just a Pointcut, the implementations are in the advices.
-    }
-
-    @Around("applicationPackagePointcut()")
+    @Around("within(org.example.hw12springapo..*)")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         try {
@@ -37,22 +31,22 @@ public class LoggingAspect {
         }
     }
 
-    @Before("applicationPackagePointcut()")
+    @Before("within(org.example.hw12springapo..*)")
     public void logBeforeMethod(JoinPoint joinPoint) {
         logger.info("About to execute: " + joinPoint.getSignature());
     }
 
-    @After("applicationPackagePointcut()")
+    @After("within(org.example.hw12springapo..*)")
     public void logAfterMethod(JoinPoint joinPoint) {
         logger.info("Finished executing: " + joinPoint.getSignature());
     }
 
-    @AfterReturning(pointcut = "applicationPackagePointcut()", returning = "result")
+    @AfterReturning(pointcut = "within(org.example.hw12springapo..*)", returning = "result")
     public void logMethodReturn(JoinPoint joinPoint, Object result) {
         logger.info(joinPoint.getSignature() + " returned with value: " + result);
     }
 
-    @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "error")
+    @AfterThrowing(pointcut = "within(org.example.hw12springapo..*)", throwing = "error")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
         logger.error("Exception in " + joinPoint.getSignature(), error);
     }
