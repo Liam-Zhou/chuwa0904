@@ -40,7 +40,7 @@ public class LoggingAspect {
         logger.info("Request URl:{} {}",request.getRequestURL().toString(),request.getMethod());
         logger.info("Request Method: {}, {}",signature.getDeclaringType(),functionName);
         long endTime = System.currentTimeMillis();
-        logger.info("Run time {}",endTime - startTime);
+        logger.info("Run time {} ms",endTime - startTime);
 
         return result;
     }
