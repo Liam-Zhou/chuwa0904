@@ -142,3 +142,15 @@ Following controls the AOP running.
 
 **Around advice**: Runs before and after an event, like a cashier’s process of greeting, taking payment, and saying goodbye.
 
+## hw13
+
+- **`@ParameterizedTest`**: This annotation marks a method as a parameterized test.
+
+- **`@ValueSource`** (or other parameter sources): Specifies the different inputs that will be used to invoke the test method.
+
+- **`@CsvSource`**: For comma-separated values (multiple parameters per test case).
+- **`@CsvFileSource`**: For loading CSV data from a file.
+- **`@MethodSource`**: For providing complex objects or values using a method.
+- **`@EnumSource`**: For testing with enum values.
+- **@Mock** creates mock objects that simulates the behavior of a real object by defaulting all method calls to return default value. The behavior can be defined using **stubbing**.
+- **@InjectMock** automatically inject mock objects (those annotated with @Mock or created manually with Mockito.mock()) into the class under  test.
