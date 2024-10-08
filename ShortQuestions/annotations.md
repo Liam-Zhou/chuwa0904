@@ -147,3 +147,47 @@
 49. **@ApiModelProperty**  
     Describes information about model properties, including name, description, and whether it is required.
 
+50. **@RunWith**  
+    Specifies a runner to use for the test class (e.g., JUnit).
+
+51. **@Mock**  
+    Creates a mock object for a given class or interface.
+
+52. **@Spy**  
+    Creates a spy object that wraps a real object, allowing for partial mocking.
+
+53. **@InjectMocks**  
+    Automatically injects mocks into the annotated class.
+
+54. **@BeforeAll**  
+    Indicates that a method should run once before all tests in the test class.
+
+55. **@BeforeEach**  
+    Indicates that a method should run before each test in the test class.
+
+56. **@Test**  
+    Marks a method as a test method.
+
+57. **@AfterEach**  
+    Indicates that a method should run after each test in the test class.
+
+58. **@AfterAll**  
+    Indicates that a method should run once after all tests in the test class.
+
+59. **@MockBean**  
+    Used to create and inject a mock bean into the Spring application context for testing.
+
+60. **@DirtiesContext**  
+    Indicates that the application context should be closed and removed after the test, ensuring a fresh context for subsequent tests.
+
+61. **@SpringBootTest**  
+    Indicates that the application context should be loaded for integration tests.
+
+62. **@WebMvcTest**  
+    Focuses on testing Spring MVC components (like controllers).
+
+63. **@DataJpaTest**  
+    Focuses on testing JPA components, configuring an in-memory database.
+
+64. **@RestClientTest**  
+    Focuses on testing REST clients and services.
