@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.service.impl</a> &gt; <span class="el_source">PostServiceImpl.java</span></div><h1>PostServiceImpl.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.service.impl;
+
+import com.chuwa.redbook.dao.PostRepository;
+import com.chuwa.redbook.entity.Post;
+import com.chuwa.redbook.exception.ResourceNotFoundException;
+import com.chuwa.redbook.payload.PostDto;
+import com.chuwa.redbook.payload.PostResponse;
+import com.chuwa.redbook.service.PostService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author b1go
+ * @date 8/22/22 6:56 PM
+ */
+@Service
+<span class="fc" id="L24">public class PostServiceImpl implements PostService {</span>
+
+    @Autowired
+    private PostRepository postRepository;
+
+    /**
+     * use this modelMapper to replace the mapToDto, mapToEntity methods.
+     */
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public PostDto createPost(PostDto postDto) {
+<span class="fc" id="L37">        System.out.println(&quot;Inside createPost()&quot;);</span>
+        // covert DTO to Entity
+<span class="fc" id="L39">        Post post = modelMapper.map(postDto, Post.class);</span>
+
+        // 调用Dao的save 方法，将entity的数据存储到数据库MySQL
+        // save()会返回存储在数据库中的数据
+<span class="fc" id="L43">        Post savedPost = postRepository.save(post);</span>
+
+        // 将save() 返回的数据转换成controller/前端 需要的数据，然后return给controller
+//        PostDto postResponse = mapToDTO(savedPost);
+
+<span class="fc" id="L48">        return modelMapper.map(savedPost, PostDto.class);</span>
+    }
+
+    /**
+     * 此处练习了lambda， stream API
+     * @return
+     */
+    @Override
+    public List&lt;PostDto&gt; getAllPost() {
+<span class="fc" id="L57">        System.out.println(&quot;Inside getAllPost()&quot;);</span>
+
+<span class="fc" id="L59">        List&lt;Post&gt; posts = postRepository.findAll();</span>
+<span class="fc" id="L60">        List&lt;PostDto&gt; postDtos = posts.stream().map(post -&gt; modelMapper.map(post, PostDto.class)).collect(Collectors.toList());</span>
+<span class="fc" id="L61">        return postDtos;</span>
+    }
+
+    /**
+     * 此处顺便练习Optional
+     * @param id
+     * @return
+     */
+    @Override
+    public PostDto getPostById(long id) {
+<span class="fc" id="L71">        System.out.println(&quot;Inside getPostById()&quot;);</span>
+<span class="pc" id="L72">        Post post = postRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, id));</span>
+
+<span class="fc" id="L74">        return modelMapper.map(post, PostDto.class);</span>
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto, long id) {
+<span class="fc" id="L79">        System.out.println(&quot;Inside updatePost()&quot;);</span>
+
+        //  Question, why do we need to find it out firstly?
+<span class="pc" id="L82">        Post post = postRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, id));</span>
+<span class="fc" id="L83">        post.setTitle(postDto.getTitle());</span>
+<span class="fc" id="L84">        post.setDescription(postDto.getDescription());</span>
+<span class="fc" id="L85">        post.setContent(postDto.getContent());</span>
+
+<span class="fc" id="L87">        Post updatePost = postRepository.save(post);</span>
+<span class="fc" id="L88">        return modelMapper.map(updatePost, PostDto.class);</span>
+    }
+
+    @Override
+    public void deletePostById(long id) {
+<span class="fc" id="L93">        System.out.println(&quot;Inside deletePostById()&quot;);</span>
+        //  Question, why do we need to find it out firstly?
+<span class="pc" id="L95">        Post post = postRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, id));</span>
+<span class="fc" id="L96">        postRepository.delete(post);</span>
+<span class="fc" id="L97">    }</span>
+
+    @Override
+    public PostResponse getAllPost(int pageNo, int pageSize, String sortBy, String sortDir) {
+<span class="fc" id="L101">        System.out.println(&quot;Inside getAllPost()&quot;);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()</span>
+<span class="fc" id="L103">                : Sort.by(sortBy).descending();</span>
+
+        // create pageable instance
+
+<span class="fc" id="L107">        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, sort);</span>
+<span class="fc" id="L108">        Page&lt;Post&gt; pagePosts = postRepository.findAll(pageRequest);</span>
+
+        // get content for page abject
+<span class="fc" id="L111">        List&lt;Post&gt; posts = pagePosts.getContent();</span>
+<span class="fc" id="L112">        List&lt;PostDto&gt; postDtos = posts.stream().map(post -&gt; modelMapper.map(post, PostDto.class)).collect(Collectors.toList());</span>
+
+<span class="fc" id="L114">        PostResponse postResponse = new PostResponse();</span>
+<span class="fc" id="L115">        postResponse.setContent(postDtos);</span>
+<span class="fc" id="L116">        postResponse.setPageNo(pagePosts.getNumber());</span>
+<span class="fc" id="L117">        postResponse.setPageSize(pagePosts.getSize());</span>
+<span class="fc" id="L118">        postResponse.setTotalElements(pagePosts.getTotalElements());</span>
+<span class="fc" id="L119">        postResponse.setTotalPages(pagePosts.getTotalPages());</span>
+<span class="fc" id="L120">        postResponse.setLast(pagePosts.isLast());</span>
+<span class="fc" id="L121">        return postResponse;</span>
+    }
+
+    public static String postServiceUtil() {
+<span class="nc" id="L125">        System.out.println(&quot;Inside postServiceUtil...&quot;);</span>
+<span class="nc" id="L126">        return &quot;postServiceUtil&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

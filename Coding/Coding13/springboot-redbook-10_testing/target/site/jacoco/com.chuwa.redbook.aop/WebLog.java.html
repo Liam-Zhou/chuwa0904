@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebLog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.aop</a> &gt; <span class="el_source">WebLog.java</span></div><h1>WebLog.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.aop;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * Controller层的日志封装类
+ * Created by macro on 2018/4/26.
+ */
+<span class="nc" id="L10">@Data</span>
+<span class="nc bnc" id="L11" title="All 94 branches missed.">@EqualsAndHashCode(callSuper = false)</span>
+public class WebLog {
+    /**
+     * 操作描述
+     */
+<span class="nc" id="L16">    private String description;</span>
+
+    /**
+     * 操作用户
+     */
+<span class="nc" id="L21">    private String username;</span>
+
+    /**
+     * 操作时间
+     */
+<span class="nc" id="L26">    private Long startTime;</span>
+
+    /**
+     * 消耗时间
+     */
+<span class="nc" id="L31">    private Integer spendTime;</span>
+
+    /**
+     * 根路径
+     */
+<span class="nc" id="L36">    private String basePath;</span>
+
+    /**
+     * URI
+     */
+<span class="nc" id="L41">    private String uri;</span>
+
+    /**
+     * URL
+     */
+<span class="nc" id="L46">    private String url;</span>
+
+    /**
+     * 请求类型
+     */
+<span class="nc" id="L51">    private String method;</span>
+
+    /**
+     * IP地址
+     */
+<span class="nc" id="L56">    private String ip;</span>
+
+    /**
+     * 请求参数
+     */
+<span class="nc" id="L61">    private Object parameter;</span>
+
+    /**
+     * 返回结果
+     */
+<span class="nc" id="L66">    private Object result;</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

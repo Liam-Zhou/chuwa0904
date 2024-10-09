@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.payload</a> &gt; <span class="el_source">CommentDto.java</span></div><h1>CommentDto.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.payload;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Objects;
+
+/**
+ * @author b1go
+ * @date 6/23/22 11:10 PM
+ */
+@Api(value = &quot;Comment model info&quot;)
+public class CommentDto {
+
+    @ApiModelProperty(value = &quot;Comment id&quot;)
+    private long id;
+
+    @ApiModelProperty(value = &quot;Comment name&quot;)
+    @NotEmpty(message = &quot;Name should not be null or empty&quot;)
+    private String name;
+
+    @ApiModelProperty(value = &quot;Comment email&quot;)
+    @NotEmpty(message = &quot;Email should not be null or empty&quot;)
+    @Email
+    private String email;
+
+    @ApiModelProperty(value = &quot;Comment body&quot;)
+    @NotEmpty
+    @Size(min = 5, message = &quot;Comment body must be minimum 5 characters&quot;)
+    private String body;
+
+<span class="fc" id="L35">    public CommentDto() {</span>
+<span class="fc" id="L36">    }</span>
+
+<span class="fc" id="L38">    public CommentDto(String name, String email, String body) {</span>
+<span class="fc" id="L39">        this.name = name;</span>
+<span class="fc" id="L40">        this.email = email;</span>
+<span class="fc" id="L41">        this.body = body;</span>
+<span class="fc" id="L42">    }</span>
+
+    public CommentDto(long id, String name, String email, String body) {
+<span class="fc" id="L45">        this(name, email, body);</span>
+<span class="fc" id="L46">        this.id = id;</span>
+<span class="fc" id="L47">    }</span>
+
+    public long getId() {
+<span class="fc" id="L50">        return id;</span>
+    }
+
+    public void setId(long id) {
+<span class="nc" id="L54">        this.id = id;</span>
+<span class="nc" id="L55">    }</span>
+
+    public String getName() {
+<span class="fc" id="L58">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L62">        this.name = name;</span>
+<span class="fc" id="L63">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L66">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L70">        this.email = email;</span>
+<span class="fc" id="L71">    }</span>
+
+    public String getBody() {
+<span class="fc" id="L74">        return body;</span>
+    }
+
+    public void setBody(String body) {
+<span class="fc" id="L78">        this.body = body;</span>
+<span class="fc" id="L79">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L83">        return &quot;CommentDto{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, email='&quot; + email + '\'' +
+                &quot;, body='&quot; + body + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L94">            return true;</span>
+        }
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (!(o instanceof CommentDto)) {</span>
+<span class="nc" id="L97">            return false;</span>
+        }
+<span class="nc" id="L99">        CommentDto that = (CommentDto) o;</span>
+<span class="nc bnc" id="L100" title="All 8 branches missed.">        return getId() == that.getId() &amp;&amp; getName().equals(that.getName()) &amp;&amp; getEmail().equals(that.getEmail()) &amp;&amp; getBody().equals(that.getBody());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L105">        return Objects.hash(getId(), getName(), getEmail(), getBody());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.payload</a> &gt; <span class="el_source">PostResponse.java</span></div><h1>PostResponse.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.payload;
+
+import java.util.List;
+
+/**
+ * @author b1go
+ * @date 6/22/22 2:15 AM
+ */
+public class PostResponse {
+    private List&lt;PostDto&gt; content;
+    private int pageNo;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
+    private boolean last;
+
+<span class="fc" id="L17">    public PostResponse() {</span>
+<span class="fc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public PostResponse(List&lt;PostDto&gt; content, int pageNo, int pageSize, long totalElements, int totalPages, boolean last) {</span>
+<span class="nc" id="L21">        this.content = content;</span>
+<span class="nc" id="L22">        this.pageNo = pageNo;</span>
+<span class="nc" id="L23">        this.pageSize = pageSize;</span>
+<span class="nc" id="L24">        this.totalElements = totalElements;</span>
+<span class="nc" id="L25">        this.totalPages = totalPages;</span>
+<span class="nc" id="L26">        this.last = last;</span>
+<span class="nc" id="L27">    }</span>
+
+    public List&lt;PostDto&gt; getContent() {
+<span class="fc" id="L30">        return content;</span>
+    }
+
+    public void setContent(List&lt;PostDto&gt; content) {
+<span class="fc" id="L34">        this.content = content;</span>
+<span class="fc" id="L35">    }</span>
+
+    public int getPageNo() {
+<span class="fc" id="L38">        return pageNo;</span>
+    }
+
+    public void setPageNo(int pageNo) {
+<span class="fc" id="L42">        this.pageNo = pageNo;</span>
+<span class="fc" id="L43">    }</span>
+
+    public int getPageSize() {
+<span class="fc" id="L46">        return pageSize;</span>
+    }
+
+    public void setPageSize(int pageSize) {
+<span class="fc" id="L50">        this.pageSize = pageSize;</span>
+<span class="fc" id="L51">    }</span>
+
+    public long getTotalElements() {
+<span class="fc" id="L54">        return totalElements;</span>
+    }
+
+    public void setTotalElements(long totalElements) {
+<span class="fc" id="L58">        this.totalElements = totalElements;</span>
+<span class="fc" id="L59">    }</span>
+
+    public int getTotalPages() {
+<span class="fc" id="L62">        return totalPages;</span>
+    }
+
+    public void setTotalPages(int totalPages) {
+<span class="fc" id="L66">        this.totalPages = totalPages;</span>
+<span class="fc" id="L67">    }</span>
+
+    public boolean isLast() {
+<span class="fc" id="L70">        return last;</span>
+    }
+
+    public void setLast(boolean last) {
+<span class="fc" id="L74">        this.last = last;</span>
+<span class="fc" id="L75">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L79">        return &quot;PostResponse{&quot; +</span>
+                &quot;content=&quot; + content +
+                &quot;, pageNo=&quot; + pageNo +
+                &quot;, pageSize=&quot; + pageSize +
+                &quot;, totalElements=&quot; + totalElements +
+                &quot;, totalPages=&quot; + totalPages +
+                &quot;, last=&quot; + last +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.service.impl</a> &gt; <span class="el_source">CommentServiceImpl.java</span></div><h1>CommentServiceImpl.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.service.impl;
+import com.chuwa.redbook.dao.CommentRepository;
+import com.chuwa.redbook.dao.PostRepository;
+import com.chuwa.redbook.entity.Comment;
+import com.chuwa.redbook.entity.Post;
+import com.chuwa.redbook.exception.BlogAPIException;
+import com.chuwa.redbook.exception.ResourceNotFoundException;
+import com.chuwa.redbook.payload.CommentDto;
+import com.chuwa.redbook.service.CommentService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+<span class="fc" id="L19">public class CommentServiceImpl implements CommentService {</span>
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Override
+    public CommentDto createComment(long postId, CommentDto commentDto) {
+        // Validate input
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (commentDto == null) {</span>
+<span class="fc" id="L31">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment data cannot be null&quot;);</span>
+        }
+
+        // Convert DTO to entity
+<span class="fc" id="L35">        Comment comment = commentServiceMapperUtil(commentDto);</span>
+
+        // Retrieve post entity by id
+<span class="fc" id="L38">        Post post = postRepository.findById(postId)</span>
+<span class="pc" id="L39">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, postId));</span>
+
+        // Set post to comment entity
+<span class="fc" id="L42">        comment.setPost(post);</span>
+
+        // Save comment entity to DB
+<span class="fc" id="L45">        Comment savedComment = commentRepository.save(comment);</span>
+
+        // Convert saved comment entity to DTO and return
+<span class="fc" id="L48">        return commentServiceMapperUtil(savedComment);</span>
+    }
+
+    @Override
+    public List&lt;CommentDto&gt; getCommentsByPostId(long postId) {
+        // Check if post exists
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (!postRepository.existsById(postId)) {</span>
+<span class="nc" id="L55">            throw new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, postId);</span>
+        }
+
+        // Retrieve comments by postId
+<span class="fc" id="L59">        List&lt;Comment&gt; comments = commentRepository.findByPostId(postId);</span>
+
+        // Handle case if no comments are found
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (comments.isEmpty()) {</span>
+<span class="fc" id="L63">            throw new BlogAPIException(HttpStatus.NOT_FOUND, &quot;No comments found for the post&quot;);</span>
+        }
+
+        // Convert list of comment entities to list of comment DTOs
+<span class="fc" id="L67">        return comments.stream()</span>
+<span class="fc" id="L68">                .map(CommentServiceImpl::commentServiceMapperUtil)</span>
+<span class="fc" id="L69">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public CommentDto getCommentById(Long postId, Long commentId) {
+        // Retrieve post and comment entities by id
+<span class="fc" id="L75">        Post post = postRepository.findById(postId)</span>
+<span class="pc" id="L76">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, postId));</span>
+
+<span class="fc" id="L78">        Comment comment = commentRepository.findById(commentId)</span>
+<span class="pc" id="L79">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comment&quot;, &quot;id&quot;, commentId));</span>
+
+        // Validate if comment belongs to the post
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (!comment.getPost().getId().equals(post.getId())) {</span>
+<span class="fc" id="L83">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment does not belong to post&quot;);</span>
+        }
+
+        // Convert comment entity to DTO
+<span class="fc" id="L87">        return commentServiceMapperUtil(comment);</span>
+    }
+
+    @Override
+    public CommentDto updateComment(Long postId, Long commentId, CommentDto commentDtoRequest) {
+        // Validate input
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (commentDtoRequest == null) {</span>
+<span class="nc" id="L94">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment update data cannot be null&quot;);</span>
+        }
+
+        // Retrieve post and comment entities by id
+<span class="fc" id="L98">        Post post = postRepository.findById(postId)</span>
+<span class="pc" id="L99">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, postId));</span>
+
+<span class="fc" id="L101">        Comment comment = commentRepository.findById(commentId)</span>
+<span class="pc" id="L102">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comment&quot;, &quot;id&quot;, commentId));</span>
+
+        // Validate if comment belongs to the post
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (!comment.getPost().getId().equals(post.getId())) {</span>
+<span class="nc" id="L106">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment does not belong to post&quot;);</span>
+        }
+
+        // Update comment fields
+<span class="fc" id="L110">        comment.setName(commentDtoRequest.getName());</span>
+<span class="fc" id="L111">        comment.setEmail(commentDtoRequest.getEmail());</span>
+<span class="fc" id="L112">        comment.setBody(commentDtoRequest.getBody());</span>
+
+        // Save updated comment entity to DB
+<span class="fc" id="L115">        Comment updatedComment = commentRepository.save(comment);</span>
+
+        // Convert updated comment entity to DTO
+<span class="fc" id="L118">        return commentServiceMapperUtil(updatedComment);</span>
+    }
+
+    @Override
+    public void deleteComment(Long postId, Long commentId) {
+        // Retrieve post and comment entities by id
+<span class="fc" id="L124">        Post post = postRepository.findById(postId)</span>
+<span class="pc" id="L125">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Post&quot;, &quot;id&quot;, postId));</span>
+
+<span class="fc" id="L127">        Comment comment = commentRepository.findById(commentId)</span>
+<span class="pc" id="L128">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comment&quot;, &quot;id&quot;, commentId));</span>
+
+        // Validate if comment belongs to the post
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (!comment.getPost().getId().equals(post.getId())) {</span>
+<span class="nc" id="L132">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment does not belong to post&quot;);</span>
+        }
+
+        // Delete comment from DB
+<span class="fc" id="L136">        commentRepository.delete(comment);</span>
+<span class="fc" id="L137">    }</span>
+
+    public static CommentDto commentServiceMapperUtil(Comment comment) {
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (comment == null) {</span>
+<span class="nc" id="L141">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment entity cannot be null&quot;);</span>
+        }
+        //return new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody(), comment.getPost().getId());
+<span class="fc" id="L144">        return new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody());</span>
+    }
+
+    public static Comment commentServiceMapperUtil(CommentDto commentDto) {
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (commentDto == null) {</span>
+<span class="nc" id="L149">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Comment DTO cannot be null&quot;);</span>
+        }
+//        return new Comment(commentDto.getName(), commentDto.getEmail(), commentDto.getBody());
+<span class="fc" id="L152">        return new Comment(commentDto.getId(),commentDto.getName(), commentDto.getEmail(), commentDto.getBody());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

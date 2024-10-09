@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtTokenProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.security</a> &gt; <span class="el_source">JwtTokenProvider.java</span></div><h1>JwtTokenProvider.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.security;
+
+
+import com.chuwa.redbook.exception.BlogAPIException;
+import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+/**
+ * @author b1go
+ * @date 6/26/22 9:18 PM
+ */
+@Component
+<span class="nc" id="L18">public class JwtTokenProvider {</span>
+
+    @Value(&quot;${app.jwt-secret}&quot;)
+    private String jwtSecret;
+    @Value(&quot;${app.jwt-expiration-milliseconds}&quot;)
+    private int jwtExpirationInMs;
+
+    /**
+     * generate token
+     * @param authentication
+     * @return
+     */
+    public String generateToken(Authentication authentication) {
+<span class="nc" id="L31">        String username = authentication.getName();</span>
+<span class="nc" id="L32">        Date currentDate = new Date();</span>
+<span class="nc" id="L33">        Date expireDate = new Date(currentDate.getTime() + jwtExpirationInMs);</span>
+
+<span class="nc" id="L35">        String token = Jwts.builder()</span>
+<span class="nc" id="L36">                .setSubject(username)</span>
+<span class="nc" id="L37">                .setIssuedAt(new Date())</span>
+<span class="nc" id="L38">                .setExpiration(expireDate)</span>
+<span class="nc" id="L39">                .signWith(SignatureAlgorithm.HS512, jwtSecret)</span>
+<span class="nc" id="L40">                .compact();</span>
+
+<span class="nc" id="L42">        return token;</span>
+    }
+
+    /**
+     * get username from the token
+     * @param token
+     * @return
+     */
+    public String getUsernameFromJWT(String token) {
+<span class="nc" id="L51">        Claims claims = Jwts.parser()</span>
+<span class="nc" id="L52">                .setSigningKey(jwtSecret)</span>
+<span class="nc" id="L53">                .parseClaimsJws(token)</span>
+<span class="nc" id="L54">                .getBody();</span>
+
+<span class="nc" id="L56">        return claims.getSubject();</span>
+    }
+
+    /**
+     * validate JWT token
+     * @param token
+     * @return
+     */
+    public boolean validateToken(String token) {
+        try{
+<span class="nc" id="L66">            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);</span>
+<span class="nc" id="L67">            return true;</span>
+<span class="nc" id="L68">        }catch (SignatureException ex){</span>
+<span class="nc" id="L69">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Invalid JWT signature&quot;);</span>
+<span class="nc" id="L70">        } catch (MalformedJwtException ex) {</span>
+<span class="nc" id="L71">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Invalid JWT token&quot;);</span>
+<span class="nc" id="L72">        } catch (ExpiredJwtException ex) {</span>
+<span class="nc" id="L73">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Expired JWT token&quot;);</span>
+<span class="nc" id="L74">        } catch (UnsupportedJwtException ex) {</span>
+<span class="nc" id="L75">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;Unsupported JWT token&quot;);</span>
+<span class="nc" id="L76">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L77">            throw new BlogAPIException(HttpStatus.BAD_REQUEST, &quot;JWT claims string is empty.&quot;);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

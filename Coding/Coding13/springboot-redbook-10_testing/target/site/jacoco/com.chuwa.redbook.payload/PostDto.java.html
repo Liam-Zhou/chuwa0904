@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.payload</a> &gt; <span class="el_source">PostDto.java</span></div><h1>PostDto.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.payload;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+/**
+ * @author b1go
+ * @date 6/16/22 11:52 PM
+ */
+@ApiModel(description = &quot;Post model information&quot;)
+<span class="fc" id="L16">public class PostDto {</span>
+    @ApiModelProperty(value = &quot;Blog post id&quot;)
+    private long id;
+    /**
+     * 1. title should not be null or empty
+     * 2. title should have at least 2 characters
+     * Question, our database have set it as nullable=false,
+     * why do we need to set validation here? what is the benefits?
+     */
+    @ApiModelProperty(value = &quot;Blog post title&quot;)
+    @NotEmpty
+    @Size(min = 2, message = &quot;Post title should have at least 2 characters&quot;)
+    private String title;
+
+    @ApiModelProperty(value = &quot;Blog post description&quot;)
+    @NotEmpty
+    @Size(min = 10, message = &quot;Post description should have at least 10 characters&quot;)
+    private String description;
+
+    @ApiModelProperty(value = &quot;Blog post content&quot;)
+    @NotEmpty
+    private String content;
+
+    private Set&lt;CommentDto&gt; comments;
+    private LocalDateTime createDateTime;
+    private LocalDateTime updateDateTime;
+
+    public long getId() {
+<span class="nc" id="L44">        return id;</span>
+    }
+
+    public void setId(long id) {
+<span class="fc" id="L48">        this.id = id;</span>
+<span class="fc" id="L49">    }</span>
+
+    public String getTitle() {
+<span class="fc" id="L52">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="fc" id="L56">        this.title = title;</span>
+<span class="fc" id="L57">    }</span>
+
+    public String getDescription() {
+<span class="fc" id="L60">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L64">        this.description = description;</span>
+<span class="fc" id="L65">    }</span>
+
+    public String getContent() {
+<span class="fc" id="L68">        return content;</span>
+    }
+
+    public void setContent(String content) {
+<span class="fc" id="L72">        this.content = content;</span>
+<span class="fc" id="L73">    }</span>
+
+    public Set&lt;CommentDto&gt; getComments() {
+<span class="nc" id="L76">        return comments;</span>
+    }
+
+    public void setComments(Set&lt;CommentDto&gt; comments) {
+<span class="nc" id="L80">        this.comments = comments;</span>
+<span class="nc" id="L81">    }</span>
+
+    public LocalDateTime getCreateDateTime() {
+<span class="nc" id="L84">        return createDateTime;</span>
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+<span class="nc" id="L88">        this.createDateTime = createDateTime;</span>
+<span class="nc" id="L89">    }</span>
+
+    public LocalDateTime getUpdateDateTime() {
+<span class="nc" id="L92">        return updateDateTime;</span>
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+<span class="nc" id="L96">        this.updateDateTime = updateDateTime;</span>
+<span class="nc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

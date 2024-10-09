@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityDBJWTConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.config.security</a> &gt; <span class="el_source">SecurityDBJWTConfig.java</span></div><h1>SecurityDBJWTConfig.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.config.security;
+
+import com.chuwa.redbook.security.CustomUserDetailsService;
+import com.chuwa.redbook.security.JwtAuthenticationEntryPoint;
+import com.chuwa.redbook.security.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+/**
+ * @author b1go
+ * @date 7/1/22 3:46 PM
+ */
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+<span class="nc" id="L28">public class SecurityDBJWTConfig extends WebSecurityConfigurerAdapter {</span>
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+<span class="nc" id="L38">        return new JwtAuthenticationFilter();</span>
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+<span class="nc" id="L43">        return new BCryptPasswordEncoder();</span>
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+<span class="nc" id="L48">        http</span>
+<span class="nc" id="L49">                .csrf().disable()</span>
+<span class="nc" id="L50">                .exceptionHandling()</span>
+<span class="nc" id="L51">                .authenticationEntryPoint(authenticationEntryPoint)</span>
+<span class="nc" id="L52">                .and()</span>
+<span class="nc" id="L53">                .sessionManagement()</span>
+<span class="nc" id="L54">                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)</span>
+<span class="nc" id="L55">                .and()</span>
+<span class="nc" id="L56">                .authorizeRequests()</span>
+<span class="nc" id="L57">                .antMatchers(&quot;/api/v1/auth/**&quot;).permitAll()</span>
+<span class="nc" id="L58">                .and()</span>
+<span class="nc" id="L59">                .authorizeRequests()</span>
+<span class="nc" id="L60">                .antMatchers(HttpMethod.POST,&quot;/api/v1/**&quot;).hasRole(&quot;ADMIN&quot;)</span>
+<span class="nc" id="L61">                .and()</span>
+<span class="nc" id="L62">                .authorizeRequests((authorize) -&gt; authorize</span>
+<span class="nc" id="L63">                        .antMatchers(&quot;/api/v1/auth/**&quot;).permitAll()</span>
+<span class="nc" id="L64">                        .antMatchers(HttpMethod.GET, &quot;/api/v1/**&quot;).permitAll()</span>
+<span class="nc" id="L65">                        .antMatchers(HttpMethod.POST,&quot;/api/v1/**&quot;).hasRole(&quot;ADMIN&quot;)</span>
+<span class="nc" id="L66">                        .antMatchers(&quot;/v2/api-docs/**&quot;).permitAll()</span>
+<span class="nc" id="L67">                        .antMatchers(&quot;/swagger-ui/**&quot;).permitAll()</span>
+<span class="nc" id="L68">                        .antMatchers(&quot;/swagger-resources/**&quot;).permitAll()</span>
+<span class="nc" id="L69">                        .antMatchers(&quot;/swagger-ui.html&quot;).permitAll()</span>
+<span class="nc" id="L70">                        .antMatchers(&quot;/webjars/**&quot;).permitAll()</span>
+<span class="nc" id="L71">                        .anyRequest()</span>
+<span class="nc" id="L72">                        .authenticated()</span>
+                );
+
+<span class="nc" id="L75">        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);</span>
+<span class="nc" id="L76">    }</span>
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+<span class="nc" id="L80">        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());</span>
+<span class="nc" id="L81">    }</span>
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+<span class="nc" id="L86">        return super.authenticationManagerBean();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

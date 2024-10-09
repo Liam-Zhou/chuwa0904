@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.controller</a> &gt; <span class="el_source">CommentController.java</span></div><h1>CommentController.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.controller;
+
+import com.chuwa.redbook.payload.CommentDto;
+import com.chuwa.redbook.service.CommentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+/**
+ * @author b1go
+ * @date 6/23/22 11:30 PM
+ */
+@Api(value = &quot;CRUD REST APIs for Comment Resource&quot;)
+@RestController
+@RequestMapping(&quot;/api/v1&quot;)
+<span class="nc" id="L23">public class CommentController {</span>
+
+    /**
+     * TODO: Questions
+     * why intellij give us this warning? constructor injection.
+     * how many ways we can do Dependency Injection?
+     * which way is the best one?
+     */
+    @Autowired
+    private CommentService commentService;
+
+    /**
+     * TODO: Questions
+     * 当我们浏览小红书时候，点开一篇文章，请问获得这篇文章的内容，是用的哪个API？
+     * 看到大家争论库里历史地位是否超越科比，你要写评论回应，当你的评论提交时候，会call哪个API？
+     * &lt;p&gt;
+     * 此时此刻，思考为什么post的ID是pathVariable 而不是request parameter?
+     */
+    @ApiOperation(value = &quot;Create Comment REST API&quot;)
+    @PostMapping(&quot;/posts/{postId}/comments&quot;)
+    public ResponseEntity&lt;CommentDto&gt; createComment(@PathVariable(value = &quot;postId&quot;) long id,
+                                                    @Valid @RequestBody CommentDto commentDto) {
+<span class="nc" id="L45">        return new ResponseEntity&lt;&gt;(commentService.createComment(id, commentDto), HttpStatus.CREATED);</span>
+    }
+
+    @ApiOperation(value = &quot;Get All Comments by Post ID REST API&quot;)
+    @GetMapping(&quot;/posts/{postId}/comments&quot;)
+    public List&lt;CommentDto&gt; getCommentsByPostId(@PathVariable(value = &quot;postId&quot;) Long postId) {
+<span class="nc" id="L51">        return commentService.getCommentsByPostId(postId);</span>
+    }
+
+    @ApiOperation(value = &quot;Get single Comment by ID REST API&quot;)
+    @GetMapping(&quot;/posts/{postId}/comments/{id}&quot;)
+    public ResponseEntity&lt;CommentDto&gt; getCommentsById(
+            @PathVariable(value = &quot;postId&quot;) Long postId,
+            @PathVariable(value = &quot;id&quot;) Long commentId) {
+
+<span class="nc" id="L60">        CommentDto commentDto = commentService.getCommentById(postId, commentId);</span>
+<span class="nc" id="L61">        return new ResponseEntity&lt;&gt;(commentDto, HttpStatus.OK);</span>
+    }
+
+    @ApiOperation(value = &quot;Update single Comment by ID REST API&quot;)
+    @PutMapping(&quot;/posts/{postId}/comments/{id}&quot;)
+    public ResponseEntity&lt;CommentDto&gt; updateComment(@PathVariable(value = &quot;postId&quot;) Long postId,
+                                                    @PathVariable(value = &quot;id&quot;) Long commentId,
+                                                    @Valid @RequestBody CommentDto commentDto) {
+<span class="nc" id="L69">        CommentDto updateComment = commentService.updateComment(postId, commentId, commentDto);</span>
+<span class="nc" id="L70">        return new ResponseEntity&lt;&gt;(updateComment, HttpStatus.OK);</span>
+    }
+
+    @ApiOperation(value = &quot;Delete single Comment by ID REST API&quot;)
+    @DeleteMapping(&quot;/posts/{postId}/comments/{id}&quot;)
+    public ResponseEntity&lt;String&gt; deleteComment(@PathVariable(value = &quot;postId&quot;) Long postId,
+                                                @PathVariable(value = &quot;id&quot;) Long commentId) {
+<span class="nc" id="L77">        commentService.deleteComment(postId, commentId);</span>
+
+<span class="nc" id="L79">        return new ResponseEntity&lt;&gt;(&quot;Comment deleted Successfully&quot;, HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

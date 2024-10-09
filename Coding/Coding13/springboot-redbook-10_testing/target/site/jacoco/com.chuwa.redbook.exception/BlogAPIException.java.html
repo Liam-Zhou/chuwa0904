@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlogAPIException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.exception</a> &gt; <span class="el_source">BlogAPIException.java</span></div><h1>BlogAPIException.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * @author b1go
+ * @date 6/24/22 4:43 PM
+ */
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class BlogAPIException extends RuntimeException {
+    private HttpStatus httpStatus;
+    private String message;
+
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+<span class="fc" id="L20">    public BlogAPIException(HttpStatus httpStatus, String message) {</span>
+<span class="fc" id="L21">        this.httpStatus = httpStatus;</span>
+<span class="fc" id="L22">        this.message = message;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Constructs a new runtime exception with the specified detail message.
+     * The cause is not initialized, and may subsequently be initialized by a
+     * call to {@link #initCause}.
+     *
+     * @param message the detail message. The detail message is saved for
+     *                later retrieval by the {@link #getMessage()} method.
+     */
+    public BlogAPIException(String message, HttpStatus httpStatus, String message1) {
+<span class="nc" id="L34">        super(message);</span>
+<span class="nc" id="L35">        this.httpStatus = httpStatus;</span>
+<span class="nc" id="L36">        this.message = message1;</span>
+<span class="nc" id="L37">    }</span>
+
+    public HttpStatus getHttpStatus() {
+<span class="nc" id="L40">        return httpStatus;</span>
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+<span class="nc" id="L44">        this.httpStatus = httpStatus;</span>
+<span class="nc" id="L45">    }</span>
+
+    @Override
+    public String getMessage() {
+<span class="fc" id="L49">        return message;</span>
+    }
+
+    public void setMessage(String message) {
+<span class="nc" id="L53">        this.message = message;</span>
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
