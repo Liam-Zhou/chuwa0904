@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Comment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.entity</a> &gt; <span class="el_source">Comment.java</span></div><h1>Comment.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+/**
+ * @author b1go
+ * @date 6/23/22 10:46 PM
+ */
+@Entity
+@Table(name = &quot;comments&quot;)
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @JsonProperty(&quot;name&quot;)
+    private String name;
+    private String email;
+    private String body;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;post_id&quot;, nullable = false)
+    private Post post;
+
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
+
+    public Post getPost() {
+<span class="fc" id="L37">        return post;</span>
+    }
+
+    public void setPost(Post post) {
+<span class="fc" id="L41">        this.post = post;</span>
+<span class="fc" id="L42">    }</span>
+
+<span class="fc" id="L44">    public Comment() {</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc" id="L47">    public Comment(long id, String name, String email, String body) {</span>
+<span class="fc" id="L48">        this.id = id;</span>
+<span class="fc" id="L49">        this.name = name;</span>
+<span class="fc" id="L50">        this.email = email;</span>
+<span class="fc" id="L51">        this.body = body;</span>
+<span class="fc" id="L52">    }</span>
+
+    public long getId() {
+<span class="fc" id="L55">        return id;</span>
+    }
+
+    public void setId(long id) {
+<span class="fc" id="L59">        this.id = id;</span>
+<span class="fc" id="L60">    }</span>
+
+    public String getName() {
+<span class="fc" id="L63">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L67">        this.name = name;</span>
+<span class="fc" id="L68">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L71">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L75">        this.email = email;</span>
+<span class="fc" id="L76">    }</span>
+
+    public String getBody() {
+<span class="fc" id="L79">        return body;</span>
+    }
+
+    public void setBody(String body) {
+<span class="fc" id="L83">        this.body = body;</span>
+<span class="fc" id="L84">    }</span>
+
+    public LocalDateTime getCreateDateTime() {
+<span class="nc" id="L87">        return createDateTime;</span>
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+<span class="nc" id="L91">        this.createDateTime = createDateTime;</span>
+<span class="nc" id="L92">    }</span>
+
+    public LocalDateTime getUpdateDateTime() {
+<span class="nc" id="L95">        return updateDateTime;</span>
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+<span class="nc" id="L99">        this.updateDateTime = updateDateTime;</span>
+<span class="nc" id="L100">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L104">        return &quot;Comment{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, email='&quot; + email + '\'' +
+                &quot;, body='&quot; + body + '\'' +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

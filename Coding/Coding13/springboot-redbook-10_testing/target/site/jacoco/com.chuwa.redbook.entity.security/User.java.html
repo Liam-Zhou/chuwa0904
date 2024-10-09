@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.entity.security</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.entity.security;
+
+import javax.persistence.*;
+import java.util.Set;
+
+/**
+ * @author b1go
+ * @date 6/26/22 3:37 PM
+ */
+@Entity
+@Table(name = &quot;users&quot;, uniqueConstraints = {
+        @UniqueConstraint(columnNames = {&quot;account&quot;}),
+        @UniqueConstraint(columnNames = {&quot;email&quot;})
+})
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    private String account;
+    private String email;
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = &quot;user_roles&quot;,
+            joinColumns = @JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;id&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;role_id&quot;, referencedColumnName = &quot;id&quot;)
+    )
+    private Set&lt;Role&gt; roles;
+
+<span class="fc" id="L32">    public User() {</span>
+<span class="fc" id="L33">    }</span>
+
+<span class="nc" id="L35">    public User(long id, String name, String account, String email, String password, Set&lt;Role&gt; roles) {</span>
+<span class="nc" id="L36">        this.id = id;</span>
+<span class="nc" id="L37">        this.name = name;</span>
+<span class="nc" id="L38">        this.account = account;</span>
+<span class="nc" id="L39">        this.email = email;</span>
+<span class="nc" id="L40">        this.password = password;</span>
+<span class="nc" id="L41">        this.roles = roles;</span>
+<span class="nc" id="L42">    }</span>
+
+    public long getId() {
+<span class="nc" id="L45">        return id;</span>
+    }
+
+    public void setId(long id) {
+<span class="nc" id="L49">        this.id = id;</span>
+<span class="nc" id="L50">    }</span>
+
+    public String getName() {
+<span class="nc" id="L53">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L57">        this.name = name;</span>
+<span class="nc" id="L58">    }</span>
+
+    public String getAccount() {
+<span class="nc" id="L61">        return account;</span>
+    }
+
+    public void setAccount(String account) {
+<span class="nc" id="L65">        this.account = account;</span>
+<span class="nc" id="L66">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L69">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="nc" id="L73">        this.email = email;</span>
+<span class="nc" id="L74">    }</span>
+
+    public String getPassword() {
+<span class="nc" id="L77">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="nc" id="L81">        this.password = password;</span>
+<span class="nc" id="L82">    }</span>
+
+    public Set&lt;Role&gt; getRoles() {
+<span class="nc" id="L85">        return roles;</span>
+    }
+
+    public void setRoles(Set&lt;Role&gt; roles) {
+<span class="nc" id="L89">        this.roles = roles;</span>
+<span class="nc" id="L90">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

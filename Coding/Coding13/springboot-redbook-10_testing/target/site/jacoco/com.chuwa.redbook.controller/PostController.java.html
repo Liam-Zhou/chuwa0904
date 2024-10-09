@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.controller</a> &gt; <span class="el_source">PostController.java</span></div><h1>PostController.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.controller;
+
+import com.chuwa.redbook.payload.PostDto;
+import com.chuwa.redbook.payload.PostResponse;
+import com.chuwa.redbook.service.PostService;
+import com.chuwa.redbook.util.AppConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * debug it to show the flow
+ * @author b1go
+ * @date 6/17/22 12:17 AM
+ */
+@Api(value = &quot;CRUD REST APIs for Post resources&quot;)
+@RestController
+@RequestMapping(&quot;/api/v1/posts&quot;)  // localhost:8080/api/posts
+public class PostController {
+
+    private final PostService postService;
+
+    @Autowired
+<span class="nc" id="L30">    public PostController(PostService postService) {</span>
+<span class="nc" id="L31">        this.postService = postService;</span>
+<span class="nc" id="L32">    }</span>
+
+    @ApiOperation(value = &quot;Create Post REST API&quot;)
+    @PreAuthorize(&quot;hasAnyRole('ADMIN', 'USER')&quot;)
+    @PostMapping
+    public ResponseEntity&lt;PostDto&gt; createPost(@Valid @RequestBody PostDto postDto) {
+<span class="nc" id="L38">        return new ResponseEntity&lt;&gt;(postService.createPost(postDto), HttpStatus.CREATED);</span>
+    }
+
+    @ApiOperation(value = &quot;Get Post By Id REST API&quot;)
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;PostDto&gt; getPostById(@PathVariable(name = &quot;id&quot;) long id) {
+<span class="nc" id="L44">        return ResponseEntity.ok(postService.getPostById(id));</span>
+    }
+
+    @ApiOperation(value = &quot;Get all Posts REST API&quot;)
+    @GetMapping
+    public PostResponse getAllPosts(
+            @RequestParam(value = &quot;pageNo&quot;, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = &quot;pageSize&quot;, defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = &quot;sortBy&quot;, defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = &quot;sortDir&quot;, defaultValue = AppConstants.DEFAULT_SORT_DIR, required = false) String sortDir
+    ) {
+<span class="nc" id="L55">        return postService.getAllPost(pageNo, pageSize, sortBy, sortDir);</span>
+    }
+
+    @ApiOperation(value = &quot;Update Post By Id REST API&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;PostDto&gt; updatePostById(@Valid @RequestBody PostDto postDto, @PathVariable(name = &quot;id&quot;) long id) {
+<span class="nc" id="L62">        PostDto postResponse = postService.updatePost(postDto, id);</span>
+<span class="nc" id="L63">        return new ResponseEntity&lt;&gt;(postResponse, HttpStatus.OK);</span>
+    }
+
+    @ApiOperation(value = &quot;Delete Post By Id REST API&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;String&gt; deletePost(@PathVariable(name = &quot;id&quot;) long id) {
+<span class="nc" id="L70">        postService.deletePostById(id);</span>
+<span class="nc" id="L71">        return new ResponseEntity&lt;&gt;(&quot;Post entity deleted successfully.&quot;, HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

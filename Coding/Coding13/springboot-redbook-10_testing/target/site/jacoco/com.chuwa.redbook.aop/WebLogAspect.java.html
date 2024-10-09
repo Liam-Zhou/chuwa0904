@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebLogAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">redbook</a> &gt; <a href="index.source.html" class="el_package">com.chuwa.redbook.aop</a> &gt; <span class="el_source">WebLogAspect.java</span></div><h1>WebLogAspect.java</h1><pre class="source lang-java linenums">package com.chuwa.redbook.aop;
+
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
+import cn.hutool.json.JSONUtil;
+import io.swagger.annotations.ApiOperation;
+import net.logstash.logback.marker.Markers;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 统一日志处理切面
+ */
+@Aspect
+@Component
+@Order(1)
+<span class="nc" id="L37">public class WebLogAspect {</span>
+<span class="nc" id="L38">    private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);</span>
+<span class="nc" id="L39">    private final Logger log = LoggerFactory.getLogger(this.getClass());</span>
+
+
+    @Pointcut(&quot;execution(public * com.chuwa.redbook.controller.*.*(..))&quot;)
+    public void webLog() {
+<span class="nc" id="L44">    }</span>
+
+    @Before(&quot;webLog()&quot;)
+    public void doBefore(JoinPoint joinPoint) throws Throwable {
+<span class="nc" id="L48">    }</span>
+
+    @AfterReturning(value = &quot;webLog()&quot;, returning = &quot;ret&quot;)
+    public void doAfterReturning(Object ret) throws Throwable {
+<span class="nc" id="L52">    }</span>
+
+    @Around(&quot;webLog()&quot;)
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+<span class="nc" id="L56">        long startTime = System.currentTimeMillis();</span>
+        //获取当前请求对象
+<span class="nc" id="L58">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span>
+<span class="nc" id="L59">        HttpServletRequest request = attributes.getRequest();</span>
+        //记录请求信息(通过Logstash传入Elasticsearch)
+<span class="nc" id="L61">        WebLog webLog = new WebLog();</span>
+<span class="nc" id="L62">        Object result = joinPoint.proceed();</span>
+<span class="nc" id="L63">        Signature signature = joinPoint.getSignature();</span>
+<span class="nc" id="L64">        MethodSignature methodSignature = (MethodSignature) signature;</span>
+<span class="nc" id="L65">        Method method = methodSignature.getMethod();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (method.isAnnotationPresent(ApiOperation.class)) {</span>
+<span class="nc" id="L67">            ApiOperation log = method.getAnnotation(ApiOperation.class);</span>
+<span class="nc" id="L68">            webLog.setDescription(log.value());</span>
+        }
+<span class="nc" id="L70">        long endTime = System.currentTimeMillis();</span>
+<span class="nc" id="L71">        String urlStr = request.getRequestURL().toString();</span>
+<span class="nc" id="L72">        webLog.setBasePath(StrUtil.removeSuffix(urlStr, URLUtil.url(urlStr).getPath()));</span>
+<span class="nc" id="L73">        webLog.setUsername(request.getRemoteUser());</span>
+<span class="nc" id="L74">        webLog.setIp(request.getRemoteAddr());</span>
+<span class="nc" id="L75">        webLog.setMethod(request.getMethod());</span>
+<span class="nc" id="L76">        webLog.setParameter(getParameter(method, joinPoint.getArgs()));</span>
+<span class="nc" id="L77">        webLog.setResult(result);</span>
+<span class="nc" id="L78">        webLog.setSpendTime((int) (endTime - startTime));</span>
+<span class="nc" id="L79">        webLog.setStartTime(startTime);</span>
+<span class="nc" id="L80">        webLog.setUri(request.getRequestURI());</span>
+<span class="nc" id="L81">        webLog.setUrl(request.getRequestURL().toString());</span>
+<span class="nc" id="L82">        Map&lt;String,Object&gt; logMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L83">        logMap.put(&quot;url&quot;,webLog.getUrl());</span>
+<span class="nc" id="L84">        logMap.put(&quot;method&quot;,webLog.getMethod());</span>
+<span class="nc" id="L85">        logMap.put(&quot;parameter&quot;,webLog.getParameter());</span>
+<span class="nc" id="L86">        logMap.put(&quot;spendTime&quot;,webLog.getSpendTime());</span>
+<span class="nc" id="L87">        logMap.put(&quot;description&quot;,webLog.getDescription());</span>
+//        LOGGER.info(&quot;{}&quot;, JSONUtil.parse(webLog));
+<span class="nc" id="L89">        LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());</span>
+<span class="nc" id="L90">        return result;</span>
+    }
+
+    /**
+     * 根据方法和传入的参数获取请求参数
+     */
+    private Object getParameter(Method method, Object[] args) {
+<span class="nc" id="L97">        List&lt;Object&gt; argList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L98">        Parameter[] parameters = method.getParameters();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (int i = 0; i &lt; parameters.length; i++) {</span>
+            //将RequestBody注解修饰的参数作为请求参数
+<span class="nc" id="L101">            RequestBody requestBody = parameters[i].getAnnotation(RequestBody.class);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            if (requestBody != null) {</span>
+<span class="nc" id="L103">                argList.add(args[i]);</span>
+            }
+            //将RequestParam注解修饰的参数作为请求参数
+<span class="nc" id="L106">            RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if (requestParam != null) {</span>
+<span class="nc" id="L108">                Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L109">                String key = parameters[i].getName();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                if (!StringUtils.isEmpty(requestParam.value())) {</span>
+<span class="nc" id="L111">                    key = requestParam.value();</span>
+                }
+<span class="nc" id="L113">                map.put(key, args[i]);</span>
+<span class="nc" id="L114">                argList.add(map);</span>
+            }
+        }
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (argList.size() == 0) {</span>
+<span class="nc" id="L118">            return null;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        } else if (argList.size() == 1) {</span>
+<span class="nc" id="L120">            return argList.get(0);</span>
+        } else {
+<span class="nc" id="L122">            return argList;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
