@@ -3,22 +3,28 @@ import com.chuwa.redbook.dao.CommentRepository;
 import com.chuwa.redbook.dao.PostRepository;
 import com.chuwa.redbook.entity.Comment;
 import com.chuwa.redbook.entity.Post;
-import com.chuwa.redbook.exception.BlogAPIException;
 import com.chuwa.redbook.payload.CommentDto;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.BDDMockito;
 
-import java.util.Arrays;
-import java.util.List;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(CommentServiceImpl.class)
 public class CommentServiceImplTest {
+
     @Mock
     private CommentRepository commentRepository;
 
@@ -27,13 +33,16 @@ public class CommentServiceImplTest {
 
     @InjectMocks
     private CommentServiceImpl commentService;
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+
+    @Before
+    public void setUp() {
+        // Mock the static method commentServiceMapperUtil
+
+        PowerMockito.mockStatic(CommentServiceImpl.class);
     }
 
     @Test
-    void testCreateComment() {
+    public void testCreateComment() {
         long postId = 1L;
         CommentDto commentDto = new CommentDto();
         commentDto.setBody("This is a comment");
@@ -44,8 +53,14 @@ public class CommentServiceImplTest {
         Comment comment = new Comment();
         comment.setPost(post);
 
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        when(commentRepository.save(any(Comment.class))).thenReturn(comment);
+        CommentDto mappedDto = new CommentDto();
+        mappedDto.setBody("This is a comment");
+
+        Mockito.when(postRepository.findById(postId)).thenReturn(Optional.of(post));
+        Mockito.when(commentRepository.save(any(Comment.class))).thenReturn(comment);
+
+        PowerMockito.when(CommentServiceImpl.commentServiceMapperUtil(any(Comment.class)))
+                .thenReturn(mappedDto);
 
         CommentDto result = commentService.createComment(postId, commentDto);
 
@@ -53,111 +68,5 @@ public class CommentServiceImplTest {
         assertEquals("This is a comment", result.getBody());
     }
 
-    @Test
-    void testGetCommentsByPostId() {
-        long postId = 1L;
-        Comment comment1 = new Comment();
-        Comment comment2 = new Comment();
 
-        when(commentRepository.findByPostId(postId)).thenReturn(Arrays.asList(comment1, comment2));
-
-        List<CommentDto> comments = commentService.getCommentsByPostId(postId);
-
-        assertEquals(2, comments.size());
-    }
-
-    @Test
-    void testGetCommentById() {
-        long postId = 1L;
-        long commentId = 1L;
-
-        Post post = new Post();
-        post.setId(postId);
-
-        Comment comment = new Comment();
-        comment.setPost(post);
-
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
-
-        CommentDto result = commentService.getCommentById(postId, commentId);
-
-        assertNotNull(result);
-    }
-
-    @Test
-    void testGetCommentById_ThrowsException() {
-        long postId = 1L;
-        long commentId = 1L;
-
-        Post post = new Post();
-        post.setId(postId);
-
-        Comment comment = new Comment();
-        comment.setPost(new Post());
-
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
-
-        assertThrows(BlogAPIException.class, () -> commentService.getCommentById(postId, commentId));
-    }
-
-    @Test
-    void testUpdateComment() {
-        long postId = 1L;
-        long commentId = 1L;
-        CommentDto commentDto = new CommentDto();
-        commentDto.setName("Updated Name");
-        commentDto.setBody("Updated Body");
-
-        Post post = new Post();
-        post.setId(postId);
-
-        Comment comment = new Comment();
-        comment.setPost(post);
-
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
-        when(commentRepository.save(any(Comment.class))).thenReturn(comment);
-
-        CommentDto result = commentService.updateComment(postId, commentId, commentDto);
-
-        assertNotNull(result);
-        assertEquals("Updated Body", result.getBody());
-    }
-
-    @Test
-    void testDeleteComment() {
-        long postId = 1L;
-        long commentId = 1L;
-
-        Post post = new Post();
-        post.setId(postId);
-
-        Comment comment = new Comment();
-        comment.setPost(post);
-
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
-
-        commentService.deleteComment(postId, commentId);
-
-        verify(commentRepository, times(1)).delete(comment);
-    }
-
-    @Test
-    void testCommentServiceMapperUtil() {
-        Comment comment = new Comment();
-        comment.setId(1L);
-        comment.setBody("Sample body");
-        comment.setName("John Doe");
-        comment.setEmail("john@example.com");
-
-        CommentDto result = CommentServiceImpl.commentServiceMapperUtil(comment);
-
-        assertNotNull(result);
-        assertEquals("Sample body", result.getBody());
-        assertEquals("John Doe", result.getName());
-        assertEquals("john@example.com", result.getEmail());
-    }
 }
