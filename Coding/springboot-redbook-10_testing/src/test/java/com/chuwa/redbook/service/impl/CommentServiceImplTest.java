@@ -2,26 +2,19 @@ package com.chuwa.redbook.service.impl;
 
 import com.chuwa.redbook.dao.CommentRepository;
 import com.chuwa.redbook.dao.PostRepository;
-
 import com.chuwa.redbook.entity.Comment;
 import com.chuwa.redbook.entity.Post;
 import com.chuwa.redbook.exception.BlogAPIException;
 import com.chuwa.redbook.exception.ResourceNotFoundException;
 import com.chuwa.redbook.payload.CommentDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
+import org.mockito.*;
 
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -33,6 +26,7 @@ public class CommentServiceImplTest {
     private PostRepository postRepository;
 
     @InjectMocks
+    @Spy
     private CommentServiceImpl commentService;
     private Comment comment;
     private Post post;
@@ -102,6 +96,7 @@ public class CommentServiceImplTest {
         when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
         when(commentRepository.findById(anyLong())).thenReturn(Optional.of(comment));
 
+
         //call to test passing post id and  comment id
         CommentDto commentDto = commentService.getCommentById(post.getId(),comment.getId());
 
@@ -112,7 +107,7 @@ public class CommentServiceImplTest {
 
     @Test
     public void getCommentsById_postNotFound() {
-         //stubbing:define to return an empty null post
+        //stubbing:define to return an empty null post
         when(postRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         //call to test(empty post so could not find post of id = 1L)
@@ -137,16 +132,22 @@ public class CommentServiceImplTest {
     void testGetCommentById_CommentDoesNotBelongToPost() {
         // Setup
         Post post = new Post();
+        post.setId(1L);// test post id is 1L
+        Post post2 = new Post();
+        post2.setId(2L);
+
         Comment comment = new Comment();
-        post.setId(1L);
-        comment.setPost(new Post());
+        comment.setPost(post2);//comment id is 2L
+
 
         //stubbing
         when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
         //Comment object is associated with a different post (not the one with ID 1L).
         when(commentRepository.findById(anyLong())).thenReturn(Optional.of(comment));
 
-        // Test & Verify
+        CommentDto commentDto = commentService.commentServiceMapperUtil(comment);
+
+        // Test & Verify !comment.getPost().getId().equals(post.getId())
         assertThrows(BlogAPIException.class, () -> commentService.getCommentById(1L, 1L));
     }
 
@@ -167,6 +168,57 @@ public class CommentServiceImplTest {
 
         //verify dto
         assertNotNull(commentDto);
+    }
+
+    @Test
+    void testUpdateComment_success(){
+        //setup
+        Post post = new Post();
+        post.setId(1L);
+        Comment comment = new Comment();
+        comment.setPost(post);
+        CommentDto commentDtoRequest = new CommentDto();
+
+
+        //stubbing
+        when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
+        when(commentRepository.findById(anyLong())).thenReturn(Optional.of(comment));
+        when(commentRepository.save(ArgumentMatchers.any(Comment.class))).thenReturn(comment);
+
+        //test
+        CommentDto commentDto = commentService.updateComment(post.getId(),comment.getId(),commentDtoRequest);
+
+        //verify
+        verify(commentService).updateComment(post.getId(),comment.getId(),commentDtoRequest);
+        assertNotNull(commentDto);
+
+
+
+
+
+    }
+
+
+
+    @Test
+    void testDeleteComment(){
+        //setup
+        Post post = new Post();
+        post.setId(1L);
+        Comment comment = new Comment();
+        comment.setPost(post);
+
+
+
+        //stubbing
+        when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
+        when(commentRepository.findById(anyLong())).thenReturn(Optional.of(comment));
+
+        //call the method
+        commentService.deleteComment(post.getId(),comment.getId());
+
+        //verify method is called
+        verify(commentService).deleteComment(post.getId(),comment.getId());
     }
 
 
