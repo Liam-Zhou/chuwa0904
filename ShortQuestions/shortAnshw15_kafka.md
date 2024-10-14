@@ -137,7 +137,7 @@ The 4th consumer will remain idle, as it has no partition to consume from.
 ![2ndGroupPic2](./Imagehw15/2ndGroupPic2.png)
 
 **2Groups 6 Partitions**
-![G1-2G6P](./Imagehw15/G1-2G6P.png)
+![G1-2G6P](./G1-2G6P.png)
 
 ![G2-2G6P](./Imagehw15/G2-2G6P.png)
 
