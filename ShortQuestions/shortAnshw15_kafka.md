@@ -88,7 +88,7 @@ Kafka tracks message delivery using offsets. Each message in a partition has a u
 #### Write your consumer application with Spring Kafka dependency, set up 3 consumers in a single consumer group.
 
 - Prove message consumption with screenshots.
-![partitionNum](./Imagehw15/partitionNum.png)
+![partitionNum](../Imagehw15/partitionNum.png)
 ```angular2html
 chuwa-yyds is the name of your Kafka topic
 0 is the partition number within the topic
@@ -103,22 +103,22 @@ Topic chuwa-yyds-0 is assigned to another consumer.
 Topic chuwa-yyds-1 is assigned to the third consumer
 ```
 
-![3consumers](./Imagehw15/3consumers.png)
+![3consumers](../Imagehw15/3consumers.png)
 
 #### Increase number of consumers in a single consumer group, observe what happens, explain your observation.
 
-![3consumersWork](./Imagehw15/3consumersWork.png)
+![3consumersWork](../Imagehw15/3consumersWork.png)
 ```angular2html
 there is a 1:1 mapping between the consumers and the partitions. 
 Since there are 3 partitions in the topic, 
 all partitions are evenly distributed among the consumers.
 ```
-![4consumers](./Imagehw15/4consumers.png)
+![4consumers](../Imagehw15/4consumers.png)
 ```angular2html
  logs indicate that 4 different consumer clients 
 are subscribed to the chuwa-yyds topic within the same group (consumer_group_1)
 ```
-![4consumers3pts](./Imagehw15/4consumers3pts.png)
+![4consumers3pts](../Imagehw15/4consumers3pts.png)
 **What Happens When You Increase to 4 Consumers**
 ```angular2html
 Kafka follows a rule where each partition can only be assigned to one consumer per consumer group at any time.
@@ -132,21 +132,21 @@ The 4th consumer will remain idle, as it has no partition to consume from.
 
 - **2Groups 3 Partitions**
 
-![2ndGroup](./chuwa0904/Imagehw15/2ndGroup.png)
+![2ndGroup](../Imagehw15/2ndGroup.png)
 
-![2ndGroupPic2](./Imagehw15/2ndGroupPic2.png)
+![2ndGroupPic2](../Imagehw15/2ndGroupPic2.png)
 
 **2Groups 6 Partitions**
-![G1-2G6P](./G1-2G6P.png)
+![G1-2G6P](../Imagehw15/G1-2G6P.png)
 
-![G2-2G6P](./Imagehw15/G2-2G6P.png)
+![G2-2G6P](../Imagehw15/G2-2G6P.png)
 
 
 - Demo different message delivery guarantees in Kafka, with necessary code or configuration changes.
 
-![2ndGroup](./Imagehw15/2ndGroup.png)
+![2ndGroup](../Imagehw15/2ndGroup.png)
 
-![Group1OffSet](./Imagehw15/Group1OffSet.png)
+![Group1OffSet](../Imagehw15/Group1OffSet.png)
 
 
 
