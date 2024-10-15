@@ -7,11 +7,8 @@ import com.chuwa.redbook.payload.CommentDto;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.BDDMockito;
+import org.mockito.*;
 
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -37,12 +34,14 @@ public class CommentServiceImplTest {
     @Before
     public void setUp() {
         // Mock the static method commentServiceMapperUtil
-
+        MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(CommentServiceImpl.class);
     }
 
     @Test
     public void testCreateComment() {
+        Mockito.mock(CommentRepository.class);
+        Mockito.mock(PostRepository.class);
         long postId = 1L;
         CommentDto commentDto = new CommentDto();
         commentDto.setBody("This is a comment");
@@ -56,7 +55,7 @@ public class CommentServiceImplTest {
         CommentDto mappedDto = new CommentDto();
         mappedDto.setBody("This is a comment");
 
-        Mockito.when(postRepository.findById(postId)).thenReturn(Optional.of(post));
+        Mockito.when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
         Mockito.when(commentRepository.save(any(Comment.class))).thenReturn(comment);
 
         PowerMockito.when(CommentServiceImpl.commentServiceMapperUtil(any(Comment.class)))
@@ -67,6 +66,4 @@ public class CommentServiceImplTest {
         assertNotNull(result);
         assertEquals("This is a comment", result.getBody());
     }
-
-
 }
