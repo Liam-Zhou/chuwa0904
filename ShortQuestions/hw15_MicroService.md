@@ -243,17 +243,17 @@ We want processing capabilities, scalability, and retention features in Kafka be
 
 Only one consumer in a group is consuming the messages
 
-![kafka single coonsumer group](D:\Development\chuwa0904\img\kafka single coonsumer group.png)
+![kafka single coonsumer group](..\img\kafka single coonsumer group.png)
 
 When adding more consumers, still only one consumer is consuming.
 
-![kafka single consumer group 2](D:\Development\chuwa0904\img\kafka single consumer group 2.png)
+![kafka single consumer group 2](..\img\kafka single consumer group 2.png)
 
 When add new consumer groups, partitioner in kafka producer use key value hash to decide the message goes to which partitions. 
 
-![kafka multiple consumer group](D:\Development\chuwa0904\img\kafka multiple consumer group.png)
+![kafka multiple consumer group](..\img\kafka multiple consumer group.png)
 
-![kafka key hash partition](D:\Development\chuwa0904\img\kafka key hash partition.png)
+![kafka key hash partition](..\img\kafka key hash partition.png)
 
 Also we can change the partition strategy. We get rotating assignment.
 
@@ -262,7 +262,7 @@ Also we can change the partition strategy. We get rotating assignment.
 configProps.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, RoundRobinPartitioner.class);
 ```
 
-![Kafka RoundRobin](D:\Development\chuwa0904\img\Kafka RoundRobin.png)
+![Kafka RoundRobin](..\img\Kafka RoundRobin.png)
 
 At most once
 
@@ -287,7 +287,7 @@ spring.kafka.consumer.enable-auto-commit=true
 auto.commit.interval.ms=300
 ```
 
-![at most one](D:\Development\chuwa0904\img\at most one.png)
+![at most one](..\img\at most one.png)
 
 
 
@@ -301,7 +301,7 @@ After the failure, restart the program, the not responding message will be sent 
 spring.kafka.consumer.enable-auto-commit=false
 ```
 
-![at least once](D:\Development\chuwa0904\img\at least once.png)
+![at least once](..\img\at least once.png)
 
 **Exactly once**
 
