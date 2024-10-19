@@ -2,18 +2,14 @@ package com.chuwa.redbook.controller;
 
 import com.chuwa.redbook.payload.CommentDto;
 import com.chuwa.redbook.service.CommentService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,17 +28,20 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    /**
-     * TODO: Questions
-     * 当我们浏览小红书时候，点开一篇文章，请问获得这篇文章的内容，是用的哪个API？
-     * 看到大家争论库里历史地位是否超越科比，你要写评论回应，当你的评论提交时候，会call哪个API？
-     * <p>
-     * 此时此刻，思考为什么post的ID是pathVariable 而不是request parameter?
-     */
-//    @ApiOperation(value = "Create Comment REST API")
+//    /**
+//     * TODO: Questions
+//     * 当我们浏览小红书时候，点开一篇文章，请问获得这篇文章的内容，是用的哪个API？
+//     * 看到大家争论库里历史地位是否超越科比，你要写评论回应，当你的评论提交时候，会call哪个API？
+//     * <p>
+//     * 此时此刻，思考为什么post的ID是pathVariable 而不是request parameter?
+//     *
+//     * @param id
+//     * @param commentDto
+//     * @return
+//     */
 //    @PostMapping("/posts/{postId}/comments")
 //    public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long id,
-//                                                    @Valid @RequestBody CommentDto commentDto) {
+//                                                    @RequestBody CommentDto commentDto) {
 //        return new ResponseEntity<>(commentService.createComment(id, commentDto), HttpStatus.CREATED);
 //    }
     @MutationMapping
@@ -50,7 +49,7 @@ public class CommentController {
         return commentService.createComment(commentDto.getId(), commentDto);
     }
 
-//    @ApiOperation(value = "Get All Comments by Post ID REST API")
+
 //    @GetMapping("/posts/{postId}/comments")
 //    public List<CommentDto> getCommentsByPostId(@PathVariable(value = "postId") Long postId) {
 //        return commentService.getCommentsByPostId(postId);
@@ -58,9 +57,8 @@ public class CommentController {
     @QueryMapping
     public List<CommentDto> getCommentsByPostId(@Argument Long postId) {
         return commentService.getCommentsByPostId(postId);
-
     }
-//    @ApiOperation(value = "Get single Comment by ID REST API")
+
 //    @GetMapping("/posts/{postId}/comments/{id}")
 //    public ResponseEntity<CommentDto> getCommentsById(
 //            @PathVariable(value = "postId") Long postId,
@@ -74,11 +72,10 @@ public class CommentController {
         return commentService.getCommentById(postId, id);
     }
 
-//    @ApiOperation(value = "Update single Comment by ID REST API")
 //    @PutMapping("/posts/{postId}/comments/{id}")
 //    public ResponseEntity<CommentDto> updateComment(@PathVariable(value = "postId") Long postId,
 //                                                    @PathVariable(value = "id") Long commentId,
-//                                                    @Valid @RequestBody CommentDto commentDto) {
+//                                                    @RequestBody CommentDto commentDto) {
 //        CommentDto updateComment = commentService.updateComment(postId, commentId, commentDto);
 //        return new ResponseEntity<>(updateComment, HttpStatus.OK);
 //    }
@@ -86,7 +83,7 @@ public class CommentController {
     public CommentDto updateComment(@Argument Long postId, @Argument Long id, @Argument CommentDto commentInput) {
         return commentService.updateComment(postId, id, commentInput);
     }
-//    @ApiOperation(value = "Delete single Comment by ID REST API")
+
 //    @DeleteMapping("/posts/{postId}/comments/{id}")
 //    public ResponseEntity<String> deleteComment(@PathVariable(value = "postId") Long postId,
 //                                                @PathVariable(value = "id") Long commentId) {

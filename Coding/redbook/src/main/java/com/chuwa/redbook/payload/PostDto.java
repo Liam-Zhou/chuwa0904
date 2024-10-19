@@ -22,18 +22,17 @@ public class PostDto {
      * Question, our database have set it as nullable=false,
      * why do we need to set validation here? what is the benefits?
      */
-    @ApiModelProperty(value = "Blog post title")
-    @NotEmpty
+    @NotEmpty(message = "Post description is required")
     @Size(min = 2, message = "Post title should have at least 2 characters")
     private String title;
 
-    @ApiModelProperty(value = "Blog post description")
-    @NotEmpty
+//    @ApiModelProperty(value = "Blog post description")
+    @NotEmpty(message = "Post description is required")
     @Size(min = 10, message = "Post description should have at least 10 characters")
     private String description;
 
-    @ApiModelProperty(value = "Blog post content")
-    @NotEmpty
+//    @ApiModelProperty(value = "Blog post content")
+    @NotEmpty(message = "Post content is required")
     private String content;
 
     private Set<CommentDto> comments;

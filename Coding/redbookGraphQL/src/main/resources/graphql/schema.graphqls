@@ -1,0 +1,57 @@
+type Comment {
+  id: ID!
+  name: String!
+  email: String!
+  body: String!
+}
+input CommentInput {
+  name: String!
+  email: String!
+  body: String!
+}
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  content: String!
+}
+
+input PostInput {
+  title: String!
+  description: String!
+  content: String!
+}
+
+input PostUpdateInput {
+  title: String
+  description: String
+  content: String
+}
+
+type PostResponse {
+  content: [Post]!
+  pageNo: Int!
+  pageSize: Int!
+  totalElements: Int!
+  totalPages: Int!
+  last: Boolean!
+}
+type Query {
+  getCommentsByPostId(postId: ID!): [Comment!]!
+  getCommentById(postId: ID!, id: ID!): Comment
+  getPostById(id: ID!): Post
+  getAllPosts(
+    pageNo: Int = 0,
+    pageSize: Int = 10,
+    sortBy: String = "id",
+    sortDir: String = "asc"
+  ): PostResponse
+}
+type Mutation {
+  createComment(commentInput: CommentInput!): Comment!
+  updateComment(postId: ID!, id: ID!, commentInput: CommentInput!): Comment!
+  deleteComment(postId: ID!, id: ID!): String!
+  createPost(postInput: PostInput!): Post
+  updatePostById(id: ID!, postInput: PostUpdateInput!): Post
+  deletePost(id: ID!): String
+}
