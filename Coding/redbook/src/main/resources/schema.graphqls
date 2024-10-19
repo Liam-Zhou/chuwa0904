@@ -1,0 +1,90 @@
+type Mutation {
+  signIn(loginInput: LoginInput): String
+  signUp(signUpInput: SignUpInput): String
+}
+
+input LoginInput {
+  accountOrEmail: String!
+  password: String!
+}
+
+input SignUpInput {
+  name: String!
+  account: String!
+  email: String!
+  password: String!
+}
+
+type Comment {
+  id: ID!
+  name: String!
+  email: String!
+  body: String!
+}
+input CommentInput {
+  name: String!
+  email: String!
+  body: String!
+}
+type JWTAuthResponse {
+  token: String!
+  tokenType: String!
+}
+type Mutation {
+  signInJWT(loginInput: LoginInput!): JWTAuthResponse
+  signUpJWT(signUpInput: SignUpInput!): String
+}
+type Query {
+  getCommentsByPostId(postId: ID!): [Comment!]!
+  getCommentById(postId: ID!, id: ID!): Comment
+}
+type Mutation {
+  createComment(postId: ID!, commentInput: CommentInput!): Comment!
+  updateComment(postId: ID!, id: ID!, commentInput: CommentInput!): Comment!
+  deleteComment(postId: ID!, id: ID!): String!
+}
+
+
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  content: String!
+}
+
+input PostInput {
+  title: String!
+  description: String!
+  content: String!
+}
+
+input PostUpdateInput {
+  title: String
+  description: String
+  content: String
+}
+
+type PostResponse {
+  content: [Post]!
+  pageNo: Int!
+  pageSize: Int!
+  totalElements: Int!
+  totalPages: Int!
+  last: Boolean!
+}
+
+type Query {
+  getPostById(id: ID!): Post
+  getAllPosts(
+    pageNo: Int = 0,
+    pageSize: Int = 10,
+    sortBy: String = "id",
+    sortDir: String = "asc"
+  ): PostResponse
+}
+
+type Mutation {
+  createPost(postInput: PostInput!): Post
+  updatePostById(id: ID!, postInput: PostUpdateInput!): Post
+  deletePost(id: ID!): String
+}
