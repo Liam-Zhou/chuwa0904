@@ -1,0 +1,20 @@
+# Defines the PostDto type
+type PostDto {
+    id: ID
+    title: String
+    description: String
+    content: String
+}
+
+# Queries for retrieving data
+type Query {
+    getPost(id: ID!): PostDto
+    getAllPosts: [PostDto]
+}
+
+# Mutations for creating, updating, and deleting posts
+type Mutation {
+    createPost(title: String, description: String, content: String): PostDto
+    updatePost(id: ID!, title: String, description: String, content: String): PostDto
+    deletePost(id: ID!): String
+}
