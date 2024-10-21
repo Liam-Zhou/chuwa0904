@@ -1,14 +1,23 @@
 type Query {
-    getPostById(id: ID): Post
+    getPostById(id: ID!): Post!
+    getCommentsByPostId(postId: ID!): [Comment]!
 }
 
 type Post {
-    id: ID
-    title: String
-    description: String
-    content: String
+    id: ID!
+    title: String!
+    description: String!
+    content: String!
 }
 
-#type Mutation {
-#    createPost(title: String!, description: String!, content: String!) : Post!
-#}
+type Comment {
+    id : ID!
+    name: String!
+    email: String!
+    body: String!
+}
+
+type Mutation {
+    createPost(title: String!, description: String!, content: String!) : Post!
+    createCommentByPostId(postId: ID!, name: String!, email: String!, body: String!) : Comment!
+}
