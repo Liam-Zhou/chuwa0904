@@ -1,0 +1,36 @@
+type PostDto {
+    id: ID!
+    title: String!
+    description: String
+    content: String!
+    comments: [Comment!]
+}
+
+
+type Comment {
+    id: ID!
+    name: String!
+    email: String!
+    body: String!
+
+}
+
+type PostResponse {
+    content: [PostDto!]!
+    pageNo: Int!
+    pageSize: Int!
+    totalElements: Int!
+    totalPages: Int!
+    last: Boolean!
+}
+
+type Query {
+    getPost(id: ID!): PostDto
+    getAllPosts(pageNo: Int, pageSize: Int, sortBy: String, sortDir: String): PostResponse
+    getCommentsByPostId(postId: ID!): [Comment!]
+}
+
+type Mutation {
+    createPost(title: String!, description: String, content: String!): PostDto
+    createComment(postId: ID!, name: String!, email: String!, body: String!): Comment
+}
