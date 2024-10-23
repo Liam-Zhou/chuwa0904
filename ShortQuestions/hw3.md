@@ -188,7 +188,7 @@ Java Virtual Machine handles the assign and release memory automatically. Genera
 
 ### Variable
 
-Final defines the **constants**, make the varable immutable, prevent modification.
+Final defines the **constants**, make the variable immutable, prevent modification.
 
 ### Method
 
@@ -242,7 +242,7 @@ Same for method, the static method **did not belong to any class**. It will be i
 
 Static Method can only access the static variables and other static method directly. Because of its unique initialization and lifecycle; also because it did not belong to any instance.
 
-Staic method is used **when** the method does not depend on any instance variable, and when it needs to **operate** **at class level**. Usually it is used for the Utility function (Math.min(), Array.sort())
+Static method is used **when** the method does not depend on any instance variable, and when it needs to **operate** **at class level**. Usually it is used for the Utility function (Math.min(), Array.sort())
 
 ### Class
 
@@ -311,11 +311,63 @@ If we want the HashMap function as expected, we would need to define the hashcod
 
 ## 14. What is Polymorphism. How it implements?
 
-**Polymorphism**: Polymorphism provides Code resusability, Extensibility and Dynamic method binding benefits, making it helpful in building flexible, scalable and maintainable system
+- 1. **Object Representation and Virtual Method Tables (Vtables)**:
 
-- **Compile-time Polymorphism(Method overloading)**: Multiple method in a same class can have the same name but different input parameter. The method gets called is determined by the number and type of the input parameter passed at compile time.
+  In languages like Java, objects of classes that implement inheritance typically have something akin to **virtual method tables** (Vtables) to implement polymorphism efficiently. Though Java doesn’t expose this directly, it uses a similar internal concept.
 
-- **Run-time Polymorphism(Method overriding)**: When a subclass inherit from a parent class, it can provides speciifc implementation of a method that is already defined in the parent class. This behavior happens at run-time.
+  - **Vtable** is a table of pointers or references to methods. Each class has its own Vtable. When an object is created, it carries with it a pointer to the Vtable of its actual class.
+  - When you call a method on an object, the JVM looks up the actual method in the object's class Vtable and invokes the method found there.
+  - If a subclass overrides a method, the entry in the Vtable is updated to point to the subclass’s method, ensuring that the subclass’s method gets called even if the reference is of the parent class type.
+
+  #### Example:
+
+  Consider the following classes:
+
+  ```java
+  javaCopy codeclass Animal {
+      void sound() {
+          System.out.println("Animal makes a sound");
+      }
+  }
+  
+  class Dog extends Animal {
+      @Override
+      void sound() {
+          System.out.println("Dog barks");
+      }
+  }
+  ```
+
+  Here’s what happens behind the scenes:
+
+  - At runtime, if a Dog object is created but referred to as an  Animal
+
+    ```java
+    Animal myAnimal = new Dog();
+    myAnimal.sound(); // Calls Dog's version of sound()
+    ```
+
+    The JVM will dynamically determine that myAnimal is actually an instance of Dog, and thus, it will use the Dog class's method.
+
+  **How it works at a lower level:**
+
+  - When the `myAnimal.sound()` call is made, the JVM checks the Vtable associated with the `Dog` class, finds that `sound()` is overridden in `Dog`, and executes the overridden method.
+  - If `Dog` did not override `sound()`, the JVM would call the `sound()` method from `Animal`.
+
+  ### 2. **JVM and Dynamic Method Dispatch:**
+
+  The JVM plays a crucial role in supporting polymorphism through dynamic method dispatch. At runtime, the JVM determines the actual class of the object using the reference, and it uses the Vtable to invoke the correct method. Here’s how it works:
+
+  - **Object creation**: When an object of a class is instantiated (e.g., `new Dog()`), the JVM sets up memory for the object, including a reference to the Vtable of the class (`Dog` in this case).
+  - **Method Call**: When a method is invoked (e.g., `myAnimal.sound()`), the JVM uses the reference to the object to check the class’s Vtable. Even though `myAnimal` is of type `Animal`, the actual object is `Dog`, so the JVM looks at `Dog`'s Vtable for the `sound()` method.
+  - **Method Execution**: The JVM then executes the method found in the `Dog` class’s Vtable, which is the `Dog`'s overridden `sound()` method.
+
+  ### 3. **Bytecode and Method Invocation (`invokevirtual`)**:
+
+  At the bytecode level, Java uses the `invokevirtual` instruction to implement dynamic method dispatch. When you compile Java code, method calls are compiled into bytecode instructions that use this instruction to invoke methods.
+
+  - **`invokevirtual`**: This is the bytecode instruction responsible for method dispatch in the JVM. When the JVM executes `invokevirtual`, it uses the reference’s runtime type (not the compile-time type) to determine which method to call.
+  - The `invokevirtual` instruction works by first finding the actual object type and then using the Vtable for that type to call the correct method.
 
 ## 15. What is Encapsulation. How it implements? Why We need it?
 
@@ -323,7 +375,7 @@ If we want the HashMap function as expected, we would need to define the hashcod
 
 **Why?** 
 
-- Data access protection using private 
+- Data access **protection** using private 
 - Encapsulation getter and setter controls the acces right
 - Increase Flexibility Maintainability and Readability. 
 - Reduce the coupling, Improves the modularity
